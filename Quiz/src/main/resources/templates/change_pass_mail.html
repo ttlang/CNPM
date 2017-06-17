@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<title>Insert title here</title>
+</head>
+<body>
+<h3 style="color: #064740;">Chào <span th:text="${mail}"></span></h3>
+ <img src="http://wellcomusa.com/pics/Header.jpg">
+<h3 style="color: #064740;">Hãy click vào đây đặt lại mật khẩu mới</h3>
+<a th:href="@{${link}}"><span th:text="@{${link}}"></span></a>
+</body>
+</html>

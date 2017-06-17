@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+<th:block th:each="comment : ${commentList}">
+	<div class="cmt row" th:id="comment+${comment.idComment}">
+		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
+			<img class="media-photo img-responsive avt"
+				th:src="@{/images/15284079_583315985195410_4289784661158093094_n.jpg}"
+				alt="Ảnh đại diện" />
+		</div>
+		<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
+			<!-- start x close comment -->
+			<form onsubmit="return deleteComment(this)">
+				<input type="hidden" id="idcomment-close"
+					th:value="${comment.idComment}" />
+				<button class="close" type="submit">
+					<span aria-hidden="true">×</span>
+				</button>
+			</form>
+			<!-- end x close comment -->
+			<a href="#"><strong th:text="${comment.idAcc.name}"></strong></a> <span
+				th:text="${comment.commentContent}"></span><br /> <span
+				th:text="${#dates.format(comment.commentTime, 'dd-MM-yyyy hh:mm:ss')}"></span>
+		</div>
+	</div>
+</th:block>

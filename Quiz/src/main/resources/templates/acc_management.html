@@ -1,0 +1,257 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title>Quản lý tài khoản</title>
+<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/css/profile.css}" rel="stylesheet">
+<link th:href="@{/css/loading.css}" rel="stylesheet">
+<link th:href="@{/css/loading.css}" rel="stylesheet">
+<link th:href="@{/css/table.css}" rel="stylesheet">
+<link th:href="@{/css/responsive.css}" rel="stylesheet">
+<link th:href="@{/fonts/css/font-awesome.min.css}" rel="stylesheet">
+
+</head>
+
+<body>
+	<!--	menu fixed top-->
+	<th:block th:replace="homepage::menu_fix_top"></th:block>
+
+	<div class="container">
+            <!--	slider menu-->
+		<div id="mySidenav" class="sidenav">
+			<a href="homepage.html">Trang chủ</a>
+			<a href="#">Thông tin</a>
+			<a href="#">Dịch vụ</a>
+			<a href="#">Liên hệ</a>
+			<div class="form-group">
+    		<label for="room" class="col-sm-2 control-label">Mã phòng</label>
+    			<div class="col-sm-10">
+      				<div class="loader">
+						<div class="bar"></div>
+						<div class="bar"></div>
+						<div class="bar"></div>
+					</div>
+    			</div>
+  			</div>
+		</div>
+       
+<!--       nội dung trang web-->
+        <div id="main">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-4">
+<!--					thông tin cá nhân-->
+						<div class="divcontent row">
+							<div class="col-md-5 col-sm-6 col-xs-12">
+								<img class="img-circle img-responsive" th:src="@{${session.account.avatar}}" alt="Ảnh đại diện"/>
+							</div>
+							
+							<div class="col-md-7 col-sm-6 col-xs-12">
+								<h4 th:text="${session.account.name}"></h4>
+								<h5 th:text="${session.account.address}"></h5>
+							</div>
+						</div>
+						
+<!--						danh sách thành viên-->
+						<div class="divcontent">
+							<h4>Danh sách thành viên</h4>
+							<select multiple class="form-control">
+								<th:block th:each="mem : ${listMember}">
+									<option th:text="${mem.value}+' - '+${mem.key}"></option>
+
+								</th:block>
+							</select>
+<!--							<hr/>-->
+<!--							<a href=""><button type="button" class="btn btn-default"><i class="fa fa-users"></i> Quản lý thành viên</button></a>-->
+						</div>
+						
+<!--						danh sách phòng quản lý-->
+						<div class="divcontent">
+							<h4>Thông tin phòng</h4>
+							<p>
+								Tên phòng: <strong th:text="${Room.roomName}"></strong>
+								<br/>
+								Mã phòng: <strong th:text="${Room.idRoom}"></strong>
+								<br/>
+								Số thành viên: <span th:text="${numberOfAccount}"></span>
+								<input type="hidden" id="IDroom" th:value="${Room.idRoom}" />
+							</p>
+						</div>
+						
+						<th:block th:replace="homepage::footer">
+						</th:block>
+					</div>
+						
+					<div class="col-md-8">
+						<div class="panel panel-default">
+						<!-- start -->
+							<div class="panel-body">
+								<div class="pull-right">
+									<div class="btn-group">
+										<button type="button" class="btn btn-success btn-filter" data-target="pagado">Thành viên chờ</button>
+										<button type="button" class="btn btn-warning btn-filter" data-target="pendiente">Thành viên</button>
+										
+									</div>
+								</div>
+								
+								<div class="table-container">
+									<table class="table table-filter">
+										<tbody>
+										
+										
+										<!-- thành viên trong phòng -->
+											<tr data-status="pendiente" th:each="member : ${members}">
+												<td>
+													<p th:class="${session.account.idAcc==member.account.idAcc}?'star star-checked':'star'">
+														<i class="glyphicon glyphicon-star"></i>
+													</p>
+												</td>
+												<td>
+													<div class="media">
+														<a href="#" class="pull-left">
+															<img th:src="@{/images/15284079_583315985195410_4289784661158093094_n.jpg}" class="media-photo">
+														</a>
+														<div class="media-body">
+															<span class="media-meta pull-right"><a th:id="${member.account.idAcc}" href="javascript:void(0)" onclick="deleteMem(this.id);" th:class="${session.account.idAcc==member.account.idAcc}?'not-active':'a'" th:text="${session.account.idAcc==member.account.idAcc}?'':'Xóa thành viên'"></a></span>
+															<h4 class="title" th:text="${member.account.name}">
+																
+																<span class="pull-right pendiente">(Thành viên)</span>
+															</h4>
+															<p class="summary" th:text="${member.account.email}"></p>
+														</div>
+													</div>
+												</td>
+											</tr>
+									
+									
+									
+									
+											<!-- thành viên chờ duyệt -->
+											<tr data-status="pagado" class="selected" th:each="wait : ${watting}">
+												<td>
+													<a href="javascript:;" class="star">
+														<i class="glyphicon glyphicon-star"></i>
+													</a>
+												</td>
+												<td>
+													<div class="media">
+														<a href="#" class="pull-left">
+															<img th:src="@{/images/15284079_583315985195410_4289784661158093094_n.jpg}" class="media-photo">
+														</a>
+														<div class="media-body">
+															<span class="media-meta pull-right"><a th:name="${wait.account.idAcc}" href="javascript:void(0)" onclick="addMem(this.name);" >Duyệt yêu cầu</a> | <a th:id="${wait.account.idAcc}" href="javascript:void(0)" onclick="deleteMem(this.id);">Xóa yêu cầu</a></span>
+															<h4 class="title" th:text="${wait.account.name}">
+																<span class="pull-right pagado">(Chờ)</span>
+															</h4>
+															<p class="summary" th:text="${wait.account.email}"></p>
+														</div>
+													</div>
+												</td>
+											</tr>
+											
+											
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<!-- end -->
+						</div>			
+					</div>
+					 <div class="clearfix visible-xs-block"></div>
+					
+				</div>
+			</div>
+        </div>
+    </div>
+
+<!--java script-->
+	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/profile.js}"></script>
+	<script th:src="@{/js/clipboard.min.js}"></script>
+	<script th:src="@{/js/table.js}"></script>
+	<script>
+    var clipboard = new Clipboard('.btn-copy');
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+    </script>
+	<script>
+		document.getElementById("close-slide").style.display = "none";
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "250px";
+			document.getElementById("open-slide").style.display = "none";
+			document.getElementById("close-slide").style.display = "block";
+		}
+
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+			document.getElementById("open-slide").style.display = "block";
+			document.getElementById("close-slide").style.display = "none";
+		}
+	</script>
+	
+	
+	<!-- JS Xóa thành viên -->
+	<script type="text/javascript">
+			function deleteMem(merberID){
+				var IDroom=$("#IDroom").val();
+				var form_data = {
+						merberID : merberID,
+						IDroom:IDroom
+					};
+					$.ajax({
+						url : '/deleteMember',
+						dataType : 'text',
+						data : form_data,
+						success : function(result) {
+							if(result>0){
+								alert("Xóa thành công")
+							}else{
+								alert("xóa thất bại")
+							}
+							location.reload();
+						}
+
+					});
+				
+					
+			}
+			
+			function addMem(merberID){
+				var IDroom=$("#IDroom").val();
+				var form_data = {
+						merberID : merberID,
+						IDroom:IDroom
+					};
+					$.ajax({
+						url : '/addMem',
+						dataType : 'text',
+						data : form_data,
+						success : function(result) {
+							if(result>0){
+								alert("Thêm thành công")
+							}else{
+								alert("Thêm thất bại")
+							}
+							location.reload();
+						}
+
+					});
+				
+			}
+		
+	
+	
+	
+	</script>
+	
+	
+</body>
+</html>

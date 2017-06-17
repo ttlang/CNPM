@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+<!-- Định nghĩa thymeleaf -->
+<th:block th:each="account : ${accounts}">
+	<!-- Người liked -->
+	<div class="cmt row">
+		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
+			<img class="media-photo img-responsive avt"
+				th:src="@{/images/15284079_583315985195410_4289784661158093094_n.jpg}"
+				alt="Ảnh đại diện" />
+		</div>
+		<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
+			<a href="javascript:void(0)"><strong th:text="${account.name}"></strong></a>
+		</div>
+	</div>
+	<!-- /Người liked -->
+	<hr />
+</th:block>

@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:300&subset=latin-ext,vietnamese');
+.mbtn {
+    border: none;
+    background: none;
+    font-weight: bold;
+}
+
+.mbtn:hover {
+    background: none;
+}
+
+.post {
+    border: none;
+    box-shadow: none;
+}
+.post:focus {
+    font-size: 20px;
+    outline: none;
+    border: none;
+    box-shadow: none;
+}
+
+.panel-title a {
+    cursor: pointer;
+}
+
+.input-group {
+    margin-bottom: 5px;
+}
+
+.link-act {
+	color: #555555;
+}

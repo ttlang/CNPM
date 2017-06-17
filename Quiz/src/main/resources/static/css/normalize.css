@@ -1,0 +1,54 @@
+@media only screen and (min-width: 1170px) {
+	.upload-file {
+		position: absolute;
+		top: 10px;
+		left: 25px;
+		display: none;
+	}
+	
+	.avatar:hover .upload-file {
+		display: block;;
+	}
+}
+
+@media (max-width: 1190px) {
+	.upload-file {
+		position: absolute;
+		top: 10px;
+		left: 25px;
+		display: none;
+	}
+
+	.avatar:hover .upload-file {
+		display: block;;
+	}
+}
+
+@media (max-width: 970px) {
+	.upload-file {
+		position: absolute;
+		top: 10px;
+		left: 25px;
+		display: none;
+	}
+	
+	.label-sa {
+		display: none;
+	}
+	
+	.avatar:hover .upload-file {
+		display: block;;
+	}
+}
+
+@media (max-width: 750px) {
+	.upload-file {
+		position: absolute;
+		top: 10px;
+		left: 25px;
+		display: none;
+	}
+	.avatar:hover .upload-file {
+		display: block;;
+	}
+}

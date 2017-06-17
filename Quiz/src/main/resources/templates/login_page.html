@@ -1,0 +1,65 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="utf-8">
+	<title>Đăng nhập</title>
+	<!--boostrap 4-->
+	<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+	<link th:href="@{/css/dangnhap.css}" rel="stylesheet">
+</head>
+
+<body>
+	<div class="container">
+		<div class="row">
+		  	<div class="col-md-7">
+				<h6 style="color: #FFFFFF;"></h6>
+	  		</div>
+<!--		form đăng nhập và đăng ký-->
+		  	<div class="col-md-5">
+		  		<div class="login-wrap">
+					<div class="login-html">
+						<input id="tab-1" type="radio" name="tab" class="sign-in" checked>
+						<label for="tab-1" class="tab">ĐĂNG NHẬP</label>
+						<input id="tab-2" type="radio" name="tab" class="sign-up">
+						<label for="tab-2" class="tab"></label>
+						
+						<div class="login-form">
+							<div class="sign-in-htm">
+								<form th:action="@{/account/login}" method="post">
+									<div class="group">
+										<label for="email" class="label">Email</label>
+										<input id="email" type="email" class="input" required="required" name="email" th:value="${email}"/>
+									</div>
+									<div class="group">
+										<label for="password" class="label">Mật khẩu</label>
+										<input id="password" type="password" class="input" required="required" name="password"/>
+									</div>
+									<div class="group">
+										<input type="submit" class="button" value="Đăng nhập"/>
+									</div>
+									<div class="hr"></div>
+									<p class="text-center" style="color: red" th:text="${err}"></p>
+									<div class="foot-lnk">
+										<p class="text-left">&emsp;
+											<a th:href="@{/account/forgot_pass}">Quên mật khẩu?</a>&emsp;
+											<a th:href="@{/account/sign_up}">Đăng ký ngay !</a>
+										</p>
+									</div>
+								</form>
+							</div>
+							<div class="sign-up-htm">
+								
+							</div>
+						</div>
+					</div>
+				</div>
+		  	</div>
+		</div>
+	</div>
+
+
+	<!--java script-->
+	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+
+
+
+
+
+<!--trac nghiem-->
+<form id="post" onsubmit="return addQuizPost(this)">
+	<div class="post-content">
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-2">
+					<img alt="Ảnh đại diện" class="img-responsive"
+						th:src="@{../images/15284079_583315985195410_4289784661158093094_n.jpg}"
+						width="150%">
+				</div>
+				<div class="col-md-10">
+					<textarea class="form-control post" id="content_post"
+						placeholder="Nội dung câu hỏi..." rows="4" required></textarea>
+				</div>
+			</div>
+			<hr>
+			<div>
+				<div class="input-group" style="margin-bottom: 5px">
+					<span class="input-group-addon"><input name="radio_da"  id="radio_da" 
+						type="radio" checked value="1"></span> <input class="form-control" id="da1" name=""
+						placeholder="Đáp án 1" type="text" required>
+				</div>
+				<div class="input-group" style="margin-bottom: 5px">
+					<span class="input-group-addon"><input name="radio_da"  name="radio_da" 
+						type="radio" value="2"></span> <input class="form-control" id="da2" name=""
+						placeholder="Đáp án 2" type="text" required>
+				</div>
+				<div class="input-group" style="margin-bottom: 5px">
+					<span class="input-group-addon"><input name="radio_da"  name="radio_da" 
+						type="radio" value="3"></span> <input class="form-control" id="da3" name=""
+						placeholder="Đáp án 3" type="text" required>
+				</div>
+				<div class="input-group" style="margin-bottom: 5px">
+					<span class="input-group-addon"><input name="radio_da"  name="radio_da" 
+						type="radio" value="4"></span> <input class="form-control" id="da4" name=""
+						placeholder="Đáp án 4" type="text" required>
+				</div>
+			</div>
+			<hr>
+			<div class="text-right">
+				<button class="btn btn-default" type="reset">Hủy</button>
+				<button class="btn btn-primary" type="submit">Đăng</button>
+			</div>
+		</div>
+	</div>
+</form>
+<!-- /trắc nghiệm -->

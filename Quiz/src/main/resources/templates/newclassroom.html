@@ -1,0 +1,396 @@
+﻿<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Phòng học</title>
+<link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="/css/profile.css" rel="stylesheet">
+<link href="/css/loading.css" rel="stylesheet">
+<link href="/fonts/css/font-awesome.min.css" rel="stylesheet">
+</head>
+
+<body>
+	<!--	menu fixed top-->
+	<nav id="header" class="navbar navbar-fixed-top">
+		<div id="header-container" class="container navbar-container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a id="brand" class="navbar-brand" href="#">
+					<span id="open-slide" style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776;</span>
+						
+					<span id="close-slide" style="font-size:30px;cursor:pointer" onclick="closeNav()">&times;</span>
+				</a>
+			</div>
+			<div id="navbar" class="collapse navbar-collapse">
+				
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<i class="fa fa-television"></i> Quản lý
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Quản lý câu hỏi</a></li>
+							<li><a href="#">Quản lý đề thi</a></li>
+						</ul>
+					</li>
+					
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<i class="fa fa-comment-o"></i> Thông báo 
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li>
+								Không có thông báo
+							</li>
+							<li class="divider"></li>
+						</ul>
+					</li>
+					
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							<img src="/images/15284079_583315985195410_4289784661158093094_n.jpg" alt="Ảnh đại diện" width="19px" class="img-circle"/> Trần Văn Thắng 
+							<span class="caret"></span>
+						</a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Hồ sơ</a></li>
+							<li><a href="#">Chỉnh sửa</a></li>
+							<li class="divider"></li>
+							<li><a href="#">Trợ giúp</a></li>
+							<li><a href="#">Đăng xuất</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+	<div class="container">
+            <!--	slider menu-->
+		<div id="mySidenav" class="sidenav">
+			<a href="#">Thông tin</a>
+			<a href="#">Dịch vụ</a>
+			<a href="#">Liên hệ</a>
+			<div class="form-group">
+    		<label for="room" class="col-sm-2 control-label">Mã phòng</label>
+    			<div class="col-sm-10">
+      				<div class="loader">
+						<div class="bar"></div>
+						<div class="bar"></div>
+						<div class="bar"></div>
+					</div>
+    			</div>
+  			</div>
+		</div>
+       
+<!--       nội dung trang web-->
+        <div id="main">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-md-4">
+<!--					thông tin cá nhân-->
+						<div class="divcontent row">
+							<div class="col-md-5">
+								<img class="img-circle" src="/images/15284079_583315985195410_4289784661158093094_n.jpg" alt="Ảnh đại diện" width="100%"/>
+							</div>
+							
+							<div class="col-md-7">
+								<h4>Trần Văn Thắng</h4>
+								<h5>Nông Lâm tp.HCM</h5>
+							</div>
+						</div>
+						
+<!--						danh sách thành viên-->
+						<div class="divcontent">
+							<h4>Danh sách thành viên</h4>
+							<select multiple class="form-control">
+  								<option value="">Trần Văn Thắng</option>
+  								<option value="">Trương Tam Lang</option>
+  								<option value="">Nguyễn Thị Hoài Phụng</option>
+  								<option value="">Nguyễn Tấn Phát</option>
+							</select>
+							<hr/>
+							<a href="#"><button type="button" class="btn btn-default"><i class="fa fa-users"></i> Quản lý thành viên</button></a>
+						</div>
+						
+<!--						danh sách phòng quản lý-->
+						<div class="divcontent">
+							<h4>Thông tin phòng</h4>
+							<p>
+								Tên phòng: <strong>Phòng 1</strong>
+								<br/>
+								Mã phòng: <strong>P1</strong>
+								<br/>
+								Số thành viên: 4
+							</p>
+						</div>
+						
+						<div class="footer">
+							<footer>
+								<p>Hệ thống quản lý học tập © 2017</p>
+							</footer>
+						</div>
+					</div>
+						
+					<div class="col-md-8">
+						<div class="divcontent panel">
+							<div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <div class="panel-title" id="nav">
+                                        <a onclick="openPostK1()"><i class="fa fa-pencil"></i> Tạo bài viết</a>
+                                        |
+                                        <a onclick="openPostK2()"><i class="fa fa-check-square-o"></i> Trắc nghiệm</a>
+                                        |
+                                        <a onclick="openPostK3()"><i class="fa fa-cloud-upload"></i> Upload file</a>
+                                    </div>
+                                </div>
+                                <!--tao bai viet-->
+                                <div class="collapse post-content" id="post-k1">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <img class="img-responsive" src="/images/15284079_583315985195410_4289784661158093094_n.jpg" alt="Ảnh đại diện" width="150%" />
+                                            </div>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control post" id="post" rows="4" placeholder="Viết gì đó..."></textarea>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                        <div  class="row">
+                                            <div class="col-md-6">
+                                                <label for="dealine" class="col-sm-4 control-label" style="margin-top: 5px;">Thời hạn</label>
+                                                <div class="col-sm-8">
+                                                    <input type="date" class="form-control" id="dealine">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <button type="reset" class="btn btn-default">Hủy</button>
+                                                <button type="button" class="btn btn-primary">Đăng</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--trac nghiem-->
+                                <div class="collapse post-content" id="post-k2">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <img class="img-responsive" src="/images/15284079_583315985195410_4289784661158093094_n.jpg" alt="Ảnh đại diện" width="150%" />
+                                            </div>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control post" id="post" rows="4" placeholder="Viết gì đó..."></textarea>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div>
+                                            <div style="margin-bottom: 5px" class="input-group">
+                                                <span class="input-group-addon"><input type="radio" name="radio" /></span>
+                                                <input id="" type="text" class="form-control" name="" value="" placeholder="">
+                                            </div>
+                                            <div style="margin-bottom: 5px" class="input-group">
+                                                <span class="input-group-addon"><input type="radio" name="radio" /></span>
+                                                <input id="" type="text" class="form-control" name="" value="" placeholder="">
+                                            </div>
+
+                                            <p><button type="button" class="btn btn-primary"><i class="fa fa-plus"></i> Thêm</button></p>
+                                        </div>
+                                        <hr/>
+                                        <div class="text-right">
+                                            <button type="reset" class="btn btn-default">Hủy</button>
+                                            <button type="button" class="btn btn-primary">Đăng</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--upload file-->
+                                <div class="collapse post-content" id="post-k3">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <img class="img-responsive" src="/images/15284079_583315985195410_4289784661158093094_n.jpg" alt="Ảnh đại diện" width="150%" />
+                                            </div>
+                                            <div class="col-md-10">
+                                                <textarea class="form-control post" id="post" rows="4" placeholder="Viết gì đó..."></textarea>
+                                            </div>
+                                        </div>
+                                        <hr />
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="input-group">
+                                                    <label class="input-group-btn">
+                                                        <span class="btn btn-primary">
+                                                            Tải lên&hellip; <input type="file" style="display: none;" multiple>
+                                                        </span>
+                                                    </label>
+                                                    <input type="text" class="form-control" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                <button type="reset" class="btn btn-default">Hủy</button>
+                                                <button type="button" class="btn btn-primary">Đăng</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+						</div>
+						
+						<div class="divcontent">
+  							<div class="status row">
+  								<div class="col-md-1">
+   									<img class="img-responsive" src="/images/15284079_583315985195410_4289784661158093094_n.jpg" alt="Ảnh đại diện" width="150%"/>
+   								</div>
+   								<div class="col-md-10">
+   									<div class="people-stt">
+   										<a href="#"><strong>Trần Văn Thắng </strong></a>
+										đã đăng trong <a href="#"><strong>Phòng 1 </strong></a>
+  									<br/>
+  									<span style="color: #B2B2B2">1 phút trước</span>
+   									</div>
+   								</div>
+   							</div>
+   							<div class="content-stt">
+   								Xin chào
+   							</div>
+   							<hr/>
+   							<div style="color: #B2B2B2; text-align: right">
+   								<i class="fa fa-comments-o"> <strong>Bình luận (2)</strong></i>
+   							</div>
+   							<hr/>
+   							<div class="comment">
+   								<div class="cmt-input row">
+   									<div class="col-md-1">
+   										<img class="img-responsive" src="/images/15284079_583315985195410_4289784661158093094_n.jpg" alt="Ảnh đại diện" width="100%"/>
+   									</div>
+   									<div class="col-md-11">
+   										<input type="text" class="form-control" placeholder="Nhập bình luận"/>
+   									</div>
+   								</div>
+<!--   								bình luận thứ 1-->
+   								<br/>
+   								<div class="cmt row">
+   									<div class="col-md-1">
+   										<img class="img-responsive" src="/images/15284079_583315985195410_4289784661158093094_n.jpg" alt="Ảnh đại diện" width="100%"/>
+   									</div>
+   									<div class="col-md-11">
+										<div class="people-stt">
+											<a href="#"><strong>Trương Tam Lang </strong></a>
+											Trời đ*
+										</div>
+									</div>
+   								</div>
+<!--   								bình luận thứ 2-->
+  								<br/>
+   								<div class="cmt row">
+   									<div class="col-md-1">
+   										<img class="img-responsive" src="/images/15284079_583315985195410_4289784661158093094_n.jpg" alt="Ảnh đại diện" width="100%"/>
+   									</div>
+   									<div class="col-md-11">
+										<div class="people-stt">
+											<a href="#"><strong>Trương Tam Lang </strong></a>
+											Trời đ*
+										</div>
+									</div>
+   								</div>
+   							</div>
+  						</div>
+					</div>
+					 <div class="clearfix visible-xs-block"></div>
+					
+				</div>
+			</div>
+        </div>
+    </div>
+
+<!--java script-->
+	<script src="/js/jquery-3.1.1.min.js"></script>
+	<script src="/bootstrap/js/bootstrap.min.js"></script>
+	<script src="/js/profile.js"></script>
+	<script src="/js/clipboard.min.js"></script>
+	<script>
+    var clipboard = new Clipboard('.btn-copy');
+
+    clipboard.on('success', function(e) {
+        console.log(e);
+    });
+
+    clipboard.on('error', function(e) {
+        console.log(e);
+    });
+    </script>
+	<script>
+		document.getElementById("close-slide").style.display = "none";
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "250px";
+			document.getElementById("open-slide").style.display = "none";
+			document.getElementById("close-slide").style.display = "block";
+		}
+
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+			document.getElementById("open-slide").style.display = "block";
+			document.getElementById("close-slide").style.display = "none";
+		}
+	</script>
+
+    <script>
+        document.getElementById("post-k1").style.display = "block";
+        document.getElementById("post-k2").style.display = "none";
+        document.getElementById("post-k3").style.display = "none";
+
+        function openPostK1() {
+            document.getElementById("post-k1").style.display = "block";
+            document.getElementById("post-k2").style.display = "none";
+            document.getElementById("post-k3").style.display = "none";
+        }
+
+        function openPostK2() {
+            document.getElementById("post-k2").style.display = "block";
+            document.getElementById("post-k1").style.display = "none";
+            document.getElementById("post-k3").style.display = "none";
+        }
+
+        function openPostK3() {
+            document.getElementById("post-k3").style.display = "block";
+            document.getElementById("post-k1").style.display = "none";
+            document.getElementById("post-k2").style.display = "none";
+        }
+
+    </script>
+
+    <script>
+        $(function () {
+
+            // We can attach the `fileselect` event to all file inputs on the page
+            $(document).on('change', ':file', function () {
+                var input = $(this),
+                    numFiles = input.get(0).files ? input.get(0).files.length : 1,
+                    label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+                input.trigger('fileselect', [numFiles, label]);
+            });
+
+            // We can watch for our custom `fileselect` event like this
+            $(document).ready(function () {
+                $(':file').on('fileselect', function (event, numFiles, label) {
+
+                    var input = $(this).parents('.input-group').find(':text'),
+                        log = numFiles > 1 ? numFiles + ' files selected' : label;
+
+                    if (input.length) {
+                        input.val(log);
+                    } else {
+                        if (log) alert(log);
+                    }
+
+                });
+            });
+
+        });
+    </script>
+</body>
+</html>
