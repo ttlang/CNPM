@@ -3,6 +3,7 @@ package com.spring.domain;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,9 +21,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import com.spring.model.PostByGroup;
-import com.spring.service.RoomS;
 
 @Entity
 @Table(name = "post")
