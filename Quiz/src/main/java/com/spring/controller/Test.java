@@ -13,6 +13,6 @@ public class Test {
 	
 	@RequestMapping(value = "/test")
 	public String test(Model m,HttpServletRequest h) throws UnknownHostException {
-		return "test";
+		return "t1";
 	}
 }
