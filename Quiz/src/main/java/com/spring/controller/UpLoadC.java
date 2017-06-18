@@ -1,63 +1,63 @@
 package com.spring.controller;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.net.URISyntaxException;
+import java.security.GeneralSecurityException;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.google.api.client.http.FileContent;
-import com.google.api.services.drive.Drive;
 import com.google.api.services.drive.model.File;
 import com.spring.domain.Account;
 import com.spring.service.AccountS;
+import com.spring.service.GDriveService;
 
 @Controller
 public class UpLoadC {
-	// lấy thư mục cài đặt tomcat
-	public static String UPLOADED_FOLDER = System.getProperty("catalina.home") + java.io.File.separator;
+	private String folderId = "0B27mfRY62YKZYjRyUFAyRVcwUEE";
 	@Autowired
-	private AccountS accountService;
+	ServletContext context;
+	@Autowired
+	GDriveService gdriveService;
+	@Autowired
+	AccountS accountService;
 
-	// upload avatar
-	@PostMapping(value = "/upload/avatar")
+	@RequestMapping(value = "/upload/avatar", method = RequestMethod.POST)
 	@ResponseBody
-	public String upLoadAvatar(@RequestParam("file") MultipartFile uploadfile, HttpSession session) throws IOException {
+	public String uploadingPost(@RequestParam("file") MultipartFile f, HttpSession session)
+			throws IOException, GeneralSecurityException, URISyntaxException {
 
 		Account account = (Account) session.getAttribute("account");
-		String fileType = uploadfile.getContentType();
-		if (fileType.startsWith("image/")) {
-			Drive service = Quickstart.getDriveService();
-			File fileMetadata = new File();
-			fileMetadata.setName(uploadfile.getOriginalFilename());
-			// id thư mục trên google Drive
-			String folderId = "0B27mfRY62YKZYjRyUFAyRVcwUEE";
-			fileMetadata.setParents(Collections.singletonList(folderId));
-			fileMetadata.setMimeType("image/jpeg");
-			// đường dẫn trên local
-			java.io.File filePath = new java.io.File(UPLOADED_FOLDER + uploadfile.getOriginalFilename());
-			uploadfile.transferTo(filePath);
-			FileContent mediaContent = new FileContent(uploadfile.getContentType(), filePath);
-			File file = service.files().create(fileMetadata, mediaContent).setFields("id").execute();
-			// https://docs.google.com/uc?id=0B27mfRY62YKZQTBGNzlLWU5GY1U
-			String link = "https://docs.google.com/uc?id=" + file.getId();
-			// System.out.println("File ID: " + file.getId());
-			// System.err.println(filePath);
-			// xóa file trên host
-			filePath.delete();
-				
-			if (accountService.updateAccountAvatar(link, account.getIdAcc())) {
-				session.setAttribute("account", accountService.getAccountByID(account.getIdAcc()));
-				return link;
+		if (f.getContentType().startsWith("image/")) {
+			
+			try {
+				String UPLOADED_FOLDER = context.getRealPath("/") + java.io.File.separator;
+				java.io.File filePath = new java.io.File(UPLOADED_FOLDER + f.getOriginalFilename());
+				f.transferTo(filePath);
+				System.out.println(filePath.getName());
+				File file = gdriveService.upLoadFile(filePath.getName(), filePath.getPath(), folderId,
+						f.getContentType());
+				filePath.delete();
+				String link = "https://docs.google.com/uc?id=" + file.getId();
+				if (accountService.updateAccountAvatar(link, account.getIdAcc())) {
+					session.setAttribute("account", accountService.getAccountByID(account.getIdAcc()));
+					return link;
+				}
 
+			} catch (Exception e) {
+				return e.getMessage();
 			}
+
 		}
-		return "Cập nhật thất bại";
+		return "Định dạng file không hợp lệ";
 	}
+
 }
