@@ -8,6 +8,7 @@
 <link th:href="@{/css/profile.css}" rel="stylesheet">
 <link th:href="@{/css/loading.css}" rel="stylesheet">
 <link th:href="@{/css/table.css}" rel="stylesheet">
+<link th:href="@{/css/chat.css}" rel="stylesheet">
 <link th:href="@{/css/responsive.css}" rel="stylesheet">
 <link th:href="@{/fonts/css/font-awesome.min.css}" rel="stylesheet">
 <script th:src="@{/js/jquery-3.1.1.min.js}"></script>
@@ -81,7 +82,7 @@
 									<hr />
 									<form th:action="@{/adminroom}" method="get">
 										<input type="hidden" name="idRoom" th:value="${Room.idRoom}" />
-										<button type="submit" class="btn btn-default">
+										<button type="submit" class="btn btn-success">
 											<i class="fa fa-users"></i> Quản lý thành viên
 										</button>
 									</form>
@@ -91,7 +92,7 @@
 									<div class="col-md-6 text-right">
 										<hr />
 										<input type="hidden" name="idRoom" th:value="${Room.idRoom}" />
-										<button class="btn btn-default" th:id="${Room.idRoom}"
+										<button class="btn btn-warning" th:id="${Room.idRoom}"
 											onclick="deleteRoom()">
 											<i class="fa fa-window-close"></i> Xóa phòng
 										</button>
@@ -105,7 +106,7 @@
 										<input type="hidden" name="idRoom" id="leaveRoomID"
 											th:value="${Room.idRoom}" />
 										<button th:id="${session.account.idAcc}"
-											class="btn btn-default" onclick="leaveRoom(this.id)">
+											class="btn btn-warning" onclick="leaveRoom(this.id)">
 											<i class="fa fa-sign-out"></i>Rời khỏi nhóm
 										</button>
 									</div>

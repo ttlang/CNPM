@@ -24,10 +24,10 @@
 	<!--java script-->
 	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
 	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
-	<script th:src="@{/js/profile.js}"></script>
 	<script th:src="@{/js/clipboard.min.js}"></script>
-	<script th:src="@{/js/app.min.js}"></script>
+	<script th:src="@{/js/profile.js}"></script>
 	<script th:src="@{/js/classroom2.js}"></script>
+	<script th:src="@{/js/app.min.js}"></script>
 
 
 
@@ -64,9 +64,9 @@
 									th:src="${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}" alt="Ảnh đại diện" />
 							</div>
 
-							<div class="col-md-7 col-sm-6 col-xs-12">
+							<div class="col-md-7 col-sm-6 col-xs-12 text-right">
 								<h4 th:text="${session.account.name}"></h4>
-								<h5 th:text="${session.account.job}"></h5>
+								<h5 style="text-transform: uppercase;" th:text="${session.account.job}"></h5>
 							</div>
 						</div>
 						
@@ -89,9 +89,9 @@
 
 							</select>
 							<hr />
-							<button type="button" class="btn btn-default" data-toggle="modal"
+							<button type="button" class="btn btn-success" data-toggle="modal"
 								data-target="#tham-gia-phong">
-								<i class="fa fa-plus"></i> Tham gia phòng khác
+								<i class="fa fa-plus"></i> Tham gia phòng
 							</button>
 						</div>
 						
@@ -187,7 +187,7 @@
 								</th:block>
 							</select>
 							<hr />
-							<button type="button" class="btn btn-default" data-toggle="modal"
+							<button type="button" class="btn btn-success" data-toggle="modal"
 								data-target="#tao-phong">
 								<i class="fa fa-plus"></i> Tạo phòng mới<i></i>
 							</button>
@@ -263,9 +263,9 @@
 													placeholder="Mã phòng" readonly>
 											</div>
 											<div class="col-sm-3">
-												<button type="button" class="btn-copy btn btn-default"
+												<button type="button" id="btn-copy" class="btn-copy btn btn-default"
 													data-clipboard-action="copy"
-													data-clipboard-target="#id_room">Sao chép</button>
+													data-clipboard-target="#id_room"><i class="fa fa-copy"></i> Sao chép</button>
 											</div>
 										</div>
 									</form>
@@ -279,19 +279,6 @@
 
 					</div>
 
-
-
-	
-
-
-
-
-
-
-
-
-
-
 					<div class="col-md-8">
 						<div class="divcontent">
 							<div class="status row">
@@ -304,11 +291,18 @@
 									<div class="people-stt">
 										<a href="#"><strong>Trần Văn Thắng </strong></a> đã đăng trong
 										<a href="#"><strong>Phòng 1 </strong></a> <br /> 
-										<span class="time-post"  style="color: #B2B2B2; cursor: pointer;" data-toggle="tooltip" data-placement="bottom" title="Ngày 19 tháng 6 2017 lúc 17:17"><i class="fa fa-ravelry"></i> 1 phút trước</span>
+										<span class="time-post"  style="color: #B2B2B2; cursor: pointer;" 
+											data-toggle="tooltip" data-placement="bottom" 
+											title="Thời gian đăng">
+											<i class="fa fa-ravelry"></i> 1 phút trước
+										</span>
 									</div>
 								</div>
 							</div>
-							<div class="content-stt">Xin chào</div>
+							<div class="content-stt">
+							
+								<!-- Target -->
+							</div>
 							<hr />
 							<div style="color: #B2B2B2; text-align: right">
 								<i class="fa fa-comments-o"> <strong>Bình luận (2)</strong></i>
@@ -363,11 +357,111 @@
 		</div>
 	</div>
 
+<!-- 	<!-- <!-- phần chat --> -->
+<!-- 	<div class="row"> -->
+<!-- 		<div class="col-md-3"> -->
+<!-- 			DIRECT CHAT SUCCESS -->
+<!-- 			<div class="box box-success direct-chat direct-chat-success"> -->
+<!-- 				<div class="box-header with-border"> -->
+<!-- 					<h3 class="box-title">Tin nhắn</h3> -->
+<!-- 					<span data-toggle="tooltip" title="Tin nhắn mới" -->
+<!-- 						class="badge bg-green">3</span> -->
+<!-- 					<div class="box-tools pull-right"> -->
+<!-- 						<button type="button" class="btn btn-box-tool" -->
+<!-- 							data-widget="collapse"> -->
+<!-- 							<i class="fa fa-minus"></i> -->
+<!-- 						</button> -->
+<!-- 						<button type="button" class="btn btn-box-tool" -->
+<!-- 							data-toggle="tooltip" title="Liên hệ" -->
+<!-- 							data-widget="chat-pane-toggle"> -->
+<!-- 							<i class="fa fa-comments"></i> -->
+<!-- 						</button> -->
+<!-- 						<button type="button" class="btn btn-box-tool" -->
+<!-- 							data-widget="remove"> -->
+<!-- 							<i class="fa fa-times"></i> -->
+<!-- 						</button> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+<!-- 				/.box-header -->
+<!-- 				<div class="box-body"> -->
+<!-- 					Conversations are loaded here -->
+<!-- 					<div class="direct-chat-messages"> -->
+<!-- 						Message. Default to the left -->
+<!-- 						<div class="direct-chat-msg"> -->
+<!-- 							<div class="direct-chat-info clearfix"> -->
+<!-- 								<span class="direct-chat-name pull-left">Người gửi</span> <span -->
+<!-- 									class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span> -->
+<!-- 							</div> -->
+<!-- 							/.direct-chat-info -->
+<!-- 							<img class="direct-chat-img" -->
+<!-- 								src="https://bootdey.com/img/Content/user_1.jpg" -->
+<!-- 								alt="Message User Image" data-toggle="tooltip" data-placement="left" title="Người gửi"/> -->
+<!-- 							/.direct-chat-img -->
+<!-- 							<div class="direct-chat-text">M là ai thế?</div> -->
+<!-- 							/.direct-chat-text -->
+<!-- 						</div> -->
+<!-- 						/.direct-chat-msg -->
+
+<!-- 						Message to the right -->
+<!-- 						<div class="direct-chat-msg right"> -->
+<!-- 							<div class="direct-chat-info clearfix"> -->
+<!-- 								<span class="direct-chat-name pull-right">Người nhận</span> <span -->
+<!-- 									class="direct-chat-timestamp pull-left">Đã xem - 23 Jan 2:05 pm</span> -->
+<!-- 							</div> -->
+<!-- 							/.direct-chat-info -->
+<!-- 							<img class="direct-chat-img" -->
+<!-- 								src="https://bootdey.com/img/Content/user_2.jpg" -->
+<!-- 								alt="Message User Image"/> -->
+								
+<!-- 							<img class="direct-chat-img" -->
+<!-- 								th:src="${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}" -->
+<!-- 								alt="Ảnh đại diện" data-toggle="tooltip" data-placement="bottom" title="Người nhận"/> -->
+<!-- 							/.direct-chat-img -->
+<!-- 							<div class="direct-chat-text">Thắng chó đây!</div> -->
+<!-- 							/.direct-chat-text -->
+<!-- 						</div> -->
+<!-- 						/.direct-chat-msg -->
+<!-- 					</div> -->
+<!-- 					/.direct-chat-messages -->
+
+<!-- 					Contacts are loaded here -->
+<!-- 					<div class="direct-chat-contacts"> -->
+<!-- 						<ul class="contacts-list"> -->
+<!-- 							<li><a href="#"> <img class="contacts-list-img" -->
+<!-- 									src="https://bootdey.com/img/Content/user_1.jpg"/> <span -->
+<!-- 									class="contacts-list-name"> Count Dracula <small -->
+<!-- 										class="contacts-list-date pull-right">2/28/2015</small> -->
+<!-- 								</span> <span class="contacts-list-msg">How have you been? I -->
+<!-- 										was...</span> -->
+<!-- 							</a></li> -->
+<!-- 							End Contact Item -->
+<!-- 						</ul> -->
+<!-- 						/.contatcts-list -->
+<!-- 					</div> -->
+<!-- 					/.direct-chat-pane -->
+<!-- 				</div> -->
+<!-- 				/.box-body -->
+<!-- 				<div class="box-footer"> -->
+<!-- 					<form action="#" method="post"> -->
+<!-- 						<div class="input-group"> -->
+<!-- 							<input type="text" name="message" placeholder="Nhập tin nhắn ..." -->
+<!-- 								class="form-control"> <span class="input-group-btn"> -->
+<!-- 								<button type="submit" class="btn btn-success btn-flat"> -->
+<!-- 									<i class="fa fa-paper-plane"></i> -->
+<!-- 								</button> -->
+<!-- 							</span> -->
+<!-- 						</div> -->
+<!-- 					</form> -->
+<!-- 				</div> -->
+<!-- 				/.box-footer -->
+<!-- 			</div> -->
+<!-- 			/.direct-chat -->
+<!-- 		</div> -->
+<!-- 	</div> -->
+<!-- 	hết phần chat --> -->
+
+	<th:block th:replace="chat::chat-template"></th:block>
 	
-	<script>
-		
-		
-	</script>
 	<script>
 		document.getElementById("close-slide").style.display = "none";
 		function openNav() {
@@ -381,6 +475,8 @@
 			document.getElementById("open-slide").style.display = "block";
 			document.getElementById("close-slide").style.display = "none";
 		}
+		
+		new Clipboard('.btn-copy');
 	</script>
 </body>
 </html>

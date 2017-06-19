@@ -16,9 +16,11 @@
 		<div class="col-md-10">
 			<div class="people-stt">
 				<a href="#"><strong>Trần Văn Thắng </strong></a> đã đăng trong <a
-					href="#"><strong>Phòng 1 </strong></a> <br> <span
-					style="color: #B2B2B2">1 phút trước</span>
-			</div>
+					href="#"><strong>Phòng 1 </strong></a> <br> <span class="time-post" style="color: #B2B2B2; cursor: pointer;"
+						data-toggle="tooltip" data-placement="bottom"
+						title="Thời gian đăng" th:text="${#dates.format(post.postDate, 'dd-MM-yyyy hh:mm:ss')}">
+					</span>
+				</div>
 		</div>
 	</div>
 	<div class="content-stt">Xin chào</div>

@@ -17,13 +17,17 @@
 				<input type="hidden" id="idcomment-close"
 					th:value="${comment.idComment}" />
 				<button class="close" type="submit">
-					<span aria-hidden="true">×</span>
+					<span aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Xóa bình luận">&times;</span>
 				</button>
 			</form>
 			<!-- end x close comment -->
 			<a href="#"><strong th:text="${comment.idAcc.name}"></strong></a> <span
-				th:text="${comment.commentContent}"></span><br /> <span
-				th:text="${#dates.format(comment.commentTime, 'dd-MM-yyyy hh:mm:ss')}"></span>
+				th:text="${comment.commentContent}"></span><br /> 
+				<span class="time-post"  style="color: #B2B2B2; cursor: pointer;" 
+				data-toggle="tooltip" data-placement="bottom" 
+				title="Thời gian bình luận" th:text="${#dates.format(comment.commentTime, 'dd-MM-yyyy hh:mm:ss')}"></span>
+				<!-- <span
+				th:text="${#dates.format(comment.commentTime, 'dd-MM-yyyy hh:mm:ss')}"></span> -->
 		</div>
 	</div>
 </th:block>
