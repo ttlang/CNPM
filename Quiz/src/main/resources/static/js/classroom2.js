@@ -150,12 +150,12 @@ $(document)
 						}
 
 				);
-		var clipboard = new Clipboard('.btn-copy');
+		//var clipboard = new Clipboard('.btn-copy');
 
-		clipboard.on('success', function(e) {
-			console.log(e);
-		});
+	//	clipboard.on('success', function(e) {
+		//	console.log(e);
+	//	});
 
-		clipboard.on('error', function(e) {
-			console.log(e);
-		});
+		//clipboard.on('error', function(e) {
+			//console.log(e);
+		//});

@@ -8,6 +8,7 @@
 <link th:href="@{/css/profile.css}" rel="stylesheet">
 <link th:href="@{/css/loading.css}" rel="stylesheet">
 <link th:href="@{/css/table.css}" rel="stylesheet">
+<link th:href="@{/css/chat.css}" rel="stylesheet">
 <link th:href="@{/css/normalize.css}" rel="stylesheet">
 <link th:href="@{/css/responsive.css}" rel="stylesheet">
 <link th:href="@{/fonts/css/font-awesome.min.css}" rel="stylesheet">
@@ -54,11 +55,75 @@
 				
 				
 				
-				<div th:replace="homepage::thong_tin_ca_nhan"></div>
+				<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
 				
-					<div th:replace="homepage::div_hien_thi_nhap_ma_phong"></div>
 				
-				<div th:replace="homepage::ma_phong"></div>
+				
+				
+						<div class="divcontent row avatar">
+							<div class="col-md-5 col-sm-6 col-xs-12">
+								<img class="img-circle img-responsive"
+									th:src="@{${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}}"
+									alt="Ảnh đại diện" id="account_avatar" />
+							</div>
+
+							<div class="col-md-7 col-sm-6 col-xs-12">
+								<h4 th:text="${session.account.name}"></h4>
+								<h5 th:text="${session.account.job}"></h5>
+							</div>
+							<!-- UPLOAD AVATAR -->
+							<div class="upload-file">
+								<label class="btn btn-default btn-file" data-toggle="tooltip" title="Cập nhật ảnh đại diện"><i
+									class="fa fa-camera"></i>
+									<input type="file" style="display: none;" id="avatar" /> </label>
+							</div>
+						</div>
+						
+						
+						
+						
+						
+						
+						<!--						danh sách phòng tham gia-->
+						<div class="divcontent">
+						
+						
+						<h4>Danh sách bạn bè</h4>
+						
+						
+						
+						</div>
+						
+						
+						
+						
+						<!--						danh sách phòng quản lý-->
+						<div class="divcontent">
+							
+							
+							
+							<h5>Thông tin khác </h5>
+							
+							
+							
+						</div>
+
+						<div class="footer">
+							<footer>
+								<p>Hệ thống quản lý học tập © 2017</p>
+							</footer>
+						</div>
+
+					</div>
+
+
+
+
+
+
+
+
+
 				
 				
 				
@@ -107,7 +172,7 @@
 									<button type="submit" class="btn btn-default">
 										<i class="fa fa-close"></i>&nbsp;Hủy
 									</button>
-									<button type="submit" class="btn btn-info">
+									<button type="submit" class="btn btn-primary">
 										<i class="fa fa-refresh"></i>&nbsp;Cập nhật
 									</button>
 								</p>

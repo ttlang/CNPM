@@ -43,9 +43,7 @@
 							data-toggle="dropdown"> <i class="fa fa-bell icon-menu"></i> Thông
 								báo <span class="caret"></span>
 						</a>
-							<ul class="dropdown-menu notifity"  id="notification">
-								<li>Không có thông báo</li>
-								<li class="divider"></li>
+							<ul class="dropdown-menu notifity" id="notification">
 <!-- 								<li> -->
 <!-- 									<a href="#">  -->
 <!-- 										<img class="contacts-list-img" src="https://bootdey.com/img/Content/user_1.jpg" />  -->
@@ -55,12 +53,13 @@
 <!-- 										<span class="contacts-list-msg contect-notifity">How have you been? I was...</span> -->
 <!-- 									</a> -->
 <!-- 								</li> -->
-							</ul></li>
+							</ul>
+						</li>
 
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown"> <img
 								th:src="${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}"
-								alt="Ảnh đại diện" width="19px" class="img-circle" /> <span
+								alt="Ảnh đại diện" width="24px" class="img-circle" /> <span
 								th:text="${session.account.name}"></span> <span class="caret"></span>
 						</a>
 							<ul class="dropdown-menu">
