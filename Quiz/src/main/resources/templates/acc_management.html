@@ -2,40 +2,57 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
-<title>Quản lý tài khoản</title>
+<title th:text="${title}"></title>
 <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/css/profile-old.css}" rel="stylesheet">
 <link th:href="@{/css/profile.css}" rel="stylesheet">
 <link th:href="@{/css/loading.css}" rel="stylesheet">
-<link th:href="@{/css/loading.css}" rel="stylesheet">
 <link th:href="@{/css/table.css}" rel="stylesheet">
+<link th:href="@{/css/normalize.css}" rel="stylesheet">
 <link th:href="@{/css/responsive.css}" rel="stylesheet">
 <link th:href="@{/fonts/css/font-awesome.min.css}" rel="stylesheet">
+<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/profile.js}"></script>
+
+
+
+<!-- sweetAlert -->
+<script th:src="@{/sweetalert/js/sweetalert.min.js}"></script>
+<link th:href="@{/sweetalert/css/sweetalert.css	}" rel="stylesheet">
+
+
+
+<!-- jquery UI -->
+
+<script th:src="@{/jqueryUI/jquery-ui.min.js}"></script>
+<link th:href="@{/jqueryUI/jquery-ui.min.css}" rel="stylesheet">
+
+
+
+
+
+
+
 
 </head>
-
-<body>
 	<!--	menu fixed top-->
-	<th:block th:replace="homepage::menu_fix_top"></th:block>
+	<th:block th:replace="header::menu_fix_top"></th:block>
 
 	<div class="container">
-            <!--	slider menu-->
-		<div id="mySidenav" class="sidenav">
-			<a href="homepage.html">Trang chủ</a>
-			<a href="#">Thông tin</a>
-			<a href="#">Dịch vụ</a>
-			<a href="#">Liên hệ</a>
-			<div class="form-group">
-    		<label for="room" class="col-sm-2 control-label">Mã phòng</label>
-    			<div class="col-sm-10">
-      				<div class="loader">
-						<div class="bar"></div>
-						<div class="bar"></div>
-						<div class="bar"></div>
-					</div>
-    			</div>
-  			</div>
-		</div>
-       
+		<!--	slider menu-->
+			<div th:replace="homepage::sidenav">
+			
+			
+			
+			</div>
+			
+			
+			
+		<!--       nội dung trang web-->
+			
+			
+			
 <!--       nội dung trang web-->
         <div id="main">
 			<div class="container-fluid">
@@ -44,7 +61,7 @@
 <!--					thông tin cá nhân-->
 						<div class="divcontent row">
 							<div class="col-md-5 col-sm-6 col-xs-12">
-								<img class="img-circle img-responsive" th:src="@{${session.account.avatar}}" alt="Ảnh đại diện"/>
+								<img class="img-circle img-responsive" th:src="${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}" alt="Ảnh đại diện"/>
 							</div>
 							
 							<div class="col-md-7 col-sm-6 col-xs-12">
@@ -103,20 +120,21 @@
 										<!-- thành viên trong phòng -->
 											<tr data-status="pendiente" th:each="member : ${members}">
 												<td>
+												<!-- kiểm tra nếu là trưởng phòng thì đánh vào dấu sao -->
 													<p th:class="${session.account.idAcc==member.account.idAcc}?'star star-checked':'star'">
 														<i class="glyphicon glyphicon-star"></i>
 													</p>
 												</td>
 												<td>
 													<div class="media">
-														<a href="#" class="pull-left">
-															<img th:src="@{/images/15284079_583315985195410_4289784661158093094_n.jpg}" class="media-photo">
+														<a style="text-decoration: none;" th:href="@{/account/view/info/account{idAcc}(idAcc=${member.account.idAcc})}" class="pull-left">
+															<img th:src="${member.account.avatar}!=null?@{${member.account.avatar}}:@{/upload/avatar/default_avatar.jpg}" class="media-photo">
 														</a>
 														<div class="media-body">
 															<span class="media-meta pull-right"><a th:id="${member.account.idAcc}" href="javascript:void(0)" onclick="deleteMem(this.id);" th:class="${session.account.idAcc==member.account.idAcc}?'not-active':'a'" th:text="${session.account.idAcc==member.account.idAcc}?'':'Xóa thành viên'"></a></span>
-															<h4 class="title" th:text="${member.account.name}">
-																
-																<span class="pull-right pendiente">(Thành viên)</span>
+															<h4 class="title">
+																<a style="text-decoration: none;" th:text="${member.account.name}" th:href="@{/account/view/info/account{idAcc}(idAcc=${member.account.idAcc})}"></a>
+																<span class="pull-right pendiente" th:text="${session.account.idAcc==member.account.idAcc}?'(Trưởng phòng)':'(Thành viên)'"></span>
 															</h4>
 															<p class="summary" th:text="${member.account.email}"></p>
 														</div>
@@ -136,12 +154,13 @@
 												</td>
 												<td>
 													<div class="media">
-														<a href="#" class="pull-left">
-															<img th:src="@{/images/15284079_583315985195410_4289784661158093094_n.jpg}" class="media-photo">
+														<a style="text-decoration: none;"  th:href="@{/account/view/info/account{idAcc}(idAcc=${wait.account.idAcc})}" class="pull-left">
+															<img th:src="${wait.account.avatar}!=null?@{${wait.account.avatar}}:@{/upload/avatar/default_avatar.jpg}" class="media-photo">
 														</a>
 														<div class="media-body">
 															<span class="media-meta pull-right"><a th:name="${wait.account.idAcc}" href="javascript:void(0)" onclick="addMem(this.name);" >Duyệt yêu cầu</a> | <a th:id="${wait.account.idAcc}" href="javascript:void(0)" onclick="deleteMem(this.id);">Xóa yêu cầu</a></span>
-															<h4 class="title" th:text="${wait.account.name}">
+															<h4 class="title">
+															<a style="text-decoration: none;"  th:text="${wait.account.name}" th:href="@{/account/view/info/account{idAcc}(idAcc=${wait.account.idAcc})}"></a>
 																<span class="pull-right pagado">(Chờ)</span>
 															</h4>
 															<p class="summary" th:text="${wait.account.email}"></p>
@@ -165,23 +184,41 @@
         </div>
     </div>
 
-<!--java script-->
-	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
-	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
-	<script th:src="@{/js/profile.js}"></script>
+
+
+
+
+<!--java script -->
+<!-- 	<script th:src="@{/js/profile.js}"></script> -->
 	<script th:src="@{/js/clipboard.min.js}"></script>
 	<script th:src="@{/js/table.js}"></script>
+
+
+
+
+<script th:src="@{/js/account_manager.js}"></script>
+
+
+
+
+
+
+
 	<script>
     var clipboard = new Clipboard('.btn-copy');
-
     clipboard.on('success', function(e) {
         console.log(e);
     });
-
     clipboard.on('error', function(e) {
         console.log(e);
     });
     </script>
+    
+    
+    
+    
+    
+    
 	<script>
 		document.getElementById("close-slide").style.display = "none";
 		function openNav() {
@@ -198,59 +235,10 @@
 	</script>
 	
 	
-	<!-- JS Xóa thành viên -->
-	<script type="text/javascript">
-			function deleteMem(merberID){
-				var IDroom=$("#IDroom").val();
-				var form_data = {
-						merberID : merberID,
-						IDroom:IDroom
-					};
-					$.ajax({
-						url : '/deleteMember',
-						dataType : 'text',
-						data : form_data,
-						success : function(result) {
-							if(result>0){
-								alert("Xóa thành công")
-							}else{
-								alert("xóa thất bại")
-							}
-							location.reload();
-						}
-
-					});
-				
-					
-			}
-			
-			function addMem(merberID){
-				var IDroom=$("#IDroom").val();
-				var form_data = {
-						merberID : merberID,
-						IDroom:IDroom
-					};
-					$.ajax({
-						url : '/addMem',
-						dataType : 'text',
-						data : form_data,
-						success : function(result) {
-							if(result>0){
-								alert("Thêm thành công")
-							}else{
-								alert("Thêm thất bại")
-							}
-							location.reload();
-						}
-
-					});
-				
-			}
-		
 	
 	
 	
-	</script>
+	
 	
 	
 </body>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+
+	<th:block th:each="chat: ${chatDaos}">
+	<li>
+									<a th:href="${chat.url}"> 
+										<img class="contacts-list-img" th:src="${chat.urlImg}" /> 
+										<span class="contacts-list-name" th:text="${chat.clientId}"> 
+<!-- 											<small class="contacts-list-date pull-right">2/28/2015</small> -->
+										</span>
+										
+<!-- 										<span  class="contacts-list-msg contect-notifity" th:text="${chat.body}+ ${chat.clientId}"></span> -->
+									</a>
+	</li>
+		<!-- <a th:href="${chat.url}"><span th:text="${chat.body}+ ${chat.clientId}"></span><img th:src="${chat.urlImg}"/></a> -->
+	</th:block>
+
+</body>
+</html>

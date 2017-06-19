@@ -4,6 +4,7 @@
 <meta charset="utf-8">
 <title th:text="${title}"></title>
 <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/css/profile-old.css}" rel="stylesheet">
 <link th:href="@{/css/profile.css}" rel="stylesheet">
 <link th:href="@{/css/loading.css}" rel="stylesheet">
 <link th:href="@{/css/table.css}" rel="stylesheet">
@@ -34,24 +35,15 @@
 	<input type="hidden" th:value="${Room.idRoom}" id="id-room" />
 	<!-- /Đánh dấu mã phòng -->
 	<!--	menu fixed top-->
-	<th:block th:replace="homepage::menu_fix_top"></th:block>
+	<th:block th:replace="header::menu_fix_top"></th:block>
 
 	<div class="container">
 		<!--	slider menu-->
-		<div id="mySidenav" class="sidenav">
-			<a href="homepage.html">Trang chủ</a> <a href="#">Thông tin</a> <a
-				href="#">Dịch vụ</a> <a href="#">Liên hệ</a>
-			<div class="form-group">
-				<label for="room" class="col-sm-2 control-label">Mã phòng</label>
-				<div class="col-sm-10">
-					<div class="loader">
-						<div class="bar"></div>
-						<div class="bar"></div>
-						<div class="bar"></div>
-					</div>
-				</div>
+			<div th:replace="homepage::sidenav">
+			
+			
+			
 			</div>
-		</div>
 
 		<!--       nội dung trang web-->
 		<div id="main">
@@ -184,6 +176,9 @@
 										class="fa fa-check-square-o"></i> Trắc nghiệm</a> | <a
 										onclick="getHtmlFormPost(3)"><i class="fa fa-cloud-upload"></i>
 										Upload file</a>
+										| <a
+										onclick="getHtmlFormPost(4)"><i class="fa fa-picture-o"></i>
+										Upload picture</a>
 								</div>
 							</div>
 							<!-- /loại bài đăng -->

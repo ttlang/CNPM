@@ -1,0 +1,93 @@
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+</head>
+<body>
+
+
+
+<!--upload file-->
+<form id="postPic" method="post" th:attr="enctype='multipart/form-data'" onsubmit="return addPicPost(this)">
+	<div class="post-content">
+		<div class="panel-body">
+			<div class="row">
+				<div class="col-md-2">
+					<img alt="ảnh đại diện" class="img-responsive"
+						th:src="@{${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}}"
+						width="150%">
+				</div>
+				<div class="col-md-10">
+					<textarea class="form-control post" id="content_post"
+
+						placeholder="Viết gì đó..." rows="4" required></textarea>
+					
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="col-md-6">
+					<div class="input-group">
+					<label class="btn btn-default btn-file">
+						 Tải lên<input id="pic_post" type="file" multiple="multiple" name="file_post">
+						</label>
+					</div>
+				</div>
+				<div class="col-md-6 text-right">
+					<button class="btn btn-default" type="reset">Hủy bỏ </button>
+					<button class="btn btn-primary" type="submit">Xác nhận</button>
+				</div>
+			</div>
+		</div>
+	</div>
+</form>
+
+
+
+
+<script type="text/javascript">
+
+	$(document).ready(function(){
+		$("#pic_post").change(function(){
+			var file_data = $("#pic_post").prop('files');
+			var fSize =0;
+			for (var i = 0; i < file_data.length; i++) {
+				fSize+=$("#pic_post").prop('files')[i].size;
+				
+			}
+			alert(file_data.length);
+			alert(fSize);
+			// dung lượng file tải lên không được trên 25MB
+			if(fSize>26214400){
+				swal({
+					  title: "Tệp mà bạn chọn quá lớn?",
+					  text: "Tệp bạn chọn quá lớn. Kích thước tối đa là 25 MB!",
+					  type: "warning",
+					  confirmButtonColor: "#DD6B55",
+					  confirmButtonText: "OK",
+					  closeOnConfirm: true
+					},
+					function(){
+						$("#pic_post").val("");
+						return false;
+					});
+				
+			}
+			
+			
+		})
+		
+		
+		
+		
+	});
+	
+	
+	
+
+
+
+</script>

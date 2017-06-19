@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -358,6 +359,7 @@ public class RoomSImp implements RoomS {
 	@Override
 	public List<PostRoom> getListPostRoom(int idRoom) {
 		List<Post> list = getListPostInRoom(idRoom);
+		Collections.reverse(list);
 		List<PostRoom> listrs = new ArrayList<>();
 		for (Post p : list) {
 			PostRoom temp = new PostRoom();
@@ -372,5 +374,21 @@ public class RoomSImp implements RoomS {
 			listrs.add(temp);
 		}
 		return listrs;
+	}
+
+	@Override
+	public boolean leaveRoom(int idAcc, int idRoom) {
+		return (roomManageR.deleteMember(idAcc, idRoom) > 0) ? true : false;
+	}
+
+	@Override
+	public int[] getListIDAccountInRoom(int idRoom) {
+		List<RoomManage> roomManages = roomManageR.getListRoomanageByIDRoomAndState(idRoom, true);
+		int[] res = new int[roomManages.size()];
+		for (int i = 0; i < res.length; i++) {
+			res[i] = roomManages.get(i).getAccount().getIdAcc().intValue();
+		}
+		roomManages.clear();
+		return res;
 	}
 }

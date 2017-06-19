@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css?family=Pacifico");
+@import url("https://fonts.googleapis.com/css?family=Coiny");
+body {
+  background: #1d9d74;
+}
+
+.navbar {
+  font-family: 'Pacifico', cursive;
+  font-size: 25px;
+  background: none;
+  border: none;
+}
+.navbar .navbar-brand {
+  font-size: 50px;
+  color: #FFFFFF;
+}
+.navbar .navbar-brand:hover {
+  color: #FFFFFF;
+}
+
+.navbar-default .navbar-nav li a {
+  color: #FFFFFF;
+}
+.navbar-default .navbar-nav li a:hover {
+  color: #fffa84;
+}
+
+.backToTop {
+  position: absolute;
+  bottom: 0;
+  z-index: 1;
+}
+
+.intro-1 {
+  background-image: url("/images/intro-1.jpg");
+  height: 900px;
+  width: 100%;
+  padding-top: 100px;
+  font-family: 'Coiny', cursive;
+}
+.intro-1 .w-sir h2 {
+  font-size: 40px;
+  color: #f2efef;
+  text-shadow: 2px 2px 4px #000000;
+}
+.intro-1 .w-sir2 li {
+  font-size: 20px;
+  color: #f2efef;
+  text-shadow: 2px 2px 4px #000000;
+}
+
+.intro-2 {
+  background-image: url("/images/intro-2.jpg");
+  height: 769px;
+  width: 100%;
+  font-family: 'Coiny', cursive;
+  padding-top: 100px;
+}
+.intro-2 .w-sir h2 {
+  font-size: 40px;
+  color: #f2efef;
+  text-shadow: 2px 2px 4px #000000;
+}
+.intro-2 .thumbnail {
+  background-image: url("/images/intro-5.jpg");
+  background-size: 100%;
+  box-shadow: 2px 2px 15px #000000;
+}
+.intro-2 .thumbnail:hover {
+  box-shadow: 2px 2px 15px #FFFFFF;
+}
+
+.intro-3 {
+  background-image: url("/images/intro-3.jpg");
+  height: 900px;
+  width: 100%;
+  padding-top: 100px;
+}
+
+/*# sourceMappingURL=introduce.css.map */

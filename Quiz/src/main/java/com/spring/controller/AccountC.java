@@ -226,7 +226,7 @@ public class AccountC {
 		boolean gender = (w.getParameter("gender").equals("1")) ? true : false;
 		String job = w.getParameter("job");
 		String address = w.getParameter("address");
-		SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date date2 = formatter.parse(w.getParameter("birth"));
 		Account account = (Account) session.getAttribute("account");
 		int idAccount = account.getIdAcc();
