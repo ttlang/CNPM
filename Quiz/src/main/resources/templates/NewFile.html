@@ -1,0 +1,399 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<title th:text="${title}"></title>
+<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/css/profile.css}" rel="stylesheet">
+<link th:href="@{/css/loading.css}" rel="stylesheet">
+<link th:href="@{/css/table.css}" rel="stylesheet">
+<link th:href="@{/css/normalize.css}" rel="stylesheet">
+<link th:href="@{/css/responsive.css}" rel="stylesheet">
+<link th:href="@{/fonts/css/font-awesome.min.css}" rel="stylesheet">
+<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/profile.js}"></script>
+<script th:src="@{/js/clipboard.min.js}"></script>
+<!-- sweetAlert -->
+<script th:src="@{/sweetalert/js/sweetalert.min.js}"></script>
+<link th:href="@{/sweetalert/css/sweetalert.css	}" rel="stylesheet">
+
+</head>
+<body>
+	<!--	menu fixed top-->
+	<th:block th:replace="homepage::menu_fix_top"></th:block>
+
+	<div class="container">
+		<!--	slider menu-->
+		<div id="mySidenav" class="sidenav">
+			<a href="homepage.html">Trang chủ</a> <a href="#">Thông tin</a> <a
+				href="#">Dịch vụ</a> <a href="#">Liên hệ</a>
+			<div class="form-group">
+				<label for="room" class="col-sm-3 control-label">Mã phòng</label>
+				<div class="col-sm-9">
+					<div class="loader">
+						<div class="bar"></div>
+						<div class="bar"></div>
+						<div class="bar"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!--       nội dung trang web-->
+		<div id="main">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-4 col-lg-4">
+						<div class="divcontent row avatar">
+							<div class="col-md-5 col-sm-6 col-xs-12">
+								<img class="img-circle img-responsive"
+									th:src="@{${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}}"
+									alt="Ảnh đại diện" id="account_avatar" />
+							</div>
+
+							<div class="col-md-7 col-sm-6 col-xs-12">
+								<h4 th:text="${session.account.name}"></h4>
+								<h5 th:text="${session.account.job}"></h5>
+							</div>
+							<!-- UPLOAD AVATAR -->
+							<div class="upload-file">
+								<label class="btn btn-default btn-file" data-toggle="tooltip" title="Cập nhật ảnh đại diện"><i
+									class="fa fa-camera"></i>
+									<input type="file" style="display: none;" id="avatar" /> </label>
+							</div>
+						</div>
+						
+						<!--						danh sách phòng tham gia-->
+						<div class="divcontent">
+							<h4>Phòng tham gia</h4>
+							<select class="form-control"
+								onchange="if(this.value!=null && this.value!= undefined && this.value!='') location= this.value;">
+								<option value="">Chọn phòng</option>
+								<th:block th:each="room : ${listRoomParticipation}">
+									<option
+										th:value="@{/classRoom/{idRoom}(idRoom=${room.idRoom})}"
+										th:text="${room.roomName}+' - '+${room.idRoom}"></option>
+
+								</th:block>
+
+							</select>
+							<hr />
+							<button type="button" class="btn btn-default" data-toggle="modal"
+								data-target="#tham-gia-phong">
+								<i class="fa fa-plus"></i> Tham gia phòng khác
+							</button>
+						</div>
+						<!--						hiển thị div nhập mã phòng-->
+						<div class="modal fade" id="tham-gia-phong" tabindex="-1"
+							role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">
+											<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+										</button>
+										<h4 class="modal-title" id="myModalLabel1">Tham gia phòng</h4>
+									</div>
+									<form class="form-horizontal" role="form">
+										<div class="modal-body">
+											<div class="form-group">
+												<label for="room" class="col-sm-3 control-label">Nhập
+													mã phòng</label>
+												<div class="col-sm-9">
+													<input type="text" class="form-control" id="id_room2"
+														placeholder="Mã phòng">
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal">Hủy</button>
+											<button type="submit" id="search_room"
+												class="btn btn-primary" data-toggle="modal"
+												data-target="#tim-phong" data-dismiss="modal">Tìm
+												phòng</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<!--						hiển thị div tìm phong-->
+						<div class="modal fade" id="tim-phong" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel1" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal">
+											<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+										</button>
+										<h4 class="modal-title" id="myModalLabel1">Tham gia phòng</h4>
+									</div>
+									<form class="form-horizontal" role="form">
+										<div class="modal-body">
+											<div class="form-group">
+												<label for="room" class="col-sm-3 control-label">Tên
+													phòng</label>
+												<div class="col-sm-9">
+													<input type="text" class="form-control"
+														id="room_name_participation" placeholder="Tên phòng"
+														readonly>
+												</div>
+											</div>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-default"
+												data-dismiss="modal">Hủy</button>
+											<button type="button" class="btn btn-primary"
+												id="participation">Tham gia</button>
+										</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<!--						danh sách phòng quản lý-->
+						<div class="divcontent">
+							<h4>Phòng quản lý</h4>
+							<select class="form-control"
+								onchange="if(this.value!=null && this.value!= undefined && this.value!='') location= this.value;">
+								<option value="">Chọn phòng</option>
+								<th:block th:each="room : ${listRoomManager}">
+									<option th:text="${room.roomName}+' - '+${room.idRoom}"
+										th:value="@{/classRoom/{idRoom}(idRoom=${room.idRoom})}"></option>
+								</th:block>
+							</select>
+							<hr />
+							<button type="button" class="btn btn-default" data-toggle="modal"
+								data-target="#tao-phong">
+								<i class="fa fa-plus"></i> Tạo phòng mới<i></i>
+							</button>
+						</div>
+
+						<div class="footer">
+							<footer>
+								<p>Hệ thống quản lý học tập © 2017</p>
+							</footer>
+						</div>
+
+					</div>
+
+					<!--						hiển thị div nhập mã phòng-->
+					<div class="modal fade" id="tao-phong" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel2" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">
+										<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+									</button>
+									<h4 class="modal-title" id="myModalLabel2">Tạo phòng</h4>
+								</div>
+								<form class="form-horizontal" role="form">
+									<div class="modal-body">
+										<div class="form-group">
+											<label for="room" class="col-sm-3 control-label">Nhập
+												tên phòng</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="name_room"
+													placeholder="Tên phòng" required>
+											</div>
+										</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Hủy</button>
+										<button type="submit" class="btn btn-primary" id="createroom"
+											data-toggle="modal" data-target="#ma-phong"
+											data-dismiss="modal">Tạo phòng</button>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+
+					<!--					mã phòng-->
+					<div class="modal fade" id="ma-phong" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel3" aria-hidden="true">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">
+										<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+									</button>
+									<h4 class="modal-title" id="myModalLabel3">Mã phòng</h4>
+								</div>
+								<div class="modal-body">
+									<form class="form-horizontal" role="form">
+										<div class="form-group">
+											<label for="room" class="col-sm-3 control-label">Mã
+												phòng</label>
+											<div class="col-sm-6">
+												<input type="text" class="form-control" id="id_room"
+													placeholder="Mã phòng" readonly>
+											</div>
+											<div class="col-sm-3">
+												<button type="button" class="btn-copy btn btn-default"
+													data-clipboard-action="copy"
+													data-clipboard-target="#id_room">Sao chép</button>
+											</div>
+										</div>
+									</form>
+								</div>
+								<div class="modal-footer">
+									<a th:href="@{/home}"><button type="button"
+											class="btn btn-primary">Xác nhận</button></a>
+								</div>
+							</div>
+						</div>
+					</div>
+<!-- Thông tin người dùng -->
+					<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+						<div class="divcontent">
+							<h4>Cập nhật thông tin</h4>
+							<hr />
+							<form role="form" id="account_info">
+								<div class="form-group">
+									<label for="name">Họ và tên</label> <input type="text"
+										 class="form-control" id="name" th:value="${acc_setting.name}" />
+								</div>
+
+								<div class="form-group">
+									<label for="birth">Ngày sinh</label> <input type="date" 
+										class="form-control" id="birth" th:value="${acc_setting.birth}"  />
+								</div>
+
+								<div class="form-group">
+									<label for="job">Công việc</label> <input type="text"
+									class="form-control" id="job" th:value="${acc_setting.job}" />
+								</div>
+
+								<div class="form-group">
+									<label for="gender1">Giới tính</label> <br /> <label
+										class="radio-inline"> <input type="radio" name="radio"
+										id="gender1" value="1" th:attr="checked=${acc_setting.gender==true}?'checked':null" /> Nam
+									</label> <label class="radio-inline"> <input type="radio"
+										name="radio" id="gender2" value="0" th:attr="checked=${acc_setting.gender==false}?'checked':null" /> Nữ
+									</label>
+								</div>
+
+								<div class="form-group">
+									<label for="email">Email</label> <input type="email"
+										class="form-control" id="email" th:value="${acc_setting.email}" readonly="readonly" />
+								</div>
+
+								<div class="form-group">
+									<label for="address">Địa chỉ</label>
+									<textarea rows="3"  title="abc" class="form-control" id="address" th:text="${acc_setting.address}"></textarea>
+								</div>
+								<hr />
+								<p class="text-right">
+									<button type="submit" class="btn btn-default">
+										<i class="fa fa-close"></i>&nbsp;Hủy
+									</button>
+									<button type="submit" class="btn btn-info">
+										<i class="fa fa-refresh"></i>&nbsp;Cập nhật
+									</button>
+								</p>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript">
+	// kiểm tra độ dài cho phần nhập liệu
+		$(document).ready(function(){
+			document.getElementById("name").pattern = ".{5,50}";
+			document.getElementById("name").title = "là chữ cái và không quá 100 kí tự";
+			document.getElementById("job").pattern = ".{5,50}";
+			document.getElementById("job").title = "là chữ cái và không quá 50 kí tự";
+			document.getElementById("address").pattern = ".{0,300}";
+			document.getElementById("address").title = "là chữ cái và không quá 50 kí tự";
+			
+		});
+	
+	
+	</script>
+	<script type="text/javascript">
+	
+	$(document).ready(function(){
+		$("#avatar").change(function(){
+			var file_data = $('#avatar').prop('files')[0];   
+		    var form_data = new FormData();                  
+		    form_data.append('file', file_data);
+		    $.ajax({
+		                url: '/upload/avatars',
+		                dataType: 'text',
+		                cache: false,
+		                contentType: false,
+		                processData: false,
+		                data: form_data,                         
+		                type: 'post',
+		                success: function(result){
+		                	if(result=='Cập nhật thất bại'){
+		        				alert("Cập nhật thất bại")
+		        			}else{
+		        				swal("Cập nhật thành công!","", "success")
+		                    $("#account_avatar").attr('src',result); 
+		        			}
+		                }
+		     });
+		})
+	});
+	
+	
+	
+	
+	</script>
+<script type="text/javascript">
+$("#account_info").bind('submit', function (e) {
+    name=$("#name").val();
+    birth=$("#birth").val();
+   	gender= $("input:radio[name ='radio']:checked").val();
+    job=$("#job").val();
+    address=$("#address").val();
+    form_data ={name:name,birth:birth,gender:gender,job:job,address:address}
+	$.ajax({
+		url : '/account/update/info',
+		dataType : 'text',
+		data : form_data,
+		success : function(result) {
+			swal(result)
+		}
+
+	});
+    return false;
+});
+
+
+</script>
+	<!--java script-->
+
+	<script>
+		var clipboard = new Clipboard('.btn-copy');
+
+		clipboard.on('success', function(e) {
+			console.log(e);
+		});
+
+		clipboard.on('error', function(e) {
+			console.log(e);
+		});
+	</script>
+	<script>
+		document.getElementById("close-slide").style.display = "none";
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "250px";
+			document.getElementById("open-slide").style.display = "none";
+			document.getElementById("close-slide").style.display = "block";
+		}
+
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+			document.getElementById("open-slide").style.display = "block";
+			document.getElementById("close-slide").style.display = "none";
+		}
+	</script>
+</body>
+</html>
