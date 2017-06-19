@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css?family=Pacifico');
+@import url('https://fonts.googleapis.com/css?family=Coiny');
+
+$navbar-font-color: #FFFFFF;
+$navbar-font-hover: #fffa84;
+$navbar-brand-color: #1d9d74;
+$navbar-brand-hover: #009152;
+$text-color: #f2efef;
+$text-shadow: 2px 2px 4px #000000;
+body {
+	background: $navbar-brand-color;
+}
+
+.navbar {
+	font-family: 'Pacifico', cursive;
+	font-size: 25px;
+	background: none;
+	border: none;
+
+	.navbar-brand {
+		font-size: 50px;
+		color: $navbar-font-color;
+		&:hover {
+			color: $navbar-font-color;
+		}
+	}
+}
+.navbar-default {
+	.navbar-nav{
+		li { 
+			a {
+				color: $navbar-font-color;
+				&:hover {
+					color: $navbar-font-hover;
+				}
+			}
+		}
+	}
+}
+
+.intro-1 {
+	background-image: url("/images/intro-1.jpg");
+	height: 900px;
+	width: 100%;
+	padding-top: 100px;
+	font-family: 'Coiny', cursive;
+
+	.w-sir {
+		h2 {
+			font-size: 40px;
+			color: $text-color;
+			text-shadow: $text-shadow;
+		}
+	}
+
+	.w-sir2 {
+		li {
+			font-size: 20px;
+			color: $text-color;
+			text-shadow: $text-shadow;
+		}
+	}
+}
+
+.intro-2 {
+	background-image: url("/images/intro-2.jpg");
+	height: 769px;
+	width: 100%;
+	font-family: 'Coiny', cursive;
+	
+	.w-sir {
+		h2 {
+			font-size: 40px;
+			color: $text-color;
+			text-shadow: $text-shadow;
+		}
+	}
+}
+
+.intro-3 {
+	background-image: url("/images/intro-3.jpg");
+	height: 900px;
+	width: 100%;
+}

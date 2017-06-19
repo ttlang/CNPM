@@ -4,99 +4,64 @@
 <meta charset="utf-8">
 <title>Quiz</title>
 <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/css/profile-old.css}" rel="stylesheet">
 <link th:href="@{/css/profile.css}" rel="stylesheet">
 <link th:href="@{/css/loading.css}" rel="stylesheet">
 <link th:href="@{/css/responsive.css}" rel="stylesheet">
+<link th:href="@{/css/chat.css}" rel="stylesheet">
 <link th:href="@{/fonts/css/font-awesome.min.css}" rel="stylesheet">
+
+
+
+
+<!-- sweetAlert -->
+<script th:src="@{/sweetalert/js/sweetalert.min.js}"></script>
+<link th:href="@{/sweetalert/css/sweetalert.css	}" rel="stylesheet">
+
+
+
+
+	<!--java script-->
+	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+	<script th:src="@{/js/profile.js}"></script>
+	<script th:src="@{/js/clipboard.min.js}"></script>
+	<script th:src="@{/js/app.min.js}"></script>
+	<script th:src="@{/js/classroom2.js}"></script>
+
+
 
 </head>
 
 <body>
-	<!--	menu fixed top-->
-	<th:block th:fragment="menu_fix_top">
-		<nav id="header" class="navbar navbar-fixed-top">
-			<div id="header-container" class="container navbar-container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle collapsed"
-						data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-						aria-controls="navbar">
-						<span class="sr-only">Toggle navigation</span> <span
-							class="icon-bar"></span> <span class="icon-bar"></span> <span
-							class="icon-bar"></span>
-					</button>
-					<a id="brand" class="navbar-brand" href="#"> <span
-						id="open-slide" style="font-size: 30px; cursor: pointer"
-						onclick="openNav()">&#9776;</span> <span id="close-slide"
-						style="font-size: 30px; cursor: pointer" onclick="closeNav()">&times;</span>
-					</a>
-				</div>
-				<div id="navbar" class="collapse navbar-collapse">
-
-					<ul class="nav navbar-nav navbar-right">
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"> <i class="fa fa-television"></i> Quản
-								lý <span class="caret"></span>
-						</a>
-							<ul class="dropdown-menu">
-								<li><a href="#">Quản lý câu hỏi</a></li>
-								<li><a href="#">Quản lý đề thi</a></li>
-							</ul></li>
-
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"> <i class="fa fa-comment-o"></i> Thông
-								báo <span class="caret"></span>
-						</a>
-							<ul class="dropdown-menu">
-								<li>Không có thông báo</li>
-								<li class="divider"></li>
-							</ul></li>
-
-						<li class="dropdown"><a href="#" class="dropdown-toggle"
-							data-toggle="dropdown"> <img
-								th:src="@{${session.account.avatar}}"
-								alt="Ảnh đại diện" width="19px" class="img-circle" /><span
-								th:text="${session.account.name}"></span> <span class="caret"></span>
-						</a>
-							<ul class="dropdown-menu">
-								<li><a th:href="@{/account/info}">Hồ sơ</a></li>
-								<li><a href="#">Chỉnh sửa</a></li>
-								<li class="divider"></li>
-								<li><a href="#">Trợ giúp</a></li>
-								<li><a th:href="@{/account/logout}">Đăng xuất</a></li>
-							</ul></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
-	</th:block>
+<th:block th:replace="header::menu_fix_top"></th:block>
 	<div class="container">
 		<!--	slider menu-->
-		<div id="mySidenav" class="sidenav">
-			<a href="homepage.html">Trang chủ</a> <a href="#">Thông tin</a> <a
+		<div id="mySidenav" class="sidenav" th:fragment="sidenav">
+			<a th:href="@{/home}">Trang chủ</a> <a href="#">Thông tin</a> <a
 				href="#">Dịch vụ</a> <a href="#">Liên hệ</a>
-			<div class="form-group">
-				<label for="room" class="col-sm-3 control-label">Mã phòng</label>
-				<div class="col-sm-9">
-					<div class="loader">
-						<div class="bar"></div>
-						<div class="bar"></div>
-						<div class="bar"></div>
-					</div>
-				</div>
-			</div>
+			<!-- 			<div class="form-group"> -->
+			<!-- 				<label for="room" class="col-sm-3 control-label">Mã phòng</label> -->
+			<!-- 				<div class="col-sm-9"> -->
+			<!-- 					<div class="loader"> -->
+			<!-- 						<div class="bar"></div> -->
+			<!-- 						<div class="bar"></div> -->
+			<!-- 						<div class="bar"></div> -->
+			<!-- 					</div> -->
+			<!-- 				</div> -->
+			<!-- 			</div> -->
 		</div>
 
 		<!--       nội dung trang web-->
 		<div id="main">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-4">
+					<div class="col-md-4" th:fragment="thong_tin_ca_nhan">
 						<!--					thông tin cá nhân-->
 						<div class="divcontent row">
 							<div class="col-md-5 col-sm-6 col-xs-12">
 								<img class="img-circle img-responsive"
-									th:src="@{${session.account.avatar}}"
-									alt="Ảnh đại diện" />
+									th:src="${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}" alt="Ảnh đại diện" />
 							</div>
 
 							<div class="col-md-7 col-sm-6 col-xs-12">
@@ -104,8 +69,13 @@
 								<h5 th:text="${session.account.job}"></h5>
 							</div>
 						</div>
+						
+						
+						
+						
+						
 						<!--						danh sách phòng tham gia-->
-						<div class="divcontent">
+						<div class="divcontent" th:fragment="ds_phong_tham_gia">
 							<h4>Phòng tham gia</h4>
 							<select class="form-control"
 								onchange="if(this.value!=null && this.value!= undefined && this.value!='') location= this.value;">
@@ -124,9 +94,14 @@
 								<i class="fa fa-plus"></i> Tham gia phòng khác
 							</button>
 						</div>
+						
+						
+						
+						
+						
 						<!--						hiển thị div nhập mã phòng-->
 						<div class="modal fade" id="tham-gia-phong" tabindex="-1"
-							role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+							role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true" th:fragment="div_hien_thi_ma_phong">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
@@ -158,9 +133,13 @@
 								</div>
 							</div>
 						</div>
+						
+						
+						
+						
 						<!--						hiển thị div tìm phong-->
 						<div class="modal fade" id="tim-phong" tabindex="-1" role="dialog"
-							aria-labelledby="myModalLabel1" aria-hidden="true">
+							aria-labelledby="myModalLabel1" aria-hidden="true" th:fragment="hien_thi_tim_phong">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
@@ -191,8 +170,13 @@
 								</div>
 							</div>
 						</div>
+						
+						
+						
+						
+						
 						<!--						danh sách phòng quản lý-->
-						<div class="divcontent">
+						<div class="divcontent" th:fragment="ds_phong_quan_ly">
 							<h4>Phòng quản lý</h4>
 							<select class="form-control"
 								onchange="if(this.value!=null && this.value!= undefined && this.value!='') location= this.value;">
@@ -208,8 +192,15 @@
 								<i class="fa fa-plus"></i> Tạo phòng mới<i></i>
 							</button>
 						</div>
+						
+						
+						
+						
+						
+						
+						
 
-						<div class="footer" th:frame="footer">
+						<div class="footer" th:frame="footer" th:fragment="footer">
 							<footer>
 								<p>Hệ thống quản lý học tập © 2017</p>
 							</footer>
@@ -219,7 +210,7 @@
 
 					<!--						hiển thị div nhập mã phòng-->
 					<div class="modal fade" id="tao-phong" tabindex="-1" role="dialog"
-						aria-labelledby="myModalLabel2" aria-hidden="true">
+						aria-labelledby="myModalLabel2" aria-hidden="true" th:fragment="div_hien_thi_nhap_ma_phong">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -253,7 +244,7 @@
 
 					<!--					mã phòng-->
 					<div class="modal fade" id="ma-phong" tabindex="-1" role="dialog"
-						aria-labelledby="myModalLabel3" aria-hidden="true">
+						aria-labelledby="myModalLabel3" aria-hidden="true" th:fragment="ma_phong">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -288,6 +279,19 @@
 
 					</div>
 
+
+
+	
+
+
+
+
+
+
+
+
+
+
 					<div class="col-md-8">
 						<div class="divcontent">
 							<div class="status row">
@@ -299,8 +303,8 @@
 								<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
 									<div class="people-stt">
 										<a href="#"><strong>Trần Văn Thắng </strong></a> đã đăng trong
-										<a href="#"><strong>Phòng 1 </strong></a> <br /> <span
-											style="color: #B2B2B2">1 phút trước</span>
+										<a href="#"><strong>Phòng 1 </strong></a> <br /> 
+										<span class="time-post"  style="color: #B2B2B2; cursor: pointer;" data-toggle="tooltip" data-placement="bottom" title="Ngày 19 tháng 6 2017 lúc 17:17"><i class="fa fa-ravelry"></i> 1 phút trước</span>
 									</div>
 								</div>
 							</div>
@@ -359,137 +363,10 @@
 		</div>
 	</div>
 
-	<!--java script-->
-	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
-	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
-	<script th:src="@{/js/profile.js}"></script>
-	<script th:src="@{/js/clipboard.min.js}"></script>
+	
 	<script>
-		$(document)
-				.ready(
-						function() {
-							$("#participation")
-									.click(
-											function(e) {
-												var id_room = $("#id_room2")
-														.val();
-												$
-														.ajax({
-															url : "/participationroom",
-															type : "POST",
-															data : {
-																id_room : id_room
-															},
-															success : function(
-																	response) {
-																console
-																		.log(response);
-																if (!response) {
-																	alert("Đăng ký tham gia phòng thất bại! Có lẻ bạn đã tham gia phòng này!")
-																} else {
-																	alert("Đăng ký tham gia phòng thành công!")
-																}
-																$("#id_room2")
-																		.val("");
-																window.location = "/";
-															}
-														});
-
-											});
-
-							$("#search_room")
-									.click(
-											function() {
-												var id_room = $("#id_room2")
-														.val();
-												$
-														.ajax({
-															url : "/searchroom",
-															type : "POST",
-															data : {
-																id_room : id_room
-															},
-															success : function(
-																	response) {
-																if (response == "false") {
-																	alert("Phòng không tồn tại!");
-																	$(
-																			"#id_room2")
-																			.val(
-																					"");
-																	$(
-																			"#participation")
-																			.attr(
-																					'disabled',
-																					'disabled');
-																	return false;
-																} else {
-																	$(
-																			"#room_name_participation")
-																			.val(
-																					response);
-																	$(
-																			"#participation")
-																			.removeAttr(
-																					'disabled');
-																	return true;
-																}
-															}
-
-														});
-
-											});
-
-							$("#createroom")
-									.click(
-											function() {
-												var name_room = $("#name_room")
-														.val().trim();
-												if (!name_room
-														|| name_room == undefined
-														|| name_room == ""
-														|| name_room == 0) {
-													alert("Bạn cần nhập tên phòng!");
-													return false;
-												} else {
-													$
-															.ajax({
-																url : "/createroom",
-																type : "POST",
-																data : {
-																	name_room : name_room
-																},
-																success : function(
-																		response) {
-																	if (response == "false") {
-																		alert("Tạo phòng thất bại!");
-																		return false;
-																	} else {
-																		$(
-																				"#id_room")
-																				.val(
-																						response);
-																	}
-																}
-
-															});
-													$("#name_room").val("");
-													return true;
-												}
-
-											});
-						}
-
-				);
-		var clipboard = new Clipboard('.btn-copy');
-
-		clipboard.on('success', function(e) {
-			console.log(e);
-		});
-
-		clipboard.on('error', function(e) {
-			console.log(e);
-		});
+		
+		
 	</script>
 	<script>
 		document.getElementById("close-slide").style.display = "none";

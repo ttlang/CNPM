@@ -244,6 +244,8 @@ public class RoomC {
 				return "redirect:/formQuiz";
 			case 3:
 				return "redirect:/formFile";
+			case 4:
+				return "redirect:/formPic";
 			default:
 				return null;
 			}
@@ -282,6 +284,11 @@ public class RoomC {
 	@RequestMapping(value = "/formFile")
 	public String getHtmlFormHtml() {
 		return "/post/filePost";
+	}
+
+	@RequestMapping(value = "/formPic")
+	public String getHtmlFormPic() {
+		return "/post/PicPost";
 	}
 
 	@RequestMapping(value = "/likeOrUnlikePost", method = RequestMethod.POST)
@@ -335,4 +342,16 @@ public class RoomC {
 		String mes = rooms.deleteRoom(idRoom);
 		return mes;
 	}
+
+	@RequestMapping(value = "/leaves/room")
+	@ResponseBody
+	public String leaveRoom(@RequestParam("merberID") int idRoom, @RequestParam("IDroom") int idAcc) {
+		if (rooms.leaveRoom(idAcc, idRoom)) {
+			return "true";
+		} else {
+			return "Thất bại";
+		}
+
+	}
+
 }

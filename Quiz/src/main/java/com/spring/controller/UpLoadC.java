@@ -3,6 +3,7 @@ package com.spring.controller;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
@@ -37,7 +38,7 @@ public class UpLoadC {
 
 		Account account = (Account) session.getAttribute("account");
 		if (f.getContentType().startsWith("image/")) {
-			
+
 			try {
 				String UPLOADED_FOLDER = context.getRealPath("/") + java.io.File.separator;
 				java.io.File filePath = new java.io.File(UPLOADED_FOLDER + f.getOriginalFilename());
@@ -58,6 +59,19 @@ public class UpLoadC {
 
 		}
 		return "Định dạng file không hợp lệ";
+	}
+
+	@RequestMapping(value = "/upload/picture", method = RequestMethod.POST, consumes = { "multipart/*" })
+	@ResponseBody
+	public String uploadPicturepublic(HttpSession session, @RequestParam("form_data") Map<String, String> requestParam)
+			throws IOException, GeneralSecurityException, URISyntaxException {
+
+		String id = requestParam.get("content_post");
+		String content = requestParam.get("id_room");
+		System.err.println(id);
+		System.out.println(content);
+
+		return "";
 	}
 
 }

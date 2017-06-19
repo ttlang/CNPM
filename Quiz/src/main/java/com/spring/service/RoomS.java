@@ -194,4 +194,7 @@ public interface RoomS {
 	public List<PostRoom> getListPostRoom(int idRoom);
 
 	public String deleteRoom(int idRoom);
+	
+	public boolean leaveRoom(int idAcc,int idRoom);	
+	public int[] getListIDAccountInRoom(int parseInt);
 }

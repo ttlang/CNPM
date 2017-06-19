@@ -83,6 +83,7 @@ function addStatusPost(form_post) {
 				$("#list-post").prepend(response);
 				$(form_post).find("#content_post").empty();
 				$(form_post).find("#content_post").val("");
+				autoNotify("#"+$(response)[5].id);
 			}
 		}
 	});
@@ -291,6 +292,8 @@ function leaveRoom(merberID) {
 					success : function(result) {
 						if (result == 'true') {
 							window.location.href = '/home'
+						}else{
+							swal(result);
 						}
 					}
 				});
@@ -365,5 +368,38 @@ function deleteRoom() {
 		}
 
 	});
+
+}
+
+// cua tao viet
+
+function addPicPost(form_post) {
+	//var file_data = $('#pic_post').prop('files');
+	//var content_post = $(form_post).find("#content_post").val();
+	var id_room = $("#id-room").val();
+	//alert(file_data);
+	//console.log(file_data);
+	var form_data = new FormData($("#postPic")[0]);
+	//for (var i = 0; i < file_data.length; i++) {
+	//	form_data.append('files[' + i + ']', file_data[i]);
+	//}
+
+	//form_data.append('content_post', content_post);
+	form_data.append('id_room', id_room);
+	console.log(form_data)
+	alert("con me ma");
+	$.ajax({
+		url : "/upload/picture",
+		type : "POST",
+		dataType: 'json',
+		data : form_data,
+		cache : false,
+		enctype: 'multipart/form-data',
+		processData : false,
+		success : function(response) {
+			alert("ok");
+		}
+	});
+	return false;
 
 }
