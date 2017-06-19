@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Chat</title>
+</head>
+<body>
+
+	<th:block th:fragment="chat-template">
+		<!-- phần chat -->
+		<div class="row">
+			<div class="col-md-3">
+				<!-- DIRECT CHAT SUCCESS -->
+				<div class="box box-success direct-chat direct-chat-success">
+					<div class="box-header with-border">
+						<h3 class="box-title">Tin nhắn</h3>
+						<span data-toggle="tooltip" title="Tin nhắn mới"
+							class="badge bg-green">3</span>
+						<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool"
+								data-widget="collapse">
+								<i class="fa fa-minus"></i>
+							</button>
+							<button type="button" class="btn btn-box-tool"
+								data-toggle="tooltip" title="Liên hệ"
+								data-widget="chat-pane-toggle">
+								<i class="fa fa-comments"></i>
+							</button>
+							<button type="button" class="btn btn-box-tool"
+								data-widget="remove">
+								<i class="fa fa-times"></i>
+							</button>
+						</div>
+					</div>
+					<!-- /.box-header -->
+					<div class="box-body">
+						<!-- Conversations are loaded here -->
+						<div class="direct-chat-messages">
+							<!-- Message. Default to the left -->
+							<div class="direct-chat-msg">
+								<div class="direct-chat-info clearfix">
+									<span class="direct-chat-name pull-left">Tên người gửi</span> <span
+										class="direct-chat-timestamp pull-right">23 Jan 2:00 pm</span>
+								</div>
+								<!-- /.direct-chat-info -->
+								<img class="direct-chat-img"
+									src="https://bootdey.com/img/Content/user_1.jpg"
+									alt="Message User Image" data-toggle="tooltip"
+									data-placement="left" title="Người gửi" />
+								<!-- /.direct-chat-img -->
+								<div class="direct-chat-text">M là ai thế?</div>
+								<!-- /.direct-chat-text -->
+							</div>
+							<!-- /.direct-chat-msg -->
+
+							<!-- Message to the right -->
+							<div class="direct-chat-msg right">
+								<div class="direct-chat-info clearfix">
+									<span class="direct-chat-name pull-right" th:text="${session.account.name}"></span> <span
+										class="direct-chat-timestamp pull-left">Đã xem - 23 Jan
+										2:05 pm</span>
+								</div>
+								<!-- /.direct-chat-info -->
+								<!-- <img class="direct-chat-img"
+								src="https://bootdey.com/img/Content/user_2.jpg"
+								alt="Message User Image"/> -->
+
+								<img class="direct-chat-img"
+									th:src="${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}"
+									alt="Ảnh đại diện" data-toggle="tooltip"
+									data-placement="bottom" title="Tôi" />
+								<!-- /.direct-chat-img -->
+								<div class="direct-chat-text">Thắng đây!</div>
+								<!-- /.direct-chat-text -->
+							</div>
+							<!-- /.direct-chat-msg -->
+						</div>
+						<!--/.direct-chat-messages-->
+
+						<!-- Contacts are loaded here -->
+						<div class="direct-chat-contacts">
+							<ul class="contacts-list">
+								<li><a href="#"> <img class="contacts-list-img"
+										src="https://bootdey.com/img/Content/user_1.jpg" /> <span
+										class="contacts-list-name"> Tên người gửi <small
+											class="contacts-list-date pull-right">2/28/2015</small>
+									</span> <span class="contacts-list-msg">M là ai thế?</span>
+								</a></li>
+								<!-- End Contact Item -->
+							</ul>
+							<!-- /.contatcts-list -->
+						</div>
+						<!-- /.direct-chat-pane -->
+					</div>
+					<!-- /.box-body -->
+					<div class="box-footer">
+						<form action="#" method="post">
+							<div class="input-group">
+								<input type="text" name="message"
+									placeholder="Nhập tin nhắn ..." class="form-control"> <span
+									class="input-group-btn">
+									<button type="submit" class="btn btn-success btn-flat">
+										<i class="fa fa-paper-plane"></i>
+									</button>
+								</span>
+							</div>
+						</form>
+					</div>
+					<!-- /.box-footer-->
+				</div>
+				<!--/.direct-chat -->
+			</div>
+		</div>
+		<!-- hết phần chat -->
+		<!-- <script th:src="@{/js/app.min.js}"></script> -->
+	</th:block>
+
+</body>
+</html>

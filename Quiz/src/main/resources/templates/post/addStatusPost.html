@@ -21,13 +21,18 @@
 					<form onsubmit="return deletePost(this)">
 						<input type="hidden" id="idpost-close" th:value="${post.idPost}" />
 						<button class="close" type="submit">
-							<span aria-hidden="true">×</span>
+							<span aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Xóa bài viết">&times;</span>
 						</button>
 					</form>
 					<!-- end x post  -->
 					<a href="#"><strong th:text="${post.idAcc.name}"> </strong></a> <br />
-					<span style="color: #B2B2B2"
-						th:text=" ${#dates.format(post.postDate, 'dd-MM-yyyy hh:mm:ss')}"></span>
+					<span class="time-post"  style="color: #B2B2B2; cursor: pointer;" 
+											data-toggle="tooltip" data-placement="bottom" 
+											title="Thời gian đăng" th:text="${#dates.format(post.postDate, 'dd-MM-yyyy hh:mm:ss')}">
+										</span>
+					
+					<!-- <span style="color: #B2B2B2"
+						th:text=" ${#dates.format(post.postDate, 'dd-MM-yyyy hh:mm:ss')}"></span> -->
 				</div>
 			</div>
 		</div>
@@ -51,12 +56,12 @@
 			<div class="cmt-input row">
 				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
 					<img class="media-photo img-responsive avt"
-						src="../images/15284079_583315985195410_4289784661158093094_n.jpg"
-						alt="Ảnh đại diện" />
+						th:src="${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}"
+						alt="Ảnh đại diện" data-toggle="tooltip" data-placement="bottom" title="Người đăng" />
 				</div>
 				<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
 					<input type="text" class="form-control"
-						th:id="comment_post+${post.idPost}" placeholder="Nhập bình luận"
+						th:id="comment_post+${post.idPost}" placeholder="Nhập bình luận ..."
 						onkeydown="if(event.keyCode==13) addComment(this.id)" />
 				</div>
 			</div>
