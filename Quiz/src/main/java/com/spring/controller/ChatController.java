@@ -156,4 +156,16 @@ public class ChatController {
 
 	}
 
+	@RequestMapping(value = "/number-notify", method = RequestMethod.POST)
+	@ResponseBody
+	public int numberNotify(int idAcc) throws SQLException {
+		List<MailBoxDao> boxDaos = chatService.numberNotify(idAcc + "");
+		
+		int res = 0;
+		for (MailBoxDao mailBoxDao : boxDaos) {
+			res += mailBoxDao.getCountMsg();
+		}
+		return res;
+	}
+
 }

@@ -8,6 +8,7 @@
 	<div class="cmt row" th:id="comment+${comment.idComment}">
 		<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
 			<img class="media-photo img-responsive avt"
+
 				th:src="@{${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}}"
 				alt="Ảnh đại diện" />
 		</div>
@@ -19,6 +20,11 @@
 				<button class="close" type="submit">
 					<span aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Xóa bình luận">&times;</span>
 				</button>
+
+			</form>
+			<!-- end x close comment -->
+			<a href="javascript:void(0)"  th:id="'idAcc_'+${comment.idAcc.idAcc}" class="memberprofile" ><strong th:text="${comment.idAcc.name}"></strong></a> <span
+
 				
 			</form>
 			<!-- end x close comment -->

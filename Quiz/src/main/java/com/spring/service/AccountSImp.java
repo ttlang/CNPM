@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.eclipse.persistence.internal.jpa.metadata.accessors.mappings.IdAccessor;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.internal.SessionImpl;
@@ -80,7 +81,6 @@ public class AccountSImp implements AccountS {
 			while (rs.next()) {
 				message = rs.getString(1);
 			}
-			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -135,6 +135,69 @@ public class AccountSImp implements AccountS {
 	@Override
 	public boolean updateAccountAvatar(String avatarLink, int idAccount) {
 		return r.updateAccountAvatar(avatarLink, idAccount) > 0 ? true : false;
+
+	}
+
+	@Override
+	public void sendRequestAddFriend(int idAdd, int idFriend) throws SQLException {
+		/**
+		 * thêm 1 dòng vào db relationship(idadd, idfriend)
+		 */
+		SessionImpl impl = (SessionImpl) sf.getCurrentSession();
+		Connection connection = impl.connection();
+		CallableStatement statement = connection
+				.prepareCall("insert into relationship(id_acc_add, id_acc_friend,waiting)  values(?,?,?)");
+		statement.setInt(1, idAdd);
+		statement.setInt(2, idFriend);
+		statement.setBoolean(3, true);
+		statement.executeUpdate();
+
+	}
+
+	@Override
+	public void deleteRelationship(int idAdd, int idFriend) throws SQLException {
+		/**
+		 * xóa quan hệ giữa 2nguowif
+		 * relationship(idAdd,idFriend),relationship(idFriend,idAdd)
+		 */
+		SessionImpl impl = (SessionImpl) sf.getCurrentSession();
+		Connection connection = impl.connection();
+		CallableStatement statement = connection.prepareCall(
+				"delete from relationship where (id_acc_add=?  and id_acc_friend=?) or (id_acc_add=?  and id_acc_friend=?)");
+		statement.setInt(1, idAdd);
+		statement.setInt(2, idFriend);
+		statement.setInt(3, idFriend);
+		statement.setInt(4, idAdd);
+		int a = statement.executeUpdate();
+		System.out.printf("Đã xóa quan hệ bạn bè %d dòng của bạn và tôi!\n ", a);
+	}
+
+	@Override
+	public void acceptRequestAddFriend(int idAdd, int idFriend) throws SQLException {
+		/**
+		 * chỉnh relationship(idadd, idfrien, true) insert
+		 * relationship(idadd,idfrien,true)
+		 */
+		SessionImpl impl = (SessionImpl) sf.getCurrentSession();
+		Connection connection = impl.connection();
+		CallableStatement statement = connection
+				.prepareCall("exec [dbo].[p_friend_except] @id_acc_add = ?,	@id_acc_friend = ?");
+		statement.setInt(1, idFriend);
+		statement.setInt(2, idAdd);
+		statement.executeUpdate();
+	}
+
+	@Override
+	public void deleteRequestAddFriend(int idAdd, int idFriend) throws SQLException {
+		SessionImpl impl = (SessionImpl) sf.getCurrentSession();
+		Connection connection = impl.connection();
+		CallableStatement statement = connection
+				.prepareCall("delete from relationship where (id_acc_add=?  and id_acc_friend=?  and  waiting=1) ");
+		statement.setInt(1, idAdd);
+		statement.setInt(2, idFriend);
+
+		int a = statement.executeUpdate();
+		System.out.printf("Đã xóa yê cầu kết bạn %d dòng của bạn và tôi!\n ", a);
 
 	}
 
