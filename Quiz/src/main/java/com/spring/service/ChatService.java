@@ -17,6 +17,4 @@ public interface ChatService {
 	public List<MemberDao> danhSachChat(int magv) throws SQLException;
 
 	public List<ChatDao> loadNotify(String client1, String client2, int top) throws SQLException;
-
-	public List<MailBoxDao> numberNotify(String user_id) throws SQLException;
 }
