@@ -21,7 +21,7 @@
 				</button>
 			</form>
 			<!-- end x close comment -->
-			<a href="#"><strong th:text="${comment.idAcc.name}"></strong></a> <span
+			<a href="javascript:void(0)"  th:id="'idAcc_'+${comment.idAcc.idAcc}" class="memberprofile" ><strong th:text="${comment.idAcc.name}"></strong></a> <span
 				th:text="${comment.commentContent}"></span><br /> 
 				<span class="time-post"  style="color: #B2B2B2; cursor: pointer;" 
 				data-toggle="tooltip" data-placement="bottom" 

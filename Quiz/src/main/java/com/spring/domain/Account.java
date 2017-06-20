@@ -98,7 +98,30 @@ public class Account implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "account")
 	private List<RoomManage> roomManageList; /* Danh sách phòng tham gia */
 
+	// relationship
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "accountAdd")
+	private List<Relationship> relationshipList;// danh sách bạn cá nhân 
+
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "accountFriend")
+	private List<Relationship> relationshipList1;// danh sách những người 
+
 	public Account() {
+	}
+
+	public List<Relationship> getRelationshipList() {
+		return relationshipList;
+	}
+
+	public void setRelationshipList(List<Relationship> relationshipList) {
+		this.relationshipList = relationshipList;
+	}
+
+	public List<Relationship> getRelationshipList1() {
+		return relationshipList1;
+	}
+
+	public void setRelationshipList1(List<Relationship> relationshipList1) {
+		this.relationshipList1 = relationshipList1;
 	}
 
 	public Account(Integer idAcc) {
