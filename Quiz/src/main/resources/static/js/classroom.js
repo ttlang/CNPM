@@ -374,32 +374,189 @@ function deleteRoom() {
 // cua tao viet
 
 function addPicPost(form_post) {
-	//var file_data = $('#pic_post').prop('files');
-	//var content_post = $(form_post).find("#content_post").val();
+	var file_data = $('#pic_post').prop('files');
+	var content_post = $(form_post).find("#content_post").val();
 	var id_room = $("#id-room").val();
-	//alert(file_data);
-	//console.log(file_data);
-	var form_data = new FormData($("#postPic")[0]);
-	//for (var i = 0; i < file_data.length; i++) {
-	//	form_data.append('files[' + i + ']', file_data[i]);
-	//}
-
-	//form_data.append('content_post', content_post);
+	
+	console.log(file_data);
+	
+	var form_data = new FormData();
+	
+	// đưa các file vào formData
+	for (var i = 0; i < file_data.length; i++) {
+		form_data.append('f'+i, file_data[i]);
+	}
+	// đưa nội dung bài post vào form_data
+	form_data.append('content_post', content_post);
+	
+	// đưa số lượng file vào form_data
+	form_data.append('num', file_data.length);
+	
+	// đưa mã phòng vào form data
 	form_data.append('id_room', id_room);
-	console.log(form_data)
-	alert("con me ma");
-	$.ajax({
-		url : "/upload/picture",
-		type : "POST",
-		dataType: 'json',
-		data : form_data,
-		cache : false,
-		enctype: 'multipart/form-data',
-		processData : false,
-		success : function(response) {
-			alert("ok");
-		}
-	});
+	
+	console.log(content_post);
+	console.log(id_room);
+	swal({
+		  title: "Đăng Bài",
+		  text: "xác nhận đăng bài",
+		  type: "info",
+		  showCancelButton: true,
+		  closeOnConfirm: false,
+		  showLoaderOnConfirm: true,
+		},
+		function(){
+		 
+			$.ajax({
+			      url: "/upload/picture",
+			      data: form_data,
+			      type: "POST",
+			      enctype: 'multipart/form-data',
+			      processData: false,
+			      contentType: false,
+			      success: function (result) {
+			    	  if(result=='1'){
+			    		  swal({
+							  title: "Đăng bài thành công",
+							  type: "success",
+							  showCancelButton: false,
+							  confirmButtonColor: "#b3f0ff",
+							  confirmButtonText: "OK",
+							  closeOnConfirm: false
+							},
+							function(){
+								location.reload();
+							});
+			    		  
+			    		  
+			    		  
+			    	  }else{
+			    		  swal({
+							  title: "Đăng bài thất bại",
+							  type: "error",
+							  showCancelButton: false,
+							  confirmButtonColor: "#DD6B55",
+							  confirmButtonText: "OK",
+							  closeOnConfirm: false
+							},
+							function(){
+								location.reload();
+							});
+			    		  
+			    		  
+			    		  
+			    		  
+			    	  }
+					return false;
+			    }
+				
+				
+				
+				
+			});
+			
+			
+		});
+	
+	
+		
 	return false;
 
 }
+
+
+// bài đăng là file
+
+function addFilePost(form_post){
+	
+	var file_data = $('#file_post').prop('files');
+	var content_post = $(form_post).find("#content_post").val();
+	var id_room = $("#id-room").val();
+	
+	console.log(file_data);
+	
+	var form_data = new FormData();
+	
+	// đưa các file vào formData
+		form_data.append('file', file_data[0]);
+	// đưa nội dung bài post vào form_data
+	form_data.append('content_post', content_post);
+	// đưa mã phòng vào form data
+	form_data.append('id_room', id_room);
+	
+	console.log(content_post);
+	console.log(id_room);
+	swal({
+		  title: "Đăng Bài",
+		  text: "xác nhận đăng bài",
+		  type: "info",
+		  showCancelButton: true,
+		  closeOnConfirm: false,
+		  showLoaderOnConfirm: true,
+		},
+		function(){
+		 
+			$.ajax({
+			      url: "/upload/file",
+			      data: form_data,
+			      type: "POST",
+			      enctype: 'multipart/form-data',
+			      processData: false,
+			      contentType: false,
+			      success: function (result) {
+			    	  
+			    	  if(result=='1'){
+			    		  swal({
+							  title: "Đăng bài thành công",
+							  type: "success",
+							  showCancelButton: false,
+							  confirmButtonColor: "#b3f0ff",
+							  confirmButtonText: "OK",
+							  closeOnConfirm: false
+							},
+							function(){
+								location.reload();
+							});
+			    		  
+			    		  
+			    		  
+			    	  }else{
+			    		  swal({
+							  title: "Đăng bài thất bại",
+							  type: "error",
+							  showCancelButton: false,
+							  confirmButtonColor: "#DD6B55",
+							  confirmButtonText: "OK",
+							  closeOnConfirm: false
+							},
+							function(){
+								location.reload();
+							});
+			    		  
+			    		  
+			    		  
+			    		  
+			    	  }
+			    	  
+			    	 
+			    	  
+					return false;
+			    }
+				
+				
+				
+				
+			});
+			
+			
+		});
+	
+	
+		
+	return false;
+
+	
+	
+}
+
+

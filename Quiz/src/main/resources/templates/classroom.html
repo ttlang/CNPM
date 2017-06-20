@@ -19,6 +19,11 @@
 
 
 
+<!-- view Image JS -->
+<link th:href="@{/view/css/viewer.css}" rel="stylesheet">
+<script th:src="@{/view/js/viewer.js}"></script>
+
+
 <!-- sweetAlert -->
 <script th:src="@{/sweetalert/js/sweetalert.min.js}"></script>
 <link th:href="@{/sweetalert/css/sweetalert.css	}" rel="stylesheet">
@@ -259,7 +264,7 @@
 										</div>
 									</div>
 								</div>
-								<div class="content-stt" th:text="${post.content.postContent}"></div>
+								<div class="content-stt" th:utext="${post.content.postContent}"></div>
 
 								<th:block th:if="${post.content.idConnect > 0}">
 									<br>
@@ -315,7 +320,7 @@
 									<div class="cmt-input row">
 										<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
 											<img class="media-photo img-responsive avt"
-												src="../images/15284079_583315985195410_4289784661158093094_n.jpg"
+												th:src="@{${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}}"
 												alt="Ảnh đại diện" />
 										</div>
 										<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
