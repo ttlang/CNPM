@@ -12,7 +12,7 @@
 		<div class="status row">
 			<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
 				<img class="media-photo img-responsive avt"
-					src="../images/15284079_583315985195410_4289784661158093094_n.jpg"
+					th:src="@{${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}}"
 					alt="Ảnh đại diện" />
 			</div>
 			<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
@@ -36,7 +36,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="content-stt" th:text="${post.postContent}"></div>
+		<div class="content-stt" th:utext="${post.postContent}"></div>
 		<hr />
 		<div style="color: #B2B2B2; text-align: left">
 			<a class="link-act" href="#" id="like"><i

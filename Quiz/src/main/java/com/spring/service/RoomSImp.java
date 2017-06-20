@@ -161,7 +161,7 @@ public class RoomSImp implements RoomS {
 		try {
 			CallableStatement callableStatement = connection.prepareCall(
 					"EXECUTE p_addPostAfterIntoRoom_postAndRoom  @post_content=?, @id_post_type=?, @id_acc=?, @id_room=?");
-			callableStatement.setNString(1, postContent);
+			callableStatement.setString(1, postContent);
 			callableStatement.setInt(2, typePost);
 			callableStatement.setInt(3, idAcc);
 			callableStatement.setInt(4, idRoom);
