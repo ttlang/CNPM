@@ -165,29 +165,4 @@ public class ChatServiceImpl implements ChatService {
 		}
 		return res;
 	}
-
-	@Override
-	public List<MailBoxDao> numberNotify(String user_id) throws SQLException {
-		Session session = sf.getCurrentSession();
-		SessionImpl sessionImpl = (SessionImpl) session;
-		Connection conn = sessionImpl.connection();
-		CallableStatement callableStatement = conn.prepareCall("kiemtrathongbao ?");
-		callableStatement.setString(1, user_id);
-		List<MailBoxDao> res = new ArrayList<>();
-		MailBoxDao temp = null;
-		ResultSet rs = callableStatement.executeQuery();
-
-		while (rs.next()) {
-
-			temp = new MailBoxDao();
-			temp.setChatId(rs.getInt(1));
-			temp.setCode(rs.getString(2));
-			temp.setRoomId(rs.getString(3));
-			temp.setCountMsg(rs.getInt(4));
-			temp.setLastUser(rs.getString(5));
-			res.add(temp);
-		}
-
-		return res;
-	}
 }
