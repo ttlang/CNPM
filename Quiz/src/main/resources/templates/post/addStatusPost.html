@@ -12,7 +12,10 @@
 		<div class="status row">
 			<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
 				<img class="media-photo img-responsive avt"
-					th:src="${post.idAcc.avatar}"
+
+
+					th:src="@{${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}}"
+
 					alt="Ảnh đại diện" />
 			</div>
 			<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
@@ -25,7 +28,11 @@
 						</button>
 					</form>
 					<!-- end x post  -->
+
 					<a href="javascript:void(0)"  th:id="'idAcc_'+${post.idAcc}" class="memberprofile"><strong th:text="${post.idAcc.name}"> </strong></a> <br />
+
+					<a href="#"><strong th:text="${post.idAcc.name}"> </strong></a> <br />
+
 					<span class="time-post"  style="color: #B2B2B2; cursor: pointer;" 
 											data-toggle="tooltip" data-placement="bottom" 
 											title="Thời gian đăng" th:text="${#dates.format(post.postDate, 'dd-MM-yyyy hh:mm:ss')}">
@@ -36,7 +43,10 @@
 				</div>
 			</div>
 		</div>
-		<div class="content-stt" th:text="${post.postContent}"></div>
+
+
+		<div class="content-stt" th:utext="${post.postContent}"></div>
+
 		<hr />
 		<div style="color: #B2B2B2; text-align: left">
 			<a class="link-act" href="#" id="like"><i

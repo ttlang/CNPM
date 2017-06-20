@@ -136,3 +136,24 @@ footer {
 		color: #e5e3e3; 
 	}
 }
+
+.viewer-img {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+.viewer-img > li {
+      float: left;
+      width: 33.3%;
+      height: 33.3%;
+      margin: 0 -1px -1px 0;
+      border: 1px solid transparent;
+      overflow: hidden;
+    }
+
+.viewer-img > li > img {
+      width: 100%;
+      cursor: -webkit-zoom-in;
+      cursor: zoom-in;
+    }

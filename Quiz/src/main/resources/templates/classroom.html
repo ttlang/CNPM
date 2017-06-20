@@ -19,6 +19,14 @@
 
 
 
+
+
+<!-- view Image JS -->
+<link th:href="@{/view/css/viewer.css}" rel="stylesheet">
+<script th:src="@{/view/js/viewer.js}"></script>
+
+
+
 <!-- sweetAlert -->
 <script th:src="@{/sweetalert/js/sweetalert.min.js}"></script>
 <link th:href="@{/sweetalert/css/sweetalert.css	}" rel="stylesheet">
@@ -40,7 +48,15 @@
 
 	<div class="container">
 		<!--	slider menu-->
+
 		<div th:replace="homepage::sidenav"></div>
+
+			<div th:replace="homepage::sidenav">
+			
+			
+			
+			</div>
+
 
 		<!--       nội dung trang web-->
 		<div id="main">
@@ -108,6 +124,7 @@
 									</div>
 								</div>
 
+
 								<!-- ./out group -->
 
 							</div>
@@ -135,6 +152,35 @@
 
 						<!-- Bài đăng cũ -->
 						<!-- 
+
+							<!-- ./out group -->
+
+						</div>
+						<!-- /Quản lý thành viên -->
+						<!-- out nhóm -->
+
+						<!-- /out nhóm -->
+					</div>
+
+					<!--						danh sách phòng quản lý-->
+					<div class="divcontent">
+						<h4>Thông tin phòng</h4>
+						<p>
+							Tên phòng: <strong th:text="${Room.roomName}"></strong> <br />
+							Mã phòng: <strong th:text="${Room.idRoom}"></strong> <br /> Số
+							thành viên: <span th:text="${numberOfAccount}"></span>
+						</p>
+					</div>
+
+					<th:block th:replace="homepage::footer">
+					</th:block>
+				</div>
+
+				<div class="col-md-8">
+
+					<!-- Bài đăng cũ -->
+					<!-- 
+
 						<div class="divcontent">
 							<div class="create-status row">
 								<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
@@ -158,6 +204,7 @@
 							</div>
 						</div>
 						 -->
+
 						<!-- /bài đăng cũ -->
 
 
@@ -184,6 +231,35 @@
 									<th:block th:replace="/post/statusPost::main_post"></th:block>
 									<!--tao bai viet-->
 									<!-- 
+
+					<!-- /bài đăng cũ -->
+
+
+					<!-- Bài đăng mới -->
+					<div class="divcontent panel">
+						<div class="panel panel-default">
+
+							<!-- loại bài đăng -->
+							<div class="panel-heading">
+								<div class="panel-title" id="nav">
+									<a onclick="getHtmlFormPost(1)"><i class="fa fa-pencil"></i>
+										Tạo bài viết</a> | <a onclick="getHtmlFormPost(2)"><i
+										class="fa fa-check-square-o"></i> Trắc nghiệm</a> | <a
+										onclick="getHtmlFormPost(3)"><i class="fa fa-cloud-upload"></i>
+										Upload file</a>
+										| <a
+										onclick="getHtmlFormPost(4)"><i class="fa fa-picture-o"></i>
+										Upload picture</a>
+								</div>
+							</div>
+							<!-- /loại bài đăng -->
+
+							<div id="div-content-post">
+								<!--thay  các loại bài đăng -->
+								<th:block th:replace="/post/statusPost::main_post"></th:block>
+								<!--tao bai viet-->
+								<!-- 
+
 									<form id="post" onsubmit="return addStatusPost(this)">
 										<input type="hidden" id="type" value="1" />
 										<div class=" post-content">
@@ -217,6 +293,7 @@
 										</div>
 									</form>
 									 -->
+
 									<!--/tao bai viet-->
 									<!--/thay  các loại bài đăng -->
 								</div>
@@ -370,6 +447,151 @@
 			</div>
 		</div>
 	</div>
+
+								<!--/tao bai viet-->
+								<!--/thay  các loại bài đăng -->
+							</div>
+
+
+						</div>
+					</div>
+
+					<!-- /Bài đăng mới -->
+
+					<div id="list-post">
+
+						<!-- start post -->
+						<th:block th:each="post : ${listPost}">
+							<div class="divcontent" th:id="divcontent+${post.content.idPost}">
+								<div class="status row">
+									<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
+										<img class="media-photo img-responsive avt"
+											th:src="@{${session.account.avatar}}" alt="Ảnh đại diện" />
+									</div>
+									<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
+										<div class="people-stt">
+											<!--start  x post -->
+											<form onsubmit="return deletePost(this)">
+												<input type="hidden" id="idpost-close"
+													th:value="${post.content.idPost}" />
+												<button class="close" type="submit">
+													<span aria-hidden="true">×</span>
+												</button>
+											</form>
+											<!-- end x post  -->
+											<a href="#"><strong th:text="${post.content.idAcc.name}">
+											</strong></a> <br /> <span style="color: #B2B2B2"
+												th:text=" ${#dates.format(post.content.postDate, 'dd-MM-yyyy hh:mm:ss')}"></span>
+										</div>
+									</div>
+								</div>
+								<div class="content-stt" th:utext="${post.content.postContent}"></div>
+
+								<th:block th:if="${post.content.idConnect > 0}">
+									<br>
+									<div>
+										<div class="input-group" style="margin-bottom: 5px">
+											<span class="input-group-addon"><input name="radio_da"
+												id="radio_da" type="radio" checked value="1"></span> <input
+												class="form-control" id="da1" readonly="readonly"
+												th:value="${post.da1}" type="text" required>
+										</div>
+										<div class="input-group" style="margin-bottom: 5px">
+											<span class="input-group-addon"><input name="radio_da"
+												name="radio_da" type="radio" value="2"></span> <input
+												class="form-control" id="da2" readonly="readonly"
+												th:value="${post.da2}" type="text" required>
+										</div>
+										<div class="input-group" style="margin-bottom: 5px">
+											<span class="input-group-addon"><input name="radio_da"
+												name="radio_da" type="radio" value="3"></span> <input
+												class="form-control" id="da3" readonly="readonly"
+												th:value="${post.da3}" type="text" required>
+										</div>
+										<div class="input-group" style="margin-bottom: 5px">
+											<span class="input-group-addon"><input name="radio_da"
+												name="radio_da" type="radio" value="4"></span> <input
+												class="form-control" id="da4" readonly="readonly"
+												th:value="${post.da4}" type="text" required>
+										</div>
+
+
+									</div>
+								</th:block>
+								<hr />
+								<div style="color: #B2B2B2; text-align: left">
+									<a class="link-act" href="javascript:void(0);"
+										th:id="like+${post.content.idPost}"
+										onclick="likeThisPost(this)"><i class="fa fa-thumbs-o-up"></i><span
+										id="lbl-like"
+										th:type="${#lists.contains(post.content.accountList,session.account)?'1':'0'}"
+										th:text="${#lists.contains(post.content.accountList,session.account)?'Bỏ thích':'Thích'}">
+
+									</span></a>&nbsp;<a href="javascript:void(0)"
+										th:onclick="'detailAccountLikePost('+${post.content.idPost}+')'"
+										th:text="'('+${#lists.size(post.content.accountList)}+')'"></a>
+									&nbsp;<a class="link-act" href="javascript:void(0);"><i
+										class="fa fa-comment"></i><span> Bình luận (<span
+											th:text="${#lists.size(post.content.commentList)}"></span>)
+									</span></a>
+								</div>
+
+								<hr />
+								<div class="comment">
+									<div class="cmt-input row">
+										<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
+											<img class="media-photo img-responsive avt"
+												th:src="@{${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}}"
+												alt="Ảnh đại diện" />
+										</div>
+										<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
+											<input type="text" class="form-control"
+												th:id="comment_post+${post.content.idPost}"
+												placeholder="Nhập bình luận"
+												onkeydown="if(event.keyCode==13) addComment(this.id)" />
+										</div>
+									</div>
+									<!--   								bình luận thứ 1-->
+									<br />
+									<div th:id="list_comment+${post.content.idPost}">
+										<th:block th:each="comment : ${post.content.commentList}">
+											<div class="cmt row" th:id="comment+${comment.idComment}">
+												<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
+													<img class="media-photo img-responsive avt"
+														th:src="@{/images/15284079_583315985195410_4289784661158093094_n.jpg}"
+														alt="Ảnh đại diện" />
+												</div>
+												<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
+													<!-- start x close comment -->
+													<form onsubmit="return deleteComment(this)">
+														<input type="hidden" id="idcomment-close"
+															th:value="${comment.idComment}" />
+														<button class="close" type="submit">
+															<span aria-hidden="true">×</span>
+														</button>
+													</form>
+													<!-- end x close comment -->
+													<a href="#"><strong th:text="${comment.idAcc.name}"></strong></a>
+													<span th:text="${comment.commentContent}"></span><br /> <span
+														th:text="${#dates.format(comment.commentTime, 'dd-MM-yyyy hh:mm:ss')}"></span>
+												</div>
+											</div>
+										</th:block>
+									</div>
+								</div>
+							</div>
+						</th:block>
+						<!-- end post -->
+					</div>
+				</div>
+
+			</div>
+			<div class="clearfix visible-xs-block"></div>
+
+		</div>
+	</div>
+	</div>
+
 
 
 
