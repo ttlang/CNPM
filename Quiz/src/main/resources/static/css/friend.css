@@ -1,0 +1,94 @@
+.member-frame.member-card{
+	color: white;
+    background: url(http://mbtivietnam.net/diendan/rgba.php?r=0&g=0&b=0&a=204);
+    background: rgba(0, 0, 0, .8);
+    _filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=#CC000000,endColorstr=#CC000000);
+    padding: 10px;
+    -webkit-border-radius: 0px;
+    -moz-border-radius: 0px;
+    -khtml-border-radius: 0px;
+    border-radius: 0px;
+    overflow: hidden;
+    max-width: 565px;
+    -webkit-box-shadow: 0 0 15px 0 rgba(0,0,0, 0.8);
+    -moz-box-shadow: 0 0 15px 0 rgba(0,0,0, 0.8);
+    -khtml-box-shadow: 0 0 15px 0 rgba(0,0,0, 0.8);
+    box-shadow: 0 0 15px 0 rgba(0,0,0, 0.8);
+}
+.member-frame{
+    z-index: 10000;
+    width: 90%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    box-sizing: border-box;
+    max-width: 690px;
+}
+.member-card{
+	    z-index: 9999;
+    top: 64.8px;
+    left: 392px;
+    position: fixed;
+    display: none;
+}
+.member-card .avatarCropper{
+	float: left;
+    border: none;
+    padding: 0;
+    position: relative;
+    width: 192px;
+    height: 192px;
+    direction: ltr;
+}
+.member-card .avatarCropper img{
+	width: 100%;
+	height: 100%;
+}
+.member-card .userInfo{
+	    margin-left: 205px;
+    font-size: 11px;
+}
+.member-card .userInfo .username{
+	font-size: 18px;
+    color: rgb(222, 222, 222);
+}
+.member-card .userInfo .username a{
+	color: rgb(222, 222, 222);
+}
+.member-card .userInfo .userTitle{
+	    margin: 0 0 3px;
+}
+.member-card .userInfo .title{
+	color: rgb(113, 113, 113);
+    font-size: 10pt;
+    font-weight: normal;
+        font-family: 'Open Sans', sans-serif;
+        margin-top: -8px;
+        margin-bottom: 10px;
+}
+.member-card .userInfo .userTitle .info{
+	font-size: 11px;
+}
+.member-card .userInfo .rela{
+	margin-top: 20px;
+	margin-left: 10px;
+}
+.member-card .userInfo .rela .makeFriend{
+	padding: 5px 10px;
+	background: #1D9D74;
+	color: #fff;
+	border-radius: 4px;
+}
+.member-card .closeMember{
+	font-size: 23px;
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 1.2;
+    text-indent: 0;
+    width: 16px;
+    height: 16px;
+}
+
