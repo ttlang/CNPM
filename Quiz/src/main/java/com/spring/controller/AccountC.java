@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -244,12 +245,12 @@ public class AccountC {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date date2 = formatter.parse(w.getParameter("birth"));
 		Account account = (Account) session.getAttribute("account");
-//		int idAccount = account.getIdAcc();
+		// int idAccount = account.getIdAcc();
 		if (accountService.updateAccountInfo(name, date2, job, gender, address, account.getIdAcc())) {
 			session.setAttribute("account", accountService.getAccountByID(account.getIdAcc()));
-			
+
 			Account account2 = (Account) session.getAttribute("account");
-			
+
 			System.err.println(account2.getName());
 			return "Cập nhật thành công";
 		} else {
@@ -347,5 +348,24 @@ public class AccountC {
 			accountService.acceptRequestAddFriend(accAdd.getIdAcc().intValue(), idFriend);
 			return "Hủy kết bạn";
 		}
+	}
+
+	// dánh sách bạn của account
+	@RequestMapping(value = "/friend-list", method = RequestMethod.GET)
+	public String friendList(HttpSession session, Model model) {
+		Account account = (Account) session.getAttribute("account");
+		List<Relationship> accounts = (List<Relationship>) accountService.getAccountByID(account.getIdAcc().intValue())
+				.getRelationshipList();
+		model.addAttribute("listRelationship", accounts);
+		return "friend";
+	}
+
+	@RequestMapping(value = "/friend-request", method = RequestMethod.GET)
+	public String friendRequest(HttpSession session, Model model) {
+		Account account = (Account) session.getAttribute("account");
+		List<Relationship> accounts = (List<Relationship>) accountService.getAccountByID(account.getIdAcc().intValue())
+				.getRelationshipList1();
+		model.addAttribute("listRelationship", accounts);
+		return "friendRequests";
 	}
 }
