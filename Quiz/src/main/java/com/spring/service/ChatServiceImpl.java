@@ -148,19 +148,18 @@ public class ChatServiceImpl implements ChatService {
 		Session session = sf.getCurrentSession();
 		SessionImpl sessionImpl = (SessionImpl) session;
 		Connection conn = sessionImpl.connection();
-		CallableStatement callableStatement = conn.prepareCall("danhsachgiangvien ?");
+		CallableStatement callableStatement = conn.prepareCall("exec  dbo.danhsachbanbe ?");
 		callableStatement.setInt(1, magv);
 		List<MemberDao> res = new ArrayList<>();
 		ResultSet rs = callableStatement.executeQuery();
 		MemberDao temp;
 		while (rs.next()) {
 			temp = new MemberDao();
-			temp.setMagv(rs.getInt(1));
-			temp.setHogv(rs.getString(2));
-			temp.setTengv(rs.getString(3));
-			temp.setAnhgv(rs.getString(4));
-			temp.setGioitinh(rs.getBoolean(5));
-			temp.setEmail(rs.getString(6));
+			temp.setIdAcc(rs.getInt("id_acc"));
+			temp.setName(rs.getString("name"));
+			temp.setAvatar(rs.getString("avatar"));
+			temp.setGender(rs.getBoolean("gender"));
+			temp.setEmail(rs.getString("email"));
 			res.add(temp);
 		}
 		return res;

@@ -59,7 +59,6 @@ public class AccountSImp implements AccountS {
 			while (rs.next()) {
 				idAccount = rs.getInt(1);
 			}
-			
 
 		} catch (SQLException e) {
 			e.printStackTrace();

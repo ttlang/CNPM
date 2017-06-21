@@ -3,12 +3,15 @@ package com.spring.project;
 import static org.junit.Assert.assertEquals;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
@@ -22,9 +25,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.nlu.model.MemberDao;
 import com.spring.repository.AccountR;
 import com.spring.service.AES;
 import com.spring.service.AccountS;
+import com.spring.service.ChatService;
 import com.spring.service.Mail;
 
 import it.ozimov.springboot.mail.service.exception.CannotSendEmailException;
@@ -40,6 +45,8 @@ public class AccountTest {
 	Mail mail;
 	@Autowired
 	AES aes;
+	@Autowired
+	ChatService chatService;
 
 	/**
 	 * testCheckEmail
@@ -98,35 +105,49 @@ public class AccountTest {
 		mail.sendMail(to, "Test", "mail2.html", map);
 
 	}
+
 	@Test
-	public void testEnableAccount(){
+	public void testEnableAccount() {
 		assertEquals(1, s.enableAccount(1, true));
 	}
+
 	@Test
-	public void test2(){
-		String a="abca|zzzz";
+	public void test2() {
+		String a = "abca|zzzz";
 		StringTokenizer st = new StringTokenizer(a, "|");
 		System.err.println(st.countTokens());
 		System.err.println(st.nextToken());
-		
+
 	}
+
 	@Test
-	public void testChangePassword(){
+	public void testChangePassword() {
 		System.err.println(s.changePassword("ttlang162@gmail.com", "12345"));
 	}
+
 	@Test
-	public void testIsAdmin(){
+	public void testIsAdmin() {
 		assertEquals(true, s.checkIsAdmin(3, 3));
 	}
+
 	@Test
-	public void testUpdateAccountInfo(){
-		String date ="1996-2-1";
+	public void testUpdateAccountInfo() {
+		String date = "1996-2-1";
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			Date date2 = formatter.parse(date);
-			assertEquals(true, s.updateAccountInfo("Tùng tôm",date2, "sinh viên", true, "nông lâm", 3));
+			assertEquals(true, s.updateAccountInfo("Tùng tôm", date2, "sinh viên", true, "nông lâm", 3));
 		} catch (ParseException e) {
 			e.printStackTrace();
+		}
+	}
+
+	@Test
+	public void testDanhSachBanBe() throws SQLException {
+		List<MemberDao> daos = chatService.danhSachChat(1);
+		System.err.println(daos.size());
+		for (MemberDao memberDao : daos) {
+			System.out.println(memberDao);
 		}
 	}
 }
