@@ -1,48 +1,56 @@
 package com.nlu.model;
 
 public class MemberDao {
-	private int magv ;
-	private String hogv ;
-	private String tengv ;
-	private String anhgv  ;
-	private boolean gioitinh;
-	private String email ;
-	public int getMagv() {
-		return magv;
+	private int idAcc;
+	private String name;
+	private String avatar;
+	private boolean gender;
+	private String email;
+
+	public int getIdAcc() {
+		return idAcc;
 	}
-	public void setMagv(int magv) {
-		this.magv = magv;
+
+	public void setIdAcc(int idAcc) {
+		this.idAcc = idAcc;
 	}
-	public String getHogv() {
-		return hogv;
+
+	public String getName() {
+		return name;
 	}
-	public void setHogv(String hogv) {
-		this.hogv = hogv;
+
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getTengv() {
-		return tengv;
+
+	@Override
+	public String toString() {
+		return "MemberDao [idAcc=" + idAcc + ", name=" + name + ", avatar=" + avatar + ", gender=" + gender + ", email="
+				+ email + "]";
 	}
-	public void setTengv(String tengv) {
-		this.tengv = tengv;
+
+	public String getAvatar() {
+		return avatar;
 	}
-	public String getAnhgv() {
-		return anhgv;
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
-	public void setAnhgv(String anhgv) {
-		this.anhgv = anhgv;
+
+	public boolean isGender() {
+		return gender;
 	}
-	public boolean getGioitinh() {
-		return gioitinh;
+
+	public void setGender(boolean gender) {
+		this.gender = gender;
 	}
-	public void setGioitinh( boolean gioitinh) {
-		this.gioitinh = gioitinh;
-	}
+
 	public String getEmail() {
 		return email;
 	}
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 
 }

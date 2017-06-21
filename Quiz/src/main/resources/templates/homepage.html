@@ -26,9 +26,11 @@
 	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/clipboard.min.js}"></script>
 	<script th:src="@{/js/profile.js}"></script>
+
 	
 	<script th:src="@{/js/classroom.js}"></script>
 	
+
 	<script th:src="@{/js/classroom2.js}"></script>
 	<script th:src="@{/js/app.min.js}"></script>
 
@@ -283,6 +285,78 @@
 					</div>
 
 					<div class="col-md-8">
+
+						<div class="divcontent">
+							<div class="status row">
+								<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
+									<img class="media-photo img-responsive avt"
+										th:src="@{/images/15284079_583315985195410_4289784661158093094_n.jpg}"
+										alt="Ảnh đại diện" />
+								</div>
+								<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
+									<div class="people-stt">
+										<a href="#"><strong>Trần Văn Thắng </strong></a> đã đăng trong
+										<a href="#"><strong>Phòng 1 </strong></a> <br /> 
+										<span class="time-post"  style="color: #B2B2B2; cursor: pointer;" 
+											data-toggle="tooltip" data-placement="bottom" 
+											title="Thời gian đăng">
+											<i class="fa fa-ravelry"></i> 1 phút trước
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="content-stt">
+							
+								<!-- Target -->
+							</div>
+							<hr />
+							<div style="color: #B2B2B2; text-align: right">
+								<i class="fa fa-comments-o"> <strong>Bình luận (2)</strong></i>
+							</div>
+							<hr />
+							<div class="comment">
+								<div class="cmt-input row">
+									<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
+										<img class="media-photo img-responsive avt"
+											th:src="@{/images/15284079_583315985195410_4289784661158093094_n.jpg}"
+											alt="Ảnh đại diện" />
+									</div>
+									<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
+										<input type="text" class="form-control"
+											placeholder="Nhập bình luận" />
+									</div>
+								</div>
+								<!--   								bình luận thứ 1-->
+								<br />
+								<div class="cmt row">
+									<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
+										<img class="media-photo img-responsive avt"
+											th:src="@{/images/15284079_583315985195410_4289784661158093094_n.jpg}"
+											alt="Ảnh đại diện" />
+									</div>
+									<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
+										<div class="people-stt">
+											<a href="#"><strong>Trương Tam Lang </strong></a> Trời đ*
+										</div>
+									</div>
+								</div>
+								<!--   								bình luận thứ 2-->
+								<br />
+								<div class="cmt row">
+									<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
+										<img class="media-photo img-responsive avt"
+											th:src="@{/images/15284079_583315985195410_4289784661158093094_n.jpg}"
+											alt="Ảnh đại diện" />
+									</div>
+									<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
+										<div class="people-stt">
+											<a href="#"><strong>Trương Tam Lang </strong></a> Trời đ*
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
 					
 					
 					
@@ -518,6 +592,7 @@
 						
 						
 						
+
 					</div>
 					<div class="clearfix visible-xs-block"></div>
 				</div>
@@ -628,7 +703,7 @@
 <!-- 	</div> -->
 <!-- 	hết phần chat --> -->
 
-	<th:block th:replace="chat::chat-template"></th:block>
+
 	
 	<script>
 		document.getElementById("close-slide").style.display = "none";

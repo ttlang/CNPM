@@ -83,6 +83,8 @@
 			/*<![CDATA[*/
 
 			var chat = new ChatRoom();
+			var avatar_chat = "/upload/avatar/default_avatar.jpg";
+			var name_chat ="Người ta";
 			chat.from = /*[[${session.account.idAcc}]]*/-1;
 			// bien toan cuc
 			function ChatRoom(from, to, location) {
@@ -102,6 +104,24 @@
 							}
 						});
 
+					}
+					if(data.topic=="chat"){
+						var data = JSON.parse(message.body);
+						console.log(''+ data.from +' gửi tin cho :  ' +  data.message + '');
+						    		    
+							if(data.message == chat.from) {
+								$("#count-cart").html('Tin nhắn mới từ '+data.from );
+								document.title = 'Tin nhắn mới từ '+data.from  ;
+								chat.to = data.from ;
+								 loadMailBox();
+								loadingBody();
+								// $("#chat_window_1").show();
+							     }else{
+								  
+								if(data.from == chat.from ){
+									loadingBody() ;
+								}
+							}
 					}
 				});
 			});
@@ -159,6 +179,7 @@
 			}
 			function autoNotify(location) {
 				var id_room = $("#id-room").val();
+				
 				chat.to = id_room;
 				chat.location = location;
 				sendMes("notification", chat);
@@ -181,6 +202,204 @@
 					}
 				});
 			}
+			function loadingBody() {
+				   
+			       if(chat.from != null && chat.to !=null) {
+			    	   
+			    	   $.ajax({
+			    		   url : '/chatpoint' ,
+			    		   type : 'POST' ,
+			    		   data : { from : chat.from  , to : chat.to },
+			    		   success : function  (response) {	    			   
+			    				  
+			    				   $("#danhsachchat .chat-item").each( function (){
+			    					   	if($(this).attr("data-id") == chat.to ) {
+			    					   	 $("#chatvoi").html($(this).html()); 
+			    					   	}
+			    					   
+			    				   } );
+			    			   showMessage(response);
+			    			  
+			    		   }
+			    	   });
+			       }
+			    }
+			 $(document).on('click' ,'#btn-chat', function () {
+		    	 var temp = $("#btn-input").val();
+		          if(temp.length  < 60 && temp.length>0) {
+		    	 if(chat.to != null && chat.from !=null ) {
+			    	  $.ajax({
+			    		  url : '/themnoidung',
+			    		  type: 'POST' ,
+			    		  data : {from : chat.from  , to : chat.to , boby : temp , url : window.location.href } ,
+			    		  success : function ( response ) {
+			    			if(response == true ){
+			    				var topic = "chat";
+			    				client.send("/app/chat/" + topic, {}, JSON.stringify({
+			    					from: chat.from,
+			    				    text: chat.to ,
+			    				}));
+			    			}
+			    		  }
+			    	  });
+			    	}
+		        }else{
+		        	alert("nhắn méo gì dài vậy ..");
+		        }
+				$('#btn-input').val("");
+		    	 
+		     });
+			 function showMessage(mesg)
+			    {
+			    	var html = '' ;
+			    for(var i = mesg.length -1 ; i >= 0  ; i--) {
+			    	// la tin nhan cua nguoi dung 
+		                if(mesg[i].clientId == chat.from ){
+		                	var from = ' <div class="direct-chat-msg right">'
+		                        +'<div class="direct-chat-info clearfix">'
+		                        +' <span class="direct-chat-name pull-right">' + name_chat+' </span>'
+		                + '  <span class="direct-chat-timestamp pull-left">'+mesg[i].date+'</span>'
+		                + ' </div>'
+		                 + '<img class="direct-chat-img"  src="'+avatar_chat+'"  alt="Message User Image"/>'
+		                +' <div class="direct-chat-text">'
+		                +' ' +mesg[i].body
+		                +' </div>'
+		                 +'  </div>';
+		                	
+		   	    		html +=  from  ;
+		   	    	}else{
+		                	 var avatar  = /*[[${session.account.avatar}]]*/ '/upload/avatar/default_avatar.jpg';
+		   	    		var to =  '<div class="direct-chat-msg">'
+		             +' <div class="direct-chat-info clearfix">'
+		             +' <span class="direct-chat-name pull-left"> Tôi</span>'
+		            + '<span class="direct-chat-timestamp pull-right">'+mesg[i].date+'</span>'
+		            + '</div>'
+		           + '<img class="direct-chat-img"   src="'+avatar+'"" alt="Message User Image"/>'
+		           + '<div class="direct-chat-text">'
+		            +''+mesg[i].body
+		            +'</div>'
+		           + '</div>' ;
+		   	    		html+= to ;
+		   	    	}
+			    	
+			    }
+			     if(mesg.length == 0 ) {
+			    	 html = ' <div style="height: 200px;" > '
+			    	  + ''        
+			    	 +' </div >' ;
+			     }
+			    $(".msg_container_base").html(html);
+			    }
+			    $(document).ready(function  () {
+			    			  /*   $("#btn-input input").change(
+			    			    		function(){
+			    			    			if( $('.msg input').val().length === 0 ) {
+			 			    			       $("#btn-chat").addClass('disabled');
+			 			    			    }else{
+			 			    			    	$("#btn-chat").removeClass('disabled');
+			 			    			    }
+			    			    		}); */
+			    	loadDanhSachChat();
+			    	loadMailBox();
+			    	 $("#end1").click();    	 
+			        $("#end2").click();
+			   $("#contacts-list").on("click",".contacts-list-info" , function () {		   
+				//  alert($(this).attr("data-id"));
+				  $("button[data-widget='chat-pane-toggle']").click();
+				  if(!$("#minim_chat_window").hasClass("glyphicon-minus")){
+				    	 $("#minim_chat_window").click();
+				    }
+			    	      chat.to = $(this).attr("data-id");
+							avatar_chat = $(this).find("#img").val();
+			    		  name_chat = $(this).find("#name_chat").text();
+			    		  loadingBody();
+			    		  $("#chatvoi").html($(this).find("#name_chat").text());
+			    		 
+			    		  
+			    		  
+			   });
+			    });	
+			    function loadDanhSachChat() {
+					   var magv = /*[[${session.account.idAcc}]]*/ 1;
+					   $.ajax({
+						   url : '/danhsachchat',
+						   type : 'GET' ,
+						   data : {magv  , magv },
+						   success : function  (response ) {
+							   console.log(response);
+							   
+							   var html2 = '' ;
+							   for(var i = 0 ; i< response.length  ; i++) {
+								   if(response[i].magv != chat.from) {
+								   html2 += ' <li>'
+					                    + ' <a href="#">'
+				                        + '<img class="contacts-list-img" src="'+response[i].avatar+'" alt="User Image"/>'
+				                        + '<div data-id="'+response[i].idAcc+'" class="contacts-list-info">'
+				                         +'   <span class="contacts-list-name"> <span  id="name_chat">'
+				                         +' '+response[i].name 
+				                         +'    </span> <input type="hidden" id="img" value='+ response[i].avatar +' > <small class="contacts-list-date pull-right">'+response[i].idAcc+'</small>'
+				                          +'  </span>'
+				                       + '<span class="contacts-list-msg">'+response[i].email+'</span>'
+				                       +'<span data-toggle="tooltip" id="end2" title="" class="badge bg-green jsclient-count" data-id="'+response[i].idAcc+'"  data-original-title="Tin nhắn mới"></span>'
+				                       + '</div>'	                   
+				                     +' </a>' 
+				                      + ' </li>' ;
+								   }
+							   }
+							   $(".contacts-list").html(html2) ;
+						   }
+					   });
+					   
+				   }
+			    function loadMailBox(){
+					   
+					   if(chat.from != null ){
+				    		 $.ajax({
+				    			 url : '/findMailBox' ,
+				    			 type : 'POST' ,
+				    			 data : { userId : chat.from } ,
+				    			 success : function ( response) {
+				    				 // tong so luong tin nhan
+				    				 var count  = 0 ; 
+				    				 for(var i = 0  ;  i < response.length  ; i++) {
+				    					 count += response[i].countMsg ;
+				    				  }
+				    				$(".countmsg").html(count) ;
+				    				// so luong tin nhan tuong user
+				    				
+				    				for(var i = 0 ; i < response.length  ; i++) {
+				    					
+				    					  $("#contacts-list .jsclient-count").each(function  () {
+				    						  
+				    						//  alert(""+response[i].code +" "+$(this).attr("data-id"));
+				    						if( response[i].code == $(this).attr("data-id") || response[i].roomId == $(this).attr("data-id") ) {
+				    							$(this).html(response[i].countMsg) ;
+				    						}  
+				    					  }) ;
+				    				 }
+				    				
+				    				 console.log(response);
+				    			 }
+				    		 });
+				    	 } 
+					   
+				   }
+			    $(document).ready(function  () {
+				    //	 $("#chat_window_1").hide();
+				    	
+				    	 loadDanhSachChat();
+				    	 loadMailBox();
+				    	 
+				    	/*  $("#danhsachchat ").on('click' , '.list-group-item',  function  () {
+				    		   $(this).find(".badge").html("");
+				    		   var div = $(this) ;
+			    		 
+				    	 }); */
+				    	 $("#dschat").on("click" , function  () {
+				    		 loadDanhSachChat();
+				    	 }) ;
+				    	 
+				     }) ;
 
 			/*]]>*/
 		</script>
@@ -189,7 +408,7 @@
 		<div id="info-user"></div>
 		<script>
 			$(function() {
-				$('.memberprofile').click(function() {
+				$('.memberprofile').mouseenter(function() {
 					var id_acc = $(this).attr("id").substring(6);
 					$.ajax({
 						url : "/account/profilemember",
@@ -212,11 +431,18 @@
 							console.log(err);
 						}
 					});
-				});
+				})
 
+				/* .mouseleave(function(){
+						$(".member-card").hide();
+					});
+				 */
 			});
 		</script>
 		<!-- ./ket ban -->
+		<!-- /chat -->
+		<th:block th:replace="chat::chat-template"></th:block>
+		<!-- ./chat -->
 	</th:block>
 </body>
 </html>
