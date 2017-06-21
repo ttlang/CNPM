@@ -32,29 +32,29 @@
 								Trang chủ</a></li>
 						<li class="dropdown"><a th:href="@{/home}"
 							class="dropdown-toggle" data-toggle="dropdown"> <i
-								class="fa fa-television icon-menu"></i> Quản lý <span class="caret"></span>
+								class="fa fa-television icon-menu"></i> Quản lý <span
+								class="caret"></span>
 						</a>
 							<ul class="dropdown-menu">
 								<li><a href="#">Quản lý câu hỏi</a></li>
 								<li><a href="#">Quản lý đề thi</a></li>
 							</ul></li>
 
-						<li class="dropdown" ><a href="#" class="dropdown-toggle"  onclick="loadNotify()"
-							data-toggle="dropdown"> <i class="fa fa-bell icon-menu"></i> Thông
-								báo <span class="caret"></span>
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							onclick="loadNotify()" data-toggle="dropdown"> <i
+								class="fa fa-bell icon-menu"></i> Thông báo <span class="caret"></span>
 						</a>
 							<ul class="dropdown-menu notifity" id="notification">
-<!-- 								<li> -->
-<!-- 									<a href="#">  -->
-<!-- 										<img class="contacts-list-img" src="https://bootdey.com/img/Content/user_1.jpg" />  -->
-<!-- 										<span class="contacts-list-name"> Count Dracula  -->
-<!-- 											<small class="contacts-list-date pull-right">2/28/2015</small> -->
-<!-- 										</span> -->
-<!-- 										<span class="contacts-list-msg contect-notifity">How have you been? I was...</span> -->
-<!-- 									</a> -->
-<!-- 								</li> -->
-							</ul>
-						</li>
+								<!-- 								<li> -->
+								<!-- 									<a href="#">  -->
+								<!-- 										<img class="contacts-list-img" src="https://bootdey.com/img/Content/user_1.jpg" />  -->
+								<!-- 										<span class="contacts-list-name"> Count Dracula  -->
+								<!-- 											<small class="contacts-list-date pull-right">2/28/2015</small> -->
+								<!-- 										</span> -->
+								<!-- 										<span class="contacts-list-msg contect-notifity">How have you been? I was...</span> -->
+								<!-- 									</a> -->
+								<!-- 								</li> -->
+							</ul></li>
 
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
 							data-toggle="dropdown"> <img
@@ -78,6 +78,7 @@
 		<script src="/js/sockjs.js"></script>
 		<script src="/js/stomp.js"></script>
 		<script src="/bootstrap-notify/bootstrap-notify.min.js"></script>
+		<link href="/css/friend.css" rel="stylesheet" />
 		<script type="text/javascript" th:inline="javascript">
 			/*<![CDATA[*/
 
@@ -87,7 +88,7 @@
 			function ChatRoom(from, to, location) {
 				this.from = from;
 				this.to = to;
-				this.location=location;
+				this.location = location;
 			}
 			var client = client = Stomp.over(new SockJS('/chat'));
 			client.connect({}, function(frame) {
@@ -153,7 +154,7 @@
 				client.send("/app/chat/" + topic, {}, JSON.stringify({
 					from : chat.from,
 					text : chat.to,
-					location: chat.location
+					location : chat.location
 				}));
 			}
 			function autoNotify(location) {
@@ -162,27 +163,60 @@
 				chat.location = location;
 				sendMes("notification", chat);
 			}
-			function loadNotify(){
-				 if(chat.from==-1){
-					 return;
-				 }
-				 //alert("Load");
-				 $.ajax({
-					 url : "/load-notify",
-					 type: "POST",
-					 data:{from : chat.from},
-					 success: function (response){
-						 if(response){
-							 $("#notification").html(response);
-						 }
-					 }
-				 });
+			function loadNotify() {
+				if (chat.from == -1) {
+					return;
+				}
+				//alert("Load");
+				$.ajax({
+					url : "/load-notify",
+					type : "POST",
+					data : {
+						from : chat.from
+					},
+					success : function(response) {
+						if (response) {
+							$("#notification").html(response);
+						}
+					}
+				});
 			}
 
 			/*]]>*/
 		</script>
 		<!-- ./load notification -->
+		<!-- /ket ban -->
+		<div id="info-user"></div>
+		<script>
+			$(function() {
+				$('.memberprofile').click(function() {
+					var id_acc = $(this).attr("id").substring(6);
+					$.ajax({
+						url : "/account/profilemember",
+						type : "POST",
+						data : {
+							idAccount : id_acc
+						},
+						success : function(response) {
+							if (response) {
+								$("#info-user").hide();
+								$("#info-user").html(response);
+								$("#info-user").show();
+								$(".member-card").show();
 
+								//noi chung cho nay hien thi tu cai json ben kia tra ve, giong nhu hien thi info thoi
+								//ak ma hinh nhu ko dc
+							}
+						},
+						error : function(err) {
+							console.log(err);
+						}
+					});
+				});
+
+			});
+		</script>
+		<!-- ./ket ban -->
 	</th:block>
 </body>
 </html>

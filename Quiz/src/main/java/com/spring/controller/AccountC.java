@@ -1,6 +1,7 @@
 package com.spring.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -24,11 +25,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 import com.spring.domain.Account;
+import com.spring.domain.Relationship;
 import com.spring.service.AES;
 import com.spring.service.AccountS;
 import com.spring.service.Mail;
@@ -218,20 +221,36 @@ public class AccountC {
 		return "account_setting";
 	}
 
+	@RequestMapping(value = "/account/viewinfo/acc{idAcc}")
+	public String accountInfomation(@RequestParam("idAcc") int idAcc) {
+
+		return "account_setting";
+	}
+
 	// cập nhật thông tin người dùng
 	@GetMapping("/update/info")
 	@ResponseBody
 	public String updateInfo(WebRequest w, HttpSession session) throws ParseException {
 		String name = w.getParameter("name");
-		boolean gender = (w.getParameter("gender").equals("1")) ? true : false;
+		boolean gender;
+		if (w.getParameter("gender") == null) {
+			gender = false;
+		} else {
+			gender = (w.getParameter("gender").equals("1")) ? true : false;
+		}
+
 		String job = w.getParameter("job");
 		String address = w.getParameter("address");
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
 		Date date2 = formatter.parse(w.getParameter("birth"));
 		Account account = (Account) session.getAttribute("account");
-		int idAccount = account.getIdAcc();
+//		int idAccount = account.getIdAcc();
 		if (accountService.updateAccountInfo(name, date2, job, gender, address, account.getIdAcc())) {
-			session.setAttribute("account", accountService.getAccountByID(idAccount));
+			session.setAttribute("account", accountService.getAccountByID(account.getIdAcc()));
+			
+			Account account2 = (Account) session.getAttribute("account");
+			
+			System.err.println(account2.getName());
 			return "Cập nhật thành công";
 		} else {
 			return "Cập nhật thất bại";
@@ -245,5 +264,88 @@ public class AccountC {
 		Account account = (Account) session.getAttribute("account");
 		return account.getPassword();
 
+	}
+
+	@RequestMapping(value = "/profilemember", method = RequestMethod.POST)
+	public String profileMember(WebRequest w, Model m, HttpSession session) {
+		int idFriend = Integer.parseInt(w.getParameter("idAccount"));
+		Account accAdd = accountService
+				.getAccountByID(((Account) session.getAttribute("account")).getIdAcc().intValue());
+		System.out.println("profile member " + idFriend);
+		Account accFriend = accountService.getAccountByID(idFriend);
+
+		// check friend ngay đây
+		// select * from [relationship] where id_add = 1 and id_friend=3 and
+		// waiting = 0
+		// chạy câu lệnh này, nếu > 0 thì true else false, idAdd là acc
+		// session,
+		// còn idFriend là cái mình get từ cái bấm nút
+		m.addAttribute("trangThai", statusFriend(accAdd.getIdAcc().intValue(), idFriend));
+		m.addAttribute("profileMem", accFriend);
+		return "info-user/info-user";
+	}
+
+	/**
+	 * 0 không là gì của nhau \n 1 đã gửi lời mời kết bạn \n 2 đã kết bạn \n 3
+	 * chấp nhận yêu cầu kết bạn \n 4 hai người là 1
+	 * 
+	 * @param idAdd
+	 * @param idFriend
+	 * @return
+	 */
+	private int statusFriend(int idAdd, int idFriend) {
+		int trangThai = 0;// chưa có gì cả 2 người
+		Account myAcc = accountService.getAccountByID(idAdd);
+		Account acc = accountService.getAccountByID(idFriend);
+		if (idFriend == myAcc.getIdAcc().intValue()) {
+			trangThai = 4;// chính nó
+		} else {
+			System.out.println(myAcc.getRelationshipList());
+			for (Relationship relationship : myAcc.getRelationshipList()) {
+				if (relationship.getAccountFriend().getIdAcc().intValue() == idFriend) {
+					if (relationship.getWaiting()) {
+						trangThai = 1; // Da gui loi moi kết bạn
+					} else {
+						trangThai = 2;// đã kết bạn
+					}
+					break;
+				}
+			}
+			// kiểm tra xem người này có gửi lời mời kết bạn với mình không
+			// "Chấp
+			// nhận kết bạn
+			for (Relationship relationship : acc.getRelationshipList()) {
+				if (relationship.getAccountFriend().getIdAcc().intValue() == myAcc.getIdAcc().intValue()) {
+					if (relationship.getWaiting()) {
+						trangThai = 3;// chờ yêu cầu chấp nhận kết bạn
+						break;
+					}
+				}
+			}
+		}
+		return trangThai;
+	}
+
+	// xử lý nút kết bạn, code mã giả
+	@RequestMapping(value = "/addFriend", method = RequestMethod.POST)
+	@ResponseBody
+	public String addFriend(WebRequest w, Model m, HttpSession session) throws SQLException {
+		int idFriend = Integer.parseInt(w.getParameter("idFriend"));
+		Account accAdd = (Account) session.getAttribute("account");
+		System.out.println("add Friend:  " + idFriend);
+		switch (statusFriend(accAdd.getIdAcc().intValue(), idFriend)) {
+		case 0:
+			accountService.sendRequestAddFriend(accAdd.getIdAcc().intValue(), idFriend);
+			return "Đã gửi lời mời kết bạn";
+		case 1:
+			accountService.deleteRequestAddFriend(accAdd.getIdAcc().intValue(), idFriend);
+			return "Kết bạn";
+		case 2:
+			accountService.deleteRelationship(accAdd.getIdAcc().intValue(), idFriend);
+			return "Kết bạn";
+		default: // 3
+			accountService.acceptRequestAddFriend(accAdd.getIdAcc().intValue(), idFriend);
+			return "Hủy kết bạn";
+		}
 	}
 }

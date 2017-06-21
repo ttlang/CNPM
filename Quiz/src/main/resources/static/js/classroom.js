@@ -152,46 +152,108 @@ function addFilePost(form_post) {
 
 function deletePost(form_post) {
 	var id_post = $(form_post).find("#idpost-close").val();
-	alert("xóa post id: " + id_post);
-	$
-			.ajax({
-				url : "/deletepost",
-				type : "POST",
-				data : {
-					id_post : id_post
-				},
-				success : function(response) {
-					if (response) {
-						$("#divcontent" + id_post).remove();
-						alert("Bạn đã xóa bài đăng thành công!");
-					} else {
-						alert("Bạn không phải người đăng, hoặc quản trị viên!\n Xóa thất bại!");
+	
+	
+	
+	swal({
+		  title: "Xóa bài đăng?",
+		  text: "Nếu chấp nhận bạn không thể khôi phục lại bài đăng này!",
+		  type: "warning",
+		  showCancelButton: true,
+		  confirmButtonColor: "#DD6B55",
+		  confirmButtonText: "Đồng ý!",
+		  cancelButtonText: "Bỏ qua",
+		  closeOnConfirm: false,
+		  closeOnCancel: false
+		},
+		function(isConfirm){
+		  if (isConfirm) {
+			  
+			  $
+				.ajax({
+					url : "/deletepost",
+					type : "POST",
+					data : {
+						id_post : id_post
+					},
+					success : function(response) {
+						if (response) {
+							$("#divcontent" + id_post).remove();
+							swal("Thành công!", "Bạn đã xóa bài đăng thành công!", "success");
+							
+						} else {
+							swal("Xóa thất bại!", "Bạn không phải người đăng, hoặc quản trị viên!", "error");
+						}
+						
+						return false;
 					}
-				}
-			});
+				});
 
+		return false;
+			  
+			  
+		  } else {
+		    swal("Bỏ qua", "không đồng ý xóa :)", "error");
+		  }
+		});
 	return false;
+	
+	
 }
 function deleteComment(form_comment) {
 	var id_comment = $(form_comment).find("#idcomment-close").val();
 	// alert("xóa comment id: " + id_comment);
-	$
-			.ajax({
-				url : "/deletecomment",
-				type : "POST",
-				data : {
-					id_comment : id_comment
-				},
-				success : function(response) {
-					if (response) {
-						$("#comment" + id_comment).remove();
-					} else {
-						alert("Bạn không phải người bình luận , hoặc quản trị viên!\n Xóa thất bại!");
+	
+	
+	
+	swal({
+		  title: "Xóa bình luận?",
+		  text: "Nếu chấp nhận bạn không thể khôi phục lại bình luận này!",
+		  type: "warning",
+		  showCancelButton: true,
+		  confirmButtonColor: "#DD6B55",
+		  confirmButtonText: "Đồng ý!",
+		  cancelButtonText: "Bỏ qua",
+		  closeOnConfirm: true,
+		  closeOnCancel: false
+		},
+		function(isConfirm){
+		  if (isConfirm) {
+			  
+			  $
+				.ajax({
+					url : "/deletecomment",
+					type : "POST",
+					data : {
+						id_comment : id_comment
+					},
+					success : function(response) {
+						if (response) {
+							$("#comment" + id_comment).remove();
+						} else {
+							 swal("Xóa thất bại", "Bạn không phải người bình luận , hoặc quản trị viên :)", "error");
+						}
 					}
-				}
-			});
+				});
 
+		return false;
+			  
+			  
+		  } else {
+		    swal("Bỏ qua", "không đồng ý xóa :)", "error");
+		  }
+		});
 	return false;
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }
 
 function addComment(id_comment) {
@@ -207,7 +269,7 @@ function addComment(id_comment) {
 				comment_value : comment_value
 			},
 			success : function(response) {
-				alert(response);
+//				alert(response);
 				comment.value = "";
 				if ((response)) {
 					$("#list_comment" + id).html(response);
@@ -269,6 +331,7 @@ function newPostItem(form_post) {
 // thành viên rời khỏi phòng
 function leaveRoom(merberID) {
 	var IDroom = $("#leaveRoomID").val();
+	
 	var form_data = {
 		merberID : merberID,
 		IDroom : IDroom
@@ -290,6 +353,7 @@ function leaveRoom(merberID) {
 					data : form_data,
 					type : 'POST',
 					success : function(result) {
+						console.log(result)
 						if (result == 'true') {
 							window.location.href = '/home'
 						}else{

@@ -3,6 +3,7 @@ package com.spring.controller;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,8 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.google.api.services.drive.model.File;
+import com.nlu.model.OutputMessage;
 import com.spring.domain.Account;
 import com.spring.service.AccountS;
+import com.spring.service.ChatService;
 import com.spring.service.GDriveService;
 import com.spring.service.RoomS;
 
@@ -33,9 +37,12 @@ public class UpLoadC {
 	GDriveService gdriveService;
 	@Autowired
 	AccountS accountService;
-
+	@Autowired
+	private SimpMessagingTemplate template;
 	@Autowired
 	RoomS roomS;
+	@Autowired
+	ChatService chatService;
 
 	@RequestMapping(value = "/upload/avatar", method = RequestMethod.POST)
 	@ResponseBody
@@ -69,7 +76,7 @@ public class UpLoadC {
 
 	@RequestMapping(value = "/upload/picture", method = RequestMethod.POST)
 	@ResponseBody
-	public String uploadPicture(HttpSession session, MultipartHttpServletRequest m) {
+	public String uploadPicture(HttpSession session, MultipartHttpServletRequest m) throws SQLException {
 		// mã phòng
 		String idRoom = m.getParameter("id_room");
 		Account account = (Account) session.getAttribute("account");
@@ -117,20 +124,44 @@ public class UpLoadC {
 
 		String linkView = "";
 		for (String s : listFileResult) {
-			linkView += "<div class='col-md-4'><a target='_blank' href='"+s+"'><img src='" + s
+			linkView += "<div class='col-md-4'><a target='_blank' href='" + s + "'><img src='" + s
 					+ "'width='200' height='200' style='margin-bottom: 10px;'></a></div>";
 		}
 
 		String end = "</div>";
 		String postContents2 = postContents + linkView + end;
-
-		return (roomS.addPostAfterIntoRoom(postContents2, Integer.parseInt(idRoom), 1, account.getIdAcc())) > 0 ? "1"
-				: "0";
+		int idPost = roomS.addPostAfterIntoRoom(postContents2, Integer.parseInt(idRoom), 1, account.getIdAcc());
+		if (idPost > 0) {
+			String topic = "notification";
+			String from = account.getIdAcc().intValue() + "";
+			String messageContent = account.getName() + " vừa đăng hình mới trong nhóm "
+					+ roomS.getRoom(Integer.parseInt(idRoom));
+			String url = "/classRoom/" + idRoom + "#divcontent" + idPost;
+			OutputMessage message = new OutputMessage(from, messageContent, topic);
+			message.setUrl(url);
+			int[] listIdAcc = roomS.getListIDAccountInRoom(Integer.parseInt(idRoom));
+			//
+			for (int i = 0; i < listIdAcc.length; i++) {
+				if (account.getIdAcc().intValue() == listIdAcc[i]) {
+					listIdAcc[i] = -1;
+					break;
+				}
+			}
+			for (int i : listIdAcc) {
+				if (i != -1) {
+					chatService.themNoiDung("POST_" + account.getIdAcc().intValue(), i + "", messageContent, url);
+				}
+			}
+			//
+			message.setListIdAcc(listIdAcc);
+			this.template.convertAndSend("/topic/messages", message);
+		}
+		return (idPost > 0) ? "1" : "0";
 	}
 
 	@RequestMapping(value = "/upload/file", method = RequestMethod.POST)
 	@ResponseBody
-	public String uploadFile(HttpSession session, MultipartHttpServletRequest m) {
+	public String uploadFile(HttpSession session, MultipartHttpServletRequest m) throws SQLException {
 		// mã phòng
 		String idRoom = m.getParameter("id_room");
 		Account account = (Account) session.getAttribute("account");
@@ -160,8 +191,33 @@ public class UpLoadC {
 
 			return "Đăng bài thất bại";
 		}
-
-		return (roomS.addPostAfterIntoRoom(postContents, Integer.parseInt(idRoom), 1, account.getIdAcc())) > 0 ? "1"
+		int idPost = roomS.addPostAfterIntoRoom(postContents, Integer.parseInt(idRoom), 1, account.getIdAcc());
+		if (idPost > 0) {
+			String topic = "notification";
+			String from = account.getIdAcc().intValue() + "";
+			String messageContent = account.getName() + " vừa đăng tệp mới trong nhóm "
+					+ roomS.getRoom(Integer.parseInt(idRoom));
+			String url = "/classRoom/" + idRoom + "#divcontent" + idPost;
+			OutputMessage message = new OutputMessage(from, messageContent, topic);
+			message.setUrl(url);
+			int[] listIdAcc = roomS.getListIDAccountInRoom(Integer.parseInt(idRoom));
+			//
+			for (int i = 0; i < listIdAcc.length; i++) {
+				if (account.getIdAcc().intValue() == listIdAcc[i]) {
+					listIdAcc[i] = -1;
+					break;
+				}
+			}
+			for (int i : listIdAcc) {
+				if (i != -1) {
+					chatService.themNoiDung("POST_" + account.getIdAcc().intValue(), i + "", messageContent, url);
+				}
+			}
+			//
+			message.setListIdAcc(listIdAcc);
+			this.template.convertAndSend("/topic/messages", message);
+		}
+		return (idPost) > 0 ? "1"
 				: "0";
 	}
 

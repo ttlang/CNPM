@@ -139,21 +139,33 @@ public class ChatController {
 	}
 
 	// thắng
-	@RequestMapping(value = "/notification-demo")
-	public String notificationDemo() {
-		return "notification";
-	}
-
-	@RequestMapping(value = "/load-notify", method = RequestMethod.POST)
-	public String loadNotify(@RequestParam("from") int from, Model model) throws SQLException {
-		List<ChatDao> chatDaos = chatService.loadNotify("POST_", from + "", 10);
-		for (ChatDao chatDao : chatDaos) {
-			chatDao.setUrlImg(
-					acccountS.getAccountByID(Integer.parseInt(chatDao.getCode().replace("POST_", ""))).getAvatar());
+		@RequestMapping(value = "/notification-demo")
+		public String notificationDemo() {
+			return "notification";
 		}
-		model.addAttribute("chatDaos", chatDaos);
-		return "notify/load_notify";
 
-	}
+		@RequestMapping(value = "/load-notify", method = RequestMethod.POST)
+		public String loadNotify(@RequestParam("from") int from, Model model) throws SQLException {
+			List<ChatDao> chatDaos = chatService.loadNotify("POST_", from + "", 10);
+			for (ChatDao chatDao : chatDaos) {
+				chatDao.setUrlImg(
+						acccountS.getAccountByID(Integer.parseInt(chatDao.getCode().replace("POST_", ""))).getAvatar());
+			}
+			model.addAttribute("chatDaos", chatDaos);
+			return "notify/load_notify";
+
+		}
+
+		@RequestMapping(value = "/number-notify", method = RequestMethod.POST)
+		@ResponseBody
+		public int numberNotify(int idAcc) throws SQLException {
+			List<MailBoxDao> boxDaos = chatService.numberNotify(idAcc + "");
+
+			int res = 0;
+			for (MailBoxDao mailBoxDao : boxDaos) {
+				res += mailBoxDao.getCountMsg();
+			}
+			return res;
+		}
 
 }

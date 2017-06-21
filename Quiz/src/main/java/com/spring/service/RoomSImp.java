@@ -378,7 +378,18 @@ public class RoomSImp implements RoomS {
 
 	@Override
 	public boolean leaveRoom(int idAcc, int idRoom) {
-		return (roomManageR.deleteMember(idAcc, idRoom) > 0) ? true : false;
+
+		SessionImpl session = (SessionImpl) sf.getCurrentSession();
+		Connection connection = session.connection();
+		try {
+			CallableStatement callableStatement = connection.prepareCall(" EXECUTE p_leaveRoom_room_manage ?,?");
+			callableStatement.setInt(1, idRoom);
+			callableStatement.setInt(2, idAcc);
+			return (callableStatement.executeUpdate() > 0) ? true : false;
+		} catch (SQLException sqlex) {
+			System.out.println(sqlex.getMessage());
+			return false;
+		}
 	}
 
 	@Override

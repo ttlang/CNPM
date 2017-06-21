@@ -17,7 +17,7 @@ $(document)
 																	response) {
 																console
 																		.log(response);
-																if (!response) {
+																if (!response || response=="false") {
 																	swal({
 																		  title: "Thất bại!",
 																		  text: "Đăng ký tham gia phòng thất bại! Có lẻ bạn đã tham gia phòng này!",
@@ -32,7 +32,7 @@ $(document)
 																		});
 																	
 																	
-																} else {
+																} else if (response!="false") {
 // 																	alert("Đăng ký tham gia phòng thành công!")
 																	
 																	swal({
