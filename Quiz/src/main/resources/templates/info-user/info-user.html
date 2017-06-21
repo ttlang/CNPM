@@ -10,7 +10,7 @@
 		<div class="member-frame member-card">
 			<div class="memberCard">
 				<div class="avatarCropper">
-					<a href="#"> <img th:alt="${profileMem.name}"
+					<a th:href="@{${profileMem.avatar}}" target="_blank"> <img th:alt="${profileMem.name}"
 						th:src="${profileMem.avatar}">
 					</a>
 				</div>

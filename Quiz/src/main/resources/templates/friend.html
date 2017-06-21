@@ -61,139 +61,6 @@
 									th:text="${session.account.job}"></h5>
 							</div>
 						</div>
-
-
-
-
-
-						<!--						danh sách phòng tham gia-->
-						<div class="divcontent" th:fragment="ds_phong_tham_gia">
-							<h4>Phòng tham gia</h4>
-							<select class="form-control"
-								onchange="if(this.value!=null && this.value!= undefined && this.value!='') location= this.value;">
-								<option value="">Chọn phòng</option>
-								<th:block th:each="room : ${listRoomParticipation}">
-									<option
-										th:value="@{/classRoom/{idRoom}(idRoom=${room.idRoom})}"
-										th:text="${room.roomName}+' - '+${room.idRoom}"></option>
-
-								</th:block>
-
-							</select>
-							<hr />
-							<button type="button" class="btn btn-success" data-toggle="modal"
-								data-target="#tham-gia-phong">
-								<i class="fa fa-plus"></i> Tham gia phòng
-							</button>
-						</div>
-
-
-
-
-
-						<!--						hiển thị div nhập mã phòng-->
-						<div class="modal fade" id="tham-gia-phong" tabindex="-1"
-							role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"
-							th:fragment="div_hien_thi_ma_phong">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal">
-											<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-										</button>
-										<h4 class="modal-title" id="myModalLabel1">Tham gia phòng</h4>
-									</div>
-									<form class="form-horizontal" role="form">
-										<div class="modal-body">
-											<div class="form-group">
-												<label for="room" class="col-sm-3 control-label">Nhập
-													mã phòng</label>
-												<div class="col-sm-9">
-													<input type="text" class="form-control" id="id_room2"
-														placeholder="Mã phòng">
-												</div>
-											</div>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default"
-												data-dismiss="modal">Hủy</button>
-											<button type="submit" id="search_room"
-												class="btn btn-primary" data-toggle="modal"
-												data-target="#tim-phong" data-dismiss="modal">Tìm
-												phòng</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-
-
-
-
-						<!--						hiển thị div tìm phong-->
-						<div class="modal fade" id="tim-phong" tabindex="-1" role="dialog"
-							aria-labelledby="myModalLabel1" aria-hidden="true"
-							th:fragment="hien_thi_tim_phong">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal">
-											<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-										</button>
-										<h4 class="modal-title" id="myModalLabel1">Tham gia phòng</h4>
-									</div>
-									<form class="form-horizontal" role="form">
-										<div class="modal-body">
-											<div class="form-group">
-												<label for="room" class="col-sm-3 control-label">Tên
-													phòng</label>
-												<div class="col-sm-9">
-													<input type="text" class="form-control"
-														id="room_name_participation" placeholder="Tên phòng"
-														readonly>
-												</div>
-											</div>
-										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default"
-												data-dismiss="modal">Hủy</button>
-											<button type="button" class="btn btn-primary"
-												id="participation">Tham gia</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-
-
-
-
-
-						<!--						danh sách phòng quản lý-->
-						<div class="divcontent" th:fragment="ds_phong_quan_ly">
-							<h4>Phòng quản lý</h4>
-							<select class="form-control"
-								onchange="if(this.value!=null && this.value!= undefined && this.value!='') location= this.value;">
-								<option value="">Chọn phòng</option>
-								<th:block th:each="room : ${listRoomManager}">
-									<option th:text="${room.roomName}+' - '+${room.idRoom}"
-										th:value="@{/classRoom/{idRoom}(idRoom=${room.idRoom})}"></option>
-								</th:block>
-							</select>
-							<hr />
-							<button type="button" class="btn btn-success" data-toggle="modal"
-								data-target="#tao-phong">
-								<i class="fa fa-plus"></i> Tạo phòng mới<i></i>
-							</button>
-						</div>
-
-
-
-
-
-
-
-
 						<div class="footer" th:frame="footer" th:fragment="footer">
 							<footer>
 								<p>Hệ thống quản lý học tập © 2017</p>
@@ -202,100 +69,84 @@
 
 					</div>
 
-					<!--						hiển thị div nhập mã phòng-->
-					<div class="modal fade" id="tao-phong" tabindex="-1" role="dialog"
-						aria-labelledby="myModalLabel2" aria-hidden="true"
-						th:fragment="div_hien_thi_nhap_ma_phong">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal">
-										<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-									</button>
-									<h4 class="modal-title" id="myModalLabel2">Tạo phòng</h4>
-								</div>
-								<form class="form-horizontal" role="form">
-									<div class="modal-body">
-										<div class="form-group">
-											<label for="room" class="col-sm-3 control-label">Nhập
-												tên phòng</label>
-											<div class="col-sm-9">
-												<input type="text" class="form-control" id="name_room"
-													placeholder="Tên phòng" required>
-											</div>
-										</div>
-									</div>
-									<div class="modal-footer">
-										<button type="button" class="btn btn-default"
-											data-dismiss="modal">Hủy</button>
-										<button type="submit" class="btn btn-primary" id="createroom"
-											data-toggle="modal" data-target="#ma-phong"
-											data-dismiss="modal">Tạo phòng</button>
-									</div>
-								</form>
-							</div>
-						</div>
-					</div>
-
 					<!--					mã phòng-->
-					<div class="modal fade" id="ma-phong" tabindex="-1" role="dialog"
-						aria-labelledby="myModalLabel3" aria-hidden="true"
-						th:fragment="ma_phong">
-						<div class="modal-dialog">
-							<div class="modal-content">
-								<div class="modal-header">
-									<button type="button" class="close" data-dismiss="modal">
-										<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-									</button>
-									<h4 class="modal-title" id="myModalLabel3">Mã phòng</h4>
-								</div>
-								<div class="modal-body">
-									<form class="form-horizontal" role="form">
-										<div class="form-group">
-											<label for="room" class="col-sm-3 control-label">Mã
-												phòng</label>
-											<div class="col-sm-6">
-												<input type="text" class="form-control" id="id_room"
-													placeholder="Mã phòng" readonly>
-											</div>
-											<div class="col-sm-3">
-												<button type="button" id="btn-copy"
-													class="btn-copy btn btn-default"
-													data-clipboard-action="copy"
-													data-clipboard-target="#id_room">
-													<i class="fa fa-copy"></i> Sao chép
-												</button>
-											</div>
-										</div>
-									</form>
-								</div>
-								<div class="modal-footer">
-									<a th:href="@{/home}"><button type="button"
-											class="btn btn-primary">Xác nhận</button></a>
-								</div>
-							</div>
-						</div>
-
-					</div>
-
 					<div class="col-md-8" id="m-center">
 						<div class="divcontent">
 							<ul class="contacts-list">
-								<li>
-									<div class="col-md-1">
-										<!-- avatar -->
-										<img class="direct-chat-img" src="https://bootdey.com/img/Content/user_1.jpg" />
-									</div> 
-									<div class="col-md-4" style="padding-top: 10px;">
-										<!-- tên -->
-										<a href=""><span class="contacts-list-name"> Tên người gửi </span></a>
-									</div>
-									<div class="col-md-2" style="padding-top: 10px;">
-										<!-- xóa yêu cầu -->
-										<button class="btn btn-default btn-sm"><i class="fa fa-close"></i> Hủy kết bạn</button>
-									</div>
-									<div class="col-md-5"></div>
-								</li>
+								<th:block th:each="friendShip: ${listRelationship}"  th:unless="${friendShip.waiting}">
+									<li>
+										<form onsubmit="return deleteFriendShip(this)">
+											<input type="hidden" name="idFriend"
+												th:value="${friendShip.accountFriend.idAcc}" />
+											<div class="col-md-1">
+												<!-- avatar -->
+												<img class="direct-chat-img"
+													th:src="@{${friendShip.accountFriend.avatar}}" />
+											</div>
+											<div class="col-md-4" style="padding-top: 10px;">
+												<!-- tên -->
+												<a href="javascript:void(0)"
+													th:id="'idAcc_'+${friendShip.accountFriend.idAcc}"
+													class="memberprofile"><span class="contacts-list-name"
+													th:text="${friendShip.accountFriend.name}"> </span></a>
+											</div>
+											<div class="col-md-2" style="padding-top: 10px;">
+												<!-- xóa yêu cầu -->
+												<button type="submit" class="btn btn-default btn-sm">
+													<i class="fa fa-close"></i> Hủy kết bạn
+												</button>
+											</div>
+											<div class="col-md-5"></div>
+										</form>
+									</li>
+								</th:block>
+								<!-- /huy ket ban -->
+								<script>
+									function deleteFriendShip(e) {
+										var id_acc = $(e).find(
+												"input[name='idFriend']").val();
+										
+										swal({
+											  title: "Bạn chắc chắn muốn hủy kết bạn?",
+											  text: "",
+											  type: "warning",
+											  showCancelButton: true,
+											  confirmButtonColor: "#DD6B55",
+											  confirmButtonText: "Đồng ý!",
+											  cancelButtonText: "Bỏ qua",
+											  closeOnConfirm: false,
+											  closeOnCancel: false
+											},
+											function(isConfirm){
+											  if (isConfirm) {
+												  $.ajax({
+														url : "/account/addFriend",
+														type : "POST",
+														data : {
+															idFriend : id_acc
+														},
+														success : function(response) {
+															if (response) {
+																console.log(response);
+																$(e).parent("li")
+																		.remove();
+																swal("Thành công!", "Hai bạn đã trở thành những người xa lạ :))", "success");
+															}
+														},
+														error : function(err) {
+															console.log(err);
+															swal("Xóa thất bại!", "Có lẻ ông trời không cho hai bạn tách rời nhau!", "error");
+														}
+													});
+											  } else {
+											    swal("Đóng", "Chúc hai bạn mãi là bạn tốt!", "success");
+											  }
+											});
+										
+										return false;
+									}
+								</script>
+								<!-- ./huy ket ban -->
 							</ul>
 						</div>
 					</div>
@@ -304,8 +155,6 @@
 			</div>
 		</div>
 	</div>
-
-	<th:block th:replace="chat::chat-template"></th:block>
 
 	<script>
 		document.getElementById("close-slide").style.display = "none";
