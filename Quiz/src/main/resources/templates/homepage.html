@@ -44,7 +44,7 @@
 		<!--	slider menu-->
 		<div id="mySidenav" class="sidenav" th:fragment="sidenav">
 			<a th:href="@{/home}">Trang chủ</a> <a href="#">Thông tin</a> <a
-				href="#">Dịch vụ</a> <a href="#">Liên hệ</a>
+				href="#">Dịch vụ</a> <a th:href="@{/introduce}">Giới thiệu</a>
 			<!-- 			<div class="form-group"> -->
 			<!-- 				<label for="room" class="col-sm-3 control-label">Mã phòng</label> -->
 			<!-- 				<div class="col-sm-9"> -->
@@ -61,7 +61,7 @@
 		<div id="main">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-4" th:fragment="thong_tin_ca_nhan">
+					<div class="col-md-4" id="m-left" th:fragment="thong_tin_ca_nhan">
 						<!--					thông tin cá nhân-->
 						<div class="divcontent row">
 							<div class="col-md-5 col-sm-6 col-xs-12">
@@ -205,7 +205,7 @@
 						
 						
 
-						<div class="footer" th:frame="footer" th:fragment="footer">
+						<div style="margin-top: -40px;" class="footer" th:frame="footer" th:fragment="footer">
 							<footer>
 								<p>Hệ thống quản lý học tập © 2017</p>
 							</footer>
@@ -284,7 +284,7 @@
 
 					</div>
 
-					<div class="col-md-8">
+					<div class="col-md-8" id="m-center">
 
 							
 					
