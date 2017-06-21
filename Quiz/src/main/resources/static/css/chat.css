@@ -2,12 +2,12 @@
 	bottom: 0;
     right: 0;
     position: fixed;
-    border-radius: 3px;
+    border-radius: 0px;
     background: #ffffff;
     border-top: 3px solid #d2d6de;
    /* box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);*/
-   	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
-   	z-index:1;
+   	box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+   	
 }
 
 @media all and (max-width: 320px) {
@@ -22,24 +22,22 @@
 	}
 }
 
-.box.box-primary {
-    border-top-color: #3c8dbc;
+@media all and (min-width: 770px) {
+	.box {
+		opacity: 0.91;
+	}
 }
-.box.box-info {
-    border-top-color: #00c0ef;
+
+@media all and (max-width: 770px) {
+	.box {
+		opacity: 1;
+	}
 }
-.box.box-danger {
-    border-top-color: #dd4b39;
-}
-.box.box-warning {
-    border-top-color: #f39c12;
-}
+
 .box.box-success {
-    border-top-color: #00a65a;
+    border-top-color: #1d9d74;
 }
-.box.box-default {
-    border-top-color: #d2d6de;
-}
+
 .box.collapsed-box .box-body, .box.collapsed-box .box-footer {
     display: none;
 }
@@ -69,63 +67,8 @@
 .box.box-solid>.box-header .btn:hover, .box.box-solid>.box-header a:hover {
     background: rgba(0, 0, 0, 0.1);
 }
-.box.box-solid.box-default {
-    border: 1px solid #d2d6de;
-}
-.box.box-solid.box-default>.box-header {
-    color: #444;
-    background: #d2d6de;
-    background-color: #d2d6de;
-}
-.box.box-solid.box-default>.box-header a, .box.box-solid.box-default>.box-header .btn {
-    color: #444;
-}
-.box.box-solid.box-primary {
-    border: 1px solid #3c8dbc;
-}
-.box.box-solid.box-primary>.box-header {
-    color: #fff;
-    background: #3c8dbc;
-    background-color: #3c8dbc;
-}
-.box.box-solid.box-primary>.box-header a, .box.box-solid.box-primary>.box-header .btn {
-    color: #fff;
-}
-.box.box-solid.box-info {
-    border: 1px solid #00c0ef;
-}
-.box.box-solid.box-info>.box-header {
-    color: #fff;
-    background: #00c0ef;
-    background-color: #00c0ef;
-}
-.box.box-solid.box-info>.box-header a, .box.box-solid.box-info>.box-header .btn {
-    color: #fff;
-}
-.box.box-solid.box-danger {
-    border: 1px solid #dd4b39;
-}
-.box.box-solid.box-danger>.box-header {
-    color: #fff;
-    background: #dd4b39;
-    background-color: #dd4b39;
-}
-.box.box-solid.box-danger>.box-header a, .box.box-solid.box-danger>.box-header .btn {
-    color: #fff;
-}
-.box.box-solid.box-warning {
-    border: 1px solid #f39c12;
-}
-.box.box-solid.box-warning>.box-header {
-    color: #fff;
-    background: #f39c12;
-    background-color: #f39c12;
-}
-.box.box-solid.box-warning>.box-header a, .box.box-solid.box-warning>.box-header .btn {
-    color: #fff;
-}
 .box.box-solid.box-success {
-    border: 1px solid #00a65a;
+    border: 1px solid #1d9d74;
 }
 .box.box-solid.box-success>.box-header {
     color: #fff;
@@ -183,10 +126,12 @@
     clear: both;
 }
 .box-header {
-    color: #444;
+    color: #FFFFFF;
     display: block;
     padding: 10px;
     position: relative;
+    cursor: pointer;
+    background: #1d9d74;
 }
 .box-header.with-border {
     border-bottom: 1px solid #f4f4f4;
@@ -219,10 +164,15 @@
     padding: 5px;
     font-size: 12px;
     background: transparent;
-    color: #97a0b3;
+    color: #FFFFFF;
+}
+.btn-box-tool:active, .btn-box-tool:focus, .btn-box-tool:visited {
+    outline: none;
+    border: none;
+    color: #FFFFFF;
 }
 .open .btn-box-tool, .btn-box-tool:hover {
-    color: #606c84;
+    color: #e2e2e2;
 }
 .btn-box-tool.btn:active {
     box-shadow: none;
@@ -265,11 +215,11 @@
 .box-footer {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
-    border-bottom-right-radius: 3px;
-    border-bottom-left-radius: 3px;
+    /* border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px; */
     border-top: 1px solid #f4f4f4;
     padding: 10px;
-    background-color: #fff;
+    background-color: #1d9d74;
 }
 .direct-chat .box-body {
     border-bottom-right-radius: 0;
@@ -320,6 +270,7 @@
     border: 1px solid #d2d6de;
     margin: 5px 0 0 50px;
     color: #444;
+    box-shadow: 1px 1px 3px #000008;
 }
 .direct-chat-text:after, .direct-chat-text:before {
     position: absolute;
@@ -430,45 +381,13 @@
 .contacts-list-msg {
     color: #999;
 }
-.direct-chat-danger .right>.direct-chat-text {
-    background: #dd4b39;
-    border-color: #dd4b39;
-    color: #fff;
-}
-.direct-chat-danger .right>.direct-chat-text:after, .direct-chat-danger .right>.direct-chat-text:before {
-    border-left-color: #dd4b39;
-}
-.direct-chat-primary .right>.direct-chat-text {
-    background: #3c8dbc;
-    border-color: #3c8dbc;
-    color: #fff;
-}
-.direct-chat-primary .right>.direct-chat-text:after, .direct-chat-primary .right>.direct-chat-text:before {
-    border-left-color: #3c8dbc;
-}
-.direct-chat-warning .right>.direct-chat-text {
-    background: #f39c12;
-    border-color: #f39c12;
-    color: #fff;
-}
-.direct-chat-warning .right>.direct-chat-text:after, .direct-chat-warning .right>.direct-chat-text:before {
-    border-left-color: #f39c12;
-}
-.direct-chat-info .right>.direct-chat-text {
-    background: #00c0ef;
-    border-color: #00c0ef;
-    color: #fff;
-}
-.direct-chat-info .right>.direct-chat-text:after, .direct-chat-info .right>.direct-chat-text:before {
-    border-left-color: #00c0ef;
-}
 .direct-chat-success .right>.direct-chat-text {
-    background: #00a65a;
-    border-color: #00a65a;
-    color: #fff;
+    background: #1d9d74;
+    border-color: #1d9d74;
+    color: red;
 }
 .direct-chat-success .right>.direct-chat-text:after, .direct-chat-success .right>.direct-chat-text:before {
-    border-left-color: #00a65a;
+    border-left-color: #1d9d74;
 }
 .direct-chat .box-body {
   border-bottom-right-radius: 0;
@@ -518,10 +437,10 @@
   border-radius: 5px;
   position: relative;
   padding: 5px 10px;
-  background: #d2d6de;
-  border: 1px solid #d2d6de;
+  background: #f4f4f4;
+  border: 1px solid #f4f4f4;
   margin: 5px 0 0 50px;
-  color: #444444;
+  color: #1d9d74;
 }
 .direct-chat-text:after,
 .direct-chat-text:before {
@@ -529,7 +448,7 @@
   right: 100%;
   top: 15px;
   border: solid transparent;
-  border-right-color: #d2d6de;
+  border-right-color: #f4f4f4;
   content: ' ';
   height: 0;
   width: 0;
@@ -621,6 +540,7 @@
 }
 .contacts-list-name,
 .contacts-list-status {
+color: #1d9d74;
   display: block;
 }
 .contacts-list-name {
@@ -636,50 +556,14 @@
 .contacts-list-msg {
   color: #999;
 }
-.direct-chat-danger .right > .direct-chat-text {
-  background: #dd4b39;
-  border-color: #dd4b39;
-  color: #ffffff;
-}
-.direct-chat-danger .right > .direct-chat-text:after,
-.direct-chat-danger .right > .direct-chat-text:before {
-  border-left-color: #dd4b39;
-}
-.direct-chat-primary .right > .direct-chat-text {
-  background: #3c8dbc;
-  border-color: #3c8dbc;
-  color: #ffffff;
-}
-.direct-chat-primary .right > .direct-chat-text:after,
-.direct-chat-primary .right > .direct-chat-text:before {
-  border-left-color: #3c8dbc;
-}
-.direct-chat-warning .right > .direct-chat-text {
-  background: #f39c12;
-  border-color: #f39c12;
-  color: #ffffff;
-}
-.direct-chat-warning .right > .direct-chat-text:after,
-.direct-chat-warning .right > .direct-chat-text:before {
-  border-left-color: #f39c12;
-}
-.direct-chat-info .right > .direct-chat-text {
-  background: #00c0ef;
-  border-color: #00c0ef;
-  color: #ffffff;
-}
-.direct-chat-info .right > .direct-chat-text:after,
-.direct-chat-info .right > .direct-chat-text:before {
-  border-left-color: #00c0ef;
-}
 .direct-chat-success .right > .direct-chat-text {
-  background: #00a65a;
-  border-color: #00a65a;
+  background: #1d9d74;
+  border-color: #1d9d74;
   color: #ffffff;
 }
 .direct-chat-success .right > .direct-chat-text:after,
 .direct-chat-success .right > .direct-chat-text:before {
-  border-left-color: #00a65a;
+  border-left-color: #1d9d74;
 }
 
 .contacts-list {
@@ -693,4 +577,36 @@
 .contacts-list li {
 	list-style-type: none;
 	padding-left: 5px;
+}
+
+.btn-send {
+	background: none;
+	color: #FFFFFF;
+	border: none;
+}
+
+.btn-send:hover {
+	color: yellow;
+	backfground: red;
+	border: none;
+}
+
+.btn-send:hover, .btn-send:focus, btn-send:active, .btn-send:visited, .btn-send:link, .btn-send::after, .btn-send::before {
+	color: yellow;
+	backfground: none;
+	border: 0;
+	outline: 0;
+}
+
+.msg input[type="text"] {
+	background: none;
+	outline: 0;
+	border: none;
+	box-shadow: none;
+	border-bottom: 1px solid #FFFFFF;
+	color: #FFFFFF;
+}
+
+.msg input[type="text"]::placeholder {
+	color: #FFFFFF;
 }

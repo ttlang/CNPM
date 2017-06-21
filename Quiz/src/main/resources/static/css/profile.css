@@ -104,8 +104,32 @@ footer {
 .link-act {
   color: #555555; }
 
+
 @media only screen and (max-width: 980px) {
   .myform {
     opacity: 1; } }
+
+@media only screen and (min-width: 991px) {
+	#m-left {
+		position: fixed;
+		width: 30%;
+	}
+	
+	#m-center {
+		position: absolute; 
+		width: 55%; 
+		margin-left: 30%;
+	}
+}
+
+@media only screen and (max-width: 990px) {
+	#m-left {
+		
+	}
+	
+	#m-center {
+	
+	}
+}
 
 /*# sourceMappingURL=profile.css.map */

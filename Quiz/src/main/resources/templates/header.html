@@ -7,6 +7,7 @@
 
 	<!--	menu fixed top-->
 	<th:block th:fragment="menu_fix_top">
+	
 		<nav id="header" class="navbar navbar-fixed-top">
 			<div id="header-container" class="container navbar-container">
 				<div class="navbar-header">
@@ -32,12 +33,12 @@
 								Trang chủ</a></li>
 						<li class="dropdown"><a th:href="@{/home}"
 							class="dropdown-toggle" data-toggle="dropdown"> <i
-								class="fa fa-television icon-menu"></i> Quản lý <span
+								class="fa fa-users icon-menu"></i> Bạn bè <span
 								class="caret"></span>
 						</a>
 							<ul class="dropdown-menu">
-								<li><a href="#">Quản lý câu hỏi</a></li>
-								<li><a href="#">Quản lý đề thi</a></li>
+								<li><a href="#">Bạn bè</a></li>
+								<li><a href="#">Lời mời kết bạn</a></li>
 							</ul></li>
 
 						<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -255,31 +256,32 @@
 			    for(var i = mesg.length -1 ; i >= 0  ; i--) {
 			    	// la tin nhan cua nguoi dung 
 		                if(mesg[i].clientId == chat.from ){
-		                	var from = ' <div class="direct-chat-msg right">'
-		                        +'<div class="direct-chat-info clearfix">'
-		                        +' <span class="direct-chat-name pull-right">' + name_chat+' </span>'
-		                + '  <span class="direct-chat-timestamp pull-left">'+mesg[i].date+'</span>'
-		                + ' </div>'
-		                 + '<img class="direct-chat-img"  src="'+avatar_chat+'"  alt="Message User Image"/>'
-		                +' <div class="direct-chat-text">'
-		                +' ' +mesg[i].body
-		                +' </div>'
-		                 +'  </div>';
-		                	
-		   	    		html +=  from  ;
+				   	    		var to =  '<div class="direct-chat-msg">'
+				             +' <div class="direct-chat-info clearfix">'
+				             +' <span class="direct-chat-name pull-left">' + name_chat+'</span>'
+				            + '<span class="direct-chat-timestamp pull-right">'+mesg[i].date+'</span>'
+				            + '</div>'
+				           + '<img class="direct-chat-img"   src="'+avatar_chat+'"" alt="Message User Image"/>'
+				           + '<div class="direct-chat-text">'
+				            +''+mesg[i].body
+				            +'</div>'
+				           + '</div>' ;
+				   	    		html+= to ;
 		   	    	}else{
 		                	 var avatar  = /*[[${session.account.avatar}]]*/ '/upload/avatar/default_avatar.jpg';
-		   	    		var to =  '<div class="direct-chat-msg">'
-		             +' <div class="direct-chat-info clearfix">'
-		             +' <span class="direct-chat-name pull-left"> Tôi</span>'
-		            + '<span class="direct-chat-timestamp pull-right">'+mesg[i].date+'</span>'
-		            + '</div>'
-		           + '<img class="direct-chat-img"   src="'+avatar+'"" alt="Message User Image"/>'
-		           + '<div class="direct-chat-text">'
-		            +''+mesg[i].body
-		            +'</div>'
-		           + '</div>' ;
-		   	    		html+= to ;
+		                	
+		   	    		var from = ' <div class="direct-chat-msg right">'
+	                        +'<div class="direct-chat-info clearfix">'
+	                        +' <span class="direct-chat-name pull-right">Tôi</span>'
+	                + '  <span class="direct-chat-timestamp pull-left">'+mesg[i].date+'</span>'
+	                + ' </div>'
+	                 + '<img class="direct-chat-img"  src="'+avatar+'"  alt="Message User Image"/>'
+	                +' <div class="direct-chat-text">'
+	                +' ' +mesg[i].body
+	                +' </div>'
+	                 +'  </div>';
+	                	
+	   	    		html +=  from  ;
 		   	    	}
 			    	
 			    }

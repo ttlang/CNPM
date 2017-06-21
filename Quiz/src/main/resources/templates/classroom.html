@@ -16,6 +16,7 @@
 <script th:src="@{/js/profile.js}"></script>
 <script th:src="@{/js/clipboard.min.js}"></script>
 <script th:src="@{/js/classroom.js}"></script>
+<script th:src="@{/js/app.min.js}"></script>
 
 
 
@@ -51,7 +52,7 @@
 		<div id="main">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-4">
+					<div class="col-md-4" id="m-left">
 						<!--					thông tin cá nhân-->
 						<div class="divcontent row">
 							<div class="col-md-5 col-sm-6 col-xs-12">
@@ -136,7 +137,7 @@
 						</th:block>
 					</div>
 
-					<div class="col-md-8">
+					<div class="col-md-8" id="m-center">
 
 						<!-- Bài đăng cũ -->
 						<!-- 
