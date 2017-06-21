@@ -25,14 +25,12 @@
 						</button>
 					</form>
 					<!-- end x post  -->
-					<a href="#"><strong th:text="${post.idAcc.name}"> </strong></a> <br />
+					<a href="javascript:void(0)"  th:id="'idAcc_'+${post.idAcc.idAcc}" class="memberprofile"><strong th:text="${post.idAcc.name}"> </strong></a> <br />
 					<span class="time-post"  style="color: #B2B2B2; cursor: pointer;" 
 											data-toggle="tooltip" data-placement="bottom" 
 											title="Thời gian đăng" th:text="${#dates.format(post.postDate, 'dd-MM-yyyy hh:mm:ss')}">
 										</span>
 					
-					<!-- <span style="color: #B2B2B2"
-						th:text=" ${#dates.format(post.postDate, 'dd-MM-yyyy hh:mm:ss')}"></span> -->
 				</div>
 			</div>
 		</div>

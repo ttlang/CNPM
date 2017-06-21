@@ -52,6 +52,10 @@ public class RoomC {
 		int idRoom;
 		try {
 			idRoom = Integer.parseInt(webrq.getParameter("id_room"));
+			Room room = rooms.getRoom(idRoom);
+			if (room == null) {
+				return "false";
+			}
 		} catch (Exception e) {
 			return "false";
 		}
@@ -345,8 +349,13 @@ public class RoomC {
 
 	@RequestMapping(value = "/leaves/room")
 	@ResponseBody
-	public String leaveRoom(@RequestParam("merberID") int idRoom, @RequestParam("IDroom") int idAcc) {
-		if (rooms.leaveRoom(idAcc, idRoom)) {
+	public String leaveRoom(@RequestParam("IDroom") int idRoom,HttpSession session) {
+		System.err.println(idRoom);
+		Account account =(Account)session.getAttribute("account");
+		System.err.println(account.getIdAcc());
+		boolean result =rooms.leaveRoom(account.getIdAcc(), idRoom);
+		System.err.println(result);
+		if(result) {
 			return "true";
 		} else {
 			return "Thất bại";

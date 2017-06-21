@@ -1,5 +1,6 @@
 package com.spring.service;
 
+import java.sql.SQLException;
 import java.util.Date;
 
 import com.spring.domain.Account;
@@ -97,5 +98,12 @@ public interface AccountS {
 	 */
 	
 	public boolean updateAccountAvatar(String avatarLink, int idAccount);
+	public void sendRequestAddFriend(int idAdd, int idFriend) throws SQLException;
+
+	public void deleteRelationship(int idAdd, int idFriend) throws SQLException;
+
+	public void acceptRequestAddFriend(int idAdd, int idFriend) throws SQLException;
+
+	public void deleteRequestAddFriend(int idAdd, int idFriend) throws SQLException;
 	
 }
