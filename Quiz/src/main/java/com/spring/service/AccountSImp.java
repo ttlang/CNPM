@@ -59,7 +59,7 @@ public class AccountSImp implements AccountS {
 			while (rs.next()) {
 				idAccount = rs.getInt(1);
 			}
-			connection.close();
+			
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -80,7 +80,6 @@ public class AccountSImp implements AccountS {
 			while (rs.next()) {
 				message = rs.getString(1);
 			}
-			connection.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

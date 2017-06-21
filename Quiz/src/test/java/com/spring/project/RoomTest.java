@@ -118,4 +118,8 @@ public class RoomTest {
 	public void testLeaveRoom(){
 		System.err.println(rS.leaveRoom(2, 6));
 	}
+	@Test
+	public void getPostOfUser(){
+		postS.getPostOfUser(1);
+	}
 }
