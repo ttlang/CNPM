@@ -30,9 +30,13 @@
 					<ul class="nav navbar-nav navbar-right">
 						<li><a th:href="@{/home}"><i class="fa fa-home icon-menu"></i>
 								Trang chủ</a></li>
-						<li class="dropdown"><a th:href="@{/friendrequest}"> <i
-								class="fa fa-users icon-menu"></i> Lời mời kết bạn
+						<li class="dropdown"><a href="#" class="dropdown-toggle"
+							data-toggle="dropdown"><i class="fa fa-users icon-menu"></i> Bạn bè <span class="caret"></span>
 						</a>
+						<ul class="dropdown-menu">
+								<li><a th:href="@{/friend}">Danh sách bạn bè</a></li>
+								<li><a th:href="@{/friendrequest}">Lời mời kết bạn</a></li>
+							</ul>
 						</li>
 
 						<li class="dropdown" ><a href="#" class="dropdown-toggle"  onclick="loadNotify()"

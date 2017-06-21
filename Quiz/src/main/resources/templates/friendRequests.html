@@ -46,7 +46,7 @@
 		<div id="main">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-4" th:fragment="thong_tin_ca_nhan">
+					<div class="col-md-4" id="m-left">
 						<!--					thông tin cá nhân-->
 						<div class="divcontent row">
 							<div class="col-md-5 col-sm-6 col-xs-12">
@@ -278,21 +278,27 @@
 
 					</div>
 
-					<div class="col-md-8">
+					<div class="col-md-8" id="m-center">
 						<div class="divcontent">
 							<ul class="contacts-list">
-								<li>
+								<li class="row">
 									<div class="col-md-1">
+										<!-- avatar -->
 										<img class="direct-chat-img" src="https://bootdey.com/img/Content/user_1.jpg" />
 									</div> 
 									<div class="col-md-4" style="padding-top: 10px;">
-										<a href=""><span class="contacts-list-name"> Tên người gửi </span></a>
+										<!-- tên -->
+										<a href=""><span class=""> Tên người gửi </span></a>
 									</div>
-									<div class="col-md-offset-3 col-md-2" style="padding-top: 10px;">
+									<div class="col-md-2" style="padding-top: 10px;">
+										<!-- chấp nhận -->
 										<button class="btn btn-success btn-sm"><i class="fa fa-check"></i> Chập nhận</button>
 									</div>
 									<div class="col-md-2" style="padding-top: 10px;">
+										<!-- xóa yêu cầu -->
 										<button class="btn btn-default btn-sm"><i class="fa fa-close"></i> Xóa yêu cầu</button>
+									</div>
+									<div class="col-md-2" style="padding-top: 10px;">
 									</div>
 								</li>
 

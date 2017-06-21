@@ -27,16 +27,6 @@
 <script th:src="@{/jqueryUI/jquery-ui.min.js}"></script>
 <link th:href="@{/jqueryUI/jquery-ui.min.css}" rel="stylesheet">
 
-<style>
-	.sidebar-outer {
-    position: relative;
-}
-@media (min-width: 768px) {
-    .sidebar {
-        position: fixed;
-    }
-}
-</style>
 
 </head>
 
@@ -60,7 +50,7 @@
 		<div id="main">
 			<div class="container-fluid">
 				<div class="row">
-					<div class="col-md-4" id="m-left">
+					<div class="col-md-4 m-left" style="position: fixed; width: 30%;">
 						<!--					thông tin cá nhân-->
 						<div class="divcontent row">
 							<div class="col-md-5 col-sm-6 col-xs-12">
@@ -95,7 +85,7 @@
 									<form th:action="@{/adminroom}" method="get">
 										<input type="hidden" name="idRoom" th:value="${Room.idRoom}" />
 										<button type="submit" class="btn btn-success">
-											<i class="fa fa-users"></i> Quản lý
+											<i class="fa fa-users"></i> Quản lý thành viên
 										</button>
 									</form>
 								</div>
@@ -145,9 +135,8 @@
 
 						<th:block th:replace="homepage::footer">
 						</th:block>
-						
 					</div>
-					<div class="col-md-8" id="m-center">
+					<div class="col-md-8" style="position: absolute; width: 85%; padding-left: 30%">
 
 						<!-- Bài đăng cũ -->
 						<!-- 
@@ -379,6 +368,8 @@
 	</div>
 	</div>
 
+
+
 	<!-- modal -->
 	<div class="modal fade" role="dialog" aria-labelledby="myModalLabel"
 		id="modal-like" aria-hidden="true">
@@ -426,6 +417,5 @@
 			document.getElementById("close-slide").style.display = "none";
 		}
 	</script>
-
 </body>
 </html>

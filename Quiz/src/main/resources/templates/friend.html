@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
-<title>Quiz</title>
+<title>Danh sách bạn bè</title>
 <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 <link th:href="@{/css/profile-old.css}" rel="stylesheet">
 <link th:href="@{/css/profile.css}" rel="stylesheet">
@@ -21,59 +21,51 @@
 
 
 
-	<!--java script-->
-	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
-	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
-	<script th:src="@{/js/clipboard.min.js}"></script>
-	<script th:src="@{/js/profile.js}"></script>
-	<script th:src="@{/js/classroom2.js}"></script>
-	<script th:src="@{/js/app.min.js}"></script>
+<!--java script-->
+<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/clipboard.min.js}"></script>
+<script th:src="@{/js/profile.js}"></script>
+<script th:src="@{/js/classroom2.js}"></script>
+<script th:src="@{/js/app.min.js}"></script>
 
 
 
 </head>
 
 <body>
-<th:block th:replace="header::menu_fix_top"></th:block>
+	<!--	menu fixed top-->
+	<th:block th:replace="header::menu_fix_top"></th:block>
+
 	<div class="container">
 		<!--	slider menu-->
-		<div id="mySidenav" class="sidenav" th:fragment="sidenav">
-			<a th:href="@{/home}">Trang chủ</a> <a th:href="@{/introduce}">Thông tin</a> <a
-				href="#">Dịch vụ</a> <a href="#">Liên hệ</a>
-			<!-- 			<div class="form-group"> -->
-			<!-- 				<label for="room" class="col-sm-3 control-label">Mã phòng</label> -->
-			<!-- 				<div class="col-sm-9"> -->
-			<!-- 					<div class="loader"> -->
-			<!-- 						<div class="bar"></div> -->
-			<!-- 						<div class="bar"></div> -->
-			<!-- 						<div class="bar"></div> -->
-			<!-- 					</div> -->
-			<!-- 				</div> -->
-			<!-- 			</div> -->
-		</div>
+		<div th:replace="homepage::sidenav"></div>
+
 
 		<!--       nội dung trang web-->
 		<div id="main">
 			<div class="container-fluid">
-				<div class="row sidebar">
-					<div class="col-md-4" id="m-left" th:fragment="thong_tin_ca_nhan">
+				<div class="row">
+					<div class="col-md-4" id="m-left">
 						<!--					thông tin cá nhân-->
 						<div class="divcontent row">
 							<div class="col-md-5 col-sm-6 col-xs-12">
 								<img class="img-circle img-responsive"
-									th:src="${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}" alt="Ảnh đại diện" />
+									th:src="${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}"
+									alt="Ảnh đại diện" />
 							</div>
 
 							<div class="col-md-7 col-sm-6 col-xs-12 text-right">
 								<h4 th:text="${session.account.name}"></h4>
-								<h5 style="text-transform: uppercase;" th:text="${session.account.job}"></h5>
+								<h5 style="text-transform: uppercase;"
+									th:text="${session.account.job}"></h5>
 							</div>
 						</div>
-						
-						
-						
-						
-						
+
+
+
+
+
 						<!--						danh sách phòng tham gia-->
 						<div class="divcontent" th:fragment="ds_phong_tham_gia">
 							<h4>Phòng tham gia</h4>
@@ -94,14 +86,15 @@
 								<i class="fa fa-plus"></i> Tham gia phòng
 							</button>
 						</div>
-						
-						
-						
-						
-						
+
+
+
+
+
 						<!--						hiển thị div nhập mã phòng-->
 						<div class="modal fade" id="tham-gia-phong" tabindex="-1"
-							role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true" th:fragment="div_hien_thi_ma_phong">
+							role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"
+							th:fragment="div_hien_thi_ma_phong">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
@@ -133,13 +126,14 @@
 								</div>
 							</div>
 						</div>
-						
-						
-						
-						
+
+
+
+
 						<!--						hiển thị div tìm phong-->
 						<div class="modal fade" id="tim-phong" tabindex="-1" role="dialog"
-							aria-labelledby="myModalLabel1" aria-hidden="true" th:fragment="hien_thi_tim_phong">
+							aria-labelledby="myModalLabel1" aria-hidden="true"
+							th:fragment="hien_thi_tim_phong">
 							<div class="modal-dialog">
 								<div class="modal-content">
 									<div class="modal-header">
@@ -170,11 +164,11 @@
 								</div>
 							</div>
 						</div>
-						
-						
-						
-						
-						
+
+
+
+
+
 						<!--						danh sách phòng quản lý-->
 						<div class="divcontent" th:fragment="ds_phong_quan_ly">
 							<h4>Phòng quản lý</h4>
@@ -192,17 +186,17 @@
 								<i class="fa fa-plus"></i> Tạo phòng mới<i></i>
 							</button>
 						</div>
-						
-						
-						
-						
-						
-						
-						
+
+
+
+
+
+
+
 
 						<div class="footer" th:frame="footer" th:fragment="footer">
-							<footer style="padding-top: 10px;">
-								<p>Quiz © 2017</p>
+							<footer>
+								<p>Hệ thống quản lý học tập © 2017</p>
 							</footer>
 						</div>
 
@@ -210,7 +204,8 @@
 
 					<!--						hiển thị div nhập mã phòng-->
 					<div class="modal fade" id="tao-phong" tabindex="-1" role="dialog"
-						aria-labelledby="myModalLabel2" aria-hidden="true" th:fragment="div_hien_thi_nhap_ma_phong">
+						aria-labelledby="myModalLabel2" aria-hidden="true"
+						th:fragment="div_hien_thi_nhap_ma_phong">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -244,7 +239,8 @@
 
 					<!--					mã phòng-->
 					<div class="modal fade" id="ma-phong" tabindex="-1" role="dialog"
-						aria-labelledby="myModalLabel3" aria-hidden="true" th:fragment="ma_phong">
+						aria-labelledby="myModalLabel3" aria-hidden="true"
+						th:fragment="ma_phong">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -263,9 +259,12 @@
 													placeholder="Mã phòng" readonly>
 											</div>
 											<div class="col-sm-3">
-												<button type="button" id="btn-copy" class="btn-copy btn btn-default"
+												<button type="button" id="btn-copy"
+													class="btn-copy btn btn-default"
 													data-clipboard-action="copy"
-													data-clipboard-target="#id_room"><i class="fa fa-copy"></i> Sao chép</button>
+													data-clipboard-target="#id_room">
+													<i class="fa fa-copy"></i> Sao chép
+												</button>
 											</div>
 										</div>
 									</form>
@@ -281,74 +280,23 @@
 
 					<div class="col-md-8" id="m-center">
 						<div class="divcontent">
-							<div class="status row">
-								<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
-									<img class="media-photo img-responsive avt"
-										th:src="@{/images/15284079_583315985195410_4289784661158093094_n.jpg}"
-										alt="Ảnh đại diện" />
-								</div>
-								<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
-									<div class="people-stt">
-										<a href="#"><strong>Trần Văn Thắng </strong></a> đã đăng trong
-										<a href="#"><strong>Phòng 1 </strong></a> <br /> 
-										<span class="time-post"  style="color: #B2B2B2; cursor: pointer;" 
-											data-toggle="tooltip" data-placement="bottom" 
-											title="Thời gian đăng">
-											<i class="fa fa-ravelry"></i> 1 phút trước
-										</span>
+							<ul class="contacts-list">
+								<li>
+									<div class="col-md-1">
+										<!-- avatar -->
+										<img class="direct-chat-img" src="https://bootdey.com/img/Content/user_1.jpg" />
+									</div> 
+									<div class="col-md-4" style="padding-top: 10px;">
+										<!-- tên -->
+										<a href=""><span class="contacts-list-name"> Tên người gửi </span></a>
 									</div>
-								</div>
-							</div>
-							<div class="content-stt">
-							
-								<!-- Target -->
-							</div>
-							<hr />
-							<div style="color: #B2B2B2; text-align: right">
-								<i class="fa fa-comments-o"> <strong>Bình luận (2)</strong></i>
-							</div>
-							<hr />
-							<div class="comment">
-								<div class="cmt-input row">
-									<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
-										<img class="media-photo img-responsive avt"
-											th:src="@{/images/15284079_583315985195410_4289784661158093094_n.jpg}"
-											alt="Ảnh đại diện" />
+									<div class="col-md-2" style="padding-top: 10px;">
+										<!-- xóa yêu cầu -->
+										<button class="btn btn-default btn-sm"><i class="fa fa-close"></i> Hủy kết bạn</button>
 									</div>
-									<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
-										<input type="text" class="form-control"
-											placeholder="Nhập bình luận" />
-									</div>
-								</div>
-								<!--   								bình luận thứ 1-->
-								<br />
-								<div class="cmt row">
-									<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
-										<img class="media-photo img-responsive avt"
-											th:src="@{/images/15284079_583315985195410_4289784661158093094_n.jpg}"
-											alt="Ảnh đại diện" />
-									</div>
-									<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
-										<div class="people-stt">
-											<a href="#"><strong>Trương Tam Lang </strong></a> Trời đ*
-										</div>
-									</div>
-								</div>
-								<!--   								bình luận thứ 2-->
-								<br />
-								<div class="cmt row">
-									<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
-										<img class="media-photo img-responsive avt"
-											th:src="@{/images/15284079_583315985195410_4289784661158093094_n.jpg}"
-											alt="Ảnh đại diện" />
-									</div>
-									<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
-										<div class="people-stt">
-											<a href="#"><strong>Trương Tam Lang </strong></a> Trời đ*
-										</div>
-									</div>
-								</div>
-							</div>
+									<div class="col-md-5"></div>
+								</li>
+							</ul>
 						</div>
 					</div>
 					<div class="clearfix visible-xs-block"></div>
@@ -358,7 +306,7 @@
 	</div>
 
 	<th:block th:replace="chat::chat-template"></th:block>
-	
+
 	<script>
 		document.getElementById("close-slide").style.display = "none";
 		function openNav() {
@@ -372,7 +320,7 @@
 			document.getElementById("open-slide").style.display = "block";
 			document.getElementById("close-slide").style.display = "none";
 		}
-		
+
 		new Clipboard('.btn-copy');
 	</script>
 </body>
