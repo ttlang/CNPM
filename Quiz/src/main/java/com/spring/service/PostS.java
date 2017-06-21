@@ -36,5 +36,12 @@ public interface PostS {
 	public boolean likePostFromAccount(int idPost, Integer idAcc);
 
 	public List<Account> getListAccountLike(int idPost);
+	
+	/**
+	 * lấy ra ở mỗi phòng mà tài khoản đó tham gia hoặc quản lý một bài đăng mới nhất
+	 * @param idAcc
+	 * @return
+	 */
+	public List<Post>getPostOfUser(int idAcc);
 
 }

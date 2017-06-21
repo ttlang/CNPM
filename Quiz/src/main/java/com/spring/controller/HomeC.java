@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.spring.domain.Account;
 import com.spring.service.AccountS;
+import com.spring.service.PostS;
 import com.spring.service.RoomS;
 
 @Controller
@@ -17,7 +18,7 @@ public class HomeC {
 	RoomS rooms;
 	@Autowired
 	AccountS accountS;
-
+	@Autowired PostS postS;
 	@RequestMapping(value = "/home")
 	public String homePage(HttpSession session, Model model) {
 		Account account = (Account) session.getAttribute("account");
@@ -31,6 +32,7 @@ public class HomeC {
 		}
 		model.addAttribute("listRoomManager", rooms.getListRoomManager(account.getIdAcc()));
 		model.addAttribute("listRoomParticipation", rooms.getListRoomParticipation(account.getIdAcc()));
+		model.addAttribute("newPost", postS.getPostOfUser(account.getIdAcc()));
 		return "homepage";
 
 	}

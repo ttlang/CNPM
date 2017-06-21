@@ -26,6 +26,11 @@
 	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 	<script th:src="@{/js/clipboard.min.js}"></script>
 	<script th:src="@{/js/profile.js}"></script>
+
+	
+	<script th:src="@{/js/classroom.js}"></script>
+	
+
 	<script th:src="@{/js/classroom2.js}"></script>
 	<script th:src="@{/js/app.min.js}"></script>
 
@@ -280,6 +285,7 @@
 					</div>
 
 					<div class="col-md-8">
+
 						<div class="divcontent">
 							<div class="status row">
 								<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
@@ -350,6 +356,243 @@
 								</div>
 							</div>
 						</div>
+
+					
+					
+					
+						<th:block th:if="${#lists.isEmpty(newPost)}">Chào Bạn</th:block>
+					
+						<th:block th:unless="${#lists.isEmpty(newPost)}">
+					
+					
+<!-- 						<div class="divcontent" th:each="p:${newPost}"> -->
+<!-- 							<div class="status row"> -->
+<!-- 								<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media"> -->
+<!-- 									<img class="media-photo img-responsive avt" -->
+<!-- 										th:src="@{${p.idAcc.avatar}}" -->
+<!-- 										alt="Ảnh đại diện" /> -->
+<!-- 								</div> -->
+<!-- 								<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt"> -->
+<!-- 									<div class="people-stt"> -->
+<!-- 										<a href="#"><strong th:text="${p.idAcc.name}"></strong></a> đã đăng trong -->
+<!-- 										<a href="#"><strong th:text="${p.roomList[0].roomName}"></strong></a> <br />  -->
+<!-- 										<span class="time-post"  style="color: #B2B2B2; cursor: pointer;"  -->
+<!-- 											data-toggle="tooltip" data-placement="bottom"  -->
+<!-- 											title="Thời gian đăng"> -->
+<!-- 											<i class="fa fa-ravelry"></i> <span th:text="${p.postDate}"></span> -->
+<!-- 										</span> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 							</div> -->
+<!-- 							<div class="content-stt"> -->
+<!-- 								<p th:utext="${p.postContent}"></p> -->
+<!-- 								Target -->
+<!-- 							</div> -->
+<!-- 							<hr /> -->
+<!-- 							<div style="color: #B2B2B2; text-align: right"> -->
+<!-- 								<i class="fa fa-comments-o"> <strong>Bình luận ( <span th:text="${#lists.size(p.commentList)}"></span> )</strong></i> -->
+<!-- 							</div> -->
+<!-- 							<hr /> -->
+<!-- 							<div class="comment"> -->
+<!-- 								<div class="cmt-input row"> -->
+<!-- 									<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media"> -->
+<!-- 										<img class="media-photo img-responsive avt" -->
+<!-- 											th:src="@{${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}}" -->
+<!-- 											alt="Ảnh đại diện" /> -->
+<!-- 									</div> -->
+<!-- 									<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt"> -->
+<!-- 										<input type="text" class="form-control" -->
+<!-- 											th:id="comment_post+${p.idPost}" -->
+<!-- 											onkeydown="if(event.keyCode==13) addComment(this.id)" -->
+<!-- 											placeholder="Nhập bình luận" /> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 								  								bình luận thứ 1 -->
+<!-- 								<br/> -->
+									
+									
+									
+<!-- 								<th:block th:each="cmt:${p.commentList}"> -->
+<!-- 								<div class="cmt row"> -->
+<!-- 									<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media"> -->
+<!-- 										<img class="media-photo img-responsive avt" -->
+<!-- 											th:src="${cmt.idAcc.avatar}" -->
+<!-- 											alt="Ảnh đại diện" /> -->
+<!-- 									</div> -->
+<!-- 									<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt"> -->
+<!-- 										<div class="people-stt"> -->
+<!-- 											<a href="#"><strong th:text="${cmt.idAcc.name}"></strong></a> <span th:utext="${cmt.commentContent}"></span><br/> -->
+<!-- 											<span class="time-post" style="color: #B2B2B2; cursor: pointer;" data-toggle="tooltip" data-placement="bottom" title="Thời gian đăng" -->
+<!-- 															th:text="${cmt.commentTime}"> -->
+<!-- 														</span> -->
+<!-- 										</div> -->
+<!-- 									</div> -->
+<!-- 								</div> -->
+<!-- 								  								bình luận thứ 2 -->
+<!-- 								<br /> -->
+								
+<!-- 								</th:block> -->
+								
+								
+								
+								
+								
+								
+<!-- 							</div> -->
+<!-- 						</div> -->
+						
+
+							<!-- start post -->
+							<th:block th:each="post : ${newPost}">
+								<div class="divcontent"
+									th:id="divcontent+${post.idPost}">
+									<div class="status row">
+										<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
+											<img class="media-photo img-responsive avt"
+												th:src="@{${session.account.avatar}}" alt="Ảnh đại diện" />
+										</div>
+										<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
+											<div class="people-stt">
+												<!--start  x post -->
+												<form onsubmit="return deletePost(this)">
+													<input type="hidden" id="idpost-close"
+														th:value="${post.idPost}" />
+													<button class="close" type="submit">
+														<span aria-hidden="true">×</span>
+													</button>
+												</form>
+												<!-- end x post  -->
+												<a href="javascript:void(0)"
+													th:id="'idAcc_'+${post.idAcc.idAcc}"
+													class="memberprofile"><strong
+													th:text="${post.idAcc.name}"> </strong></a> <br /> <span
+													class="time-post" style="color: #B2B2B2; cursor: pointer;"
+													data-toggle="tooltip" data-placement="bottom"
+													title="Thời gian đăng"
+													th:text="${#dates.format(post.postDate, 'dd-MM-yyyy hh:mm:ss')}">
+												</span>
+											</div>
+										</div>
+									</div>
+									<div class="content-stt" th:utext="${post.postContent}"></div>
+
+									<th:block th:if="${post.idConnect > 0}">
+										<br>
+										<div>
+											<div class="input-group" style="margin-bottom: 5px">
+												<span class="input-group-addon"><input
+													name="radio_da" id="radio_da" type="radio" checked
+													value="1"></span> <input class="form-control" id="da1"
+													readonly="readonly" th:value="${post.da1}" type="text"
+													required>
+											</div>
+											<div class="input-group" style="margin-bottom: 5px">
+												<span class="input-group-addon"><input
+													name="radio_da" name="radio_da" type="radio" value="2"></span>
+												<input class="form-control" id="da2" readonly="readonly"
+													th:value="${post.da2}" type="text" required>
+											</div>
+											<div class="input-group" style="margin-bottom: 5px">
+												<span class="input-group-addon"><input
+													name="radio_da" name="radio_da" type="radio" value="3"></span>
+												<input class="form-control" id="da3" readonly="readonly"
+													th:value="${post.da3}" type="text" required>
+											</div>
+											<div class="input-group" style="margin-bottom: 5px">
+												<span class="input-group-addon"><input
+													name="radio_da" name="radio_da" type="radio" value="4"></span>
+												<input class="form-control" id="da4" readonly="readonly"
+													th:value="${post.da4}" type="text" required>
+											</div>
+
+
+										</div>
+									</th:block>
+									<hr />
+									<div style="color: #B2B2B2; text-align: left">
+										<a class="link-act" href="javascript:void(0);"
+											th:id="like+${post.idPost}"
+											onclick="likeThisPost(this)"><i class="fa fa-thumbs-o-up"></i><span
+											id="lbl-like"
+											th:type="${#lists.contains(post.accountList,session.account)?'1':'0'}"
+											th:text="${#lists.contains(post.accountList,session.account)?'Bỏ thích':'Thích'}">
+
+										</span></a>&nbsp;<a href="javascript:void(0)"
+											th:onclick="'detailAccountLikePost('+${post.idPost}+')'"
+											th:text="'('+${#lists.size(post.accountList)}+')'"></a>
+										&nbsp;<a class="link-act" href="javascript:void(0);"><i
+											class="fa fa-comment"></i><span> Bình luận (<span
+												th:text="${#lists.size(post.commentList)}"></span>)
+										</span></a>
+									</div>
+
+									<hr />
+									<div class="comment">
+										<div class="cmt-input row">
+											<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
+												<img class="media-photo img-responsive avt"
+													th:src="@{${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}}"
+													alt="Ảnh đại diện" />
+											</div>
+											<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
+												<input type="text" class="form-control"
+													th:id="comment_post+${post.idPost}"
+													placeholder="Nhập bình luận"
+													onkeydown="if(event.keyCode==13) addComment(this.id)" />
+											</div>
+										</div>
+										<!--   								bình luận thứ 1-->
+										<br />
+										<div th:id="list_comment+${post.idPost}">
+											<th:block th:each="comment : ${post.commentList}">
+												<div class="cmt row" th:id="comment+${comment.idComment}">
+													<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
+														<img class="media-photo img-responsive avt"
+															th:src="${comment.idAcc.avatar}" alt="Ảnh đại diện" />
+													</div>
+													<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
+														<!-- start x close comment -->
+														<form onsubmit="return deleteComment(this)">
+															<input type="hidden" id="idcomment-close"
+																th:value="${comment.idComment}" />
+															<button class="close" type="submit">
+																<span aria-hidden="true">×</span>
+															</button>
+														</form>
+														<!-- end x close comment -->
+														<a href="javascript:void(0)"
+															th:id="'idAcc_'+${comment.idAcc.idAcc}"
+															class="memberprofile"><strong
+															th:text="${comment.idAcc.name}"></strong></a> <span
+															th:text="${comment.commentContent}"></span><br /> <span
+															class="time-post"
+															style="color: #B2B2B2; cursor: pointer;"
+															data-toggle="tooltip" data-placement="bottom"
+															title="Thời gian đăng"
+															th:text="${#dates.format(comment.commentTime, 'dd-MM-yyyy hh:mm:ss')}">
+														</span>
+													</div>
+												</div>
+											</th:block>
+										</div>
+									</div>
+								</div>
+							</th:block>
+							<!-- end post -->
+						
+						
+						
+						
+						
+						
+						
+						
+						
+						</th:block>
+						
+						
+						
+
 					</div>
 					<div class="clearfix visible-xs-block"></div>
 				</div>
@@ -459,6 +702,7 @@
 <!-- 		</div> -->
 <!-- 	</div> -->
 <!-- 	hết phần chat --> -->
+
 
 	
 	<script>
