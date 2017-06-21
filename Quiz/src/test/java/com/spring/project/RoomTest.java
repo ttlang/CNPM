@@ -114,4 +114,8 @@ public class RoomTest {
 	public void testListPost(){
 		System.out.println("test list post: " + rS.getListPostInRoom(7).size());
 	}
+	@Test
+	public void testLeaveRoom(){
+		System.err.println(rS.leaveRoom(2, 6));
+	}
 }
