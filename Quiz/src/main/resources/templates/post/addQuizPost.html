@@ -4,68 +4,92 @@
 <meta charset="UTF-8" />
 </head>
 <body>
-
-
-<div class="divcontent">
-	<div class="status row">
-		<div class="col-md-1">
-			<img alt="Ảnh đại diện" class="img-responsive"
-				src="/images/15284079_583315985195410_4289784661158093094_n.jpg"
-				width="150%">
-		</div>
-		<div class="col-md-10">
-			<div class="people-stt">
-				<a href="#"><strong>Trần Văn Thắng </strong></a> đã đăng trong <a
-					href="#"><strong>Phòng 1 </strong></a> <br> <span class="time-post" style="color: #B2B2B2; cursor: pointer;"
+	<div class="divcontent" th:id="divcontent+${post.idPost}">
+		<div class="status row">
+			<div class="col-md-1">
+				<img class="media-photo img-responsive avt"
+					th:src="@{${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}}"
+					alt="Ảnh đại diện">
+			</div>
+			<div class="col-md-10">
+				<div class="people-stt">
+					<!--start  x post -->
+					<form onsubmit="return deletePost(this)">
+						<input type="hidden" id="idpost-close" th:value="${post.idPost}" />
+						<button class="close" type="submit">
+							<span aria-hidden="true" data-toggle="tooltip"
+								data-placement="bottom" title="Xóa bài viết">&times;</span>
+						</button>
+					</form>
+					<!-- end x post  -->
+					<a href="javascript:void(0)" th:id="'idAcc_'+${post.idAcc}"
+						class="memberprofile"><strong
+						th:text="${session.account.name}"> </strong></a> <br /> <span
+						class="time-post" style="color: #B2B2B2; cursor: pointer;"
 						data-toggle="tooltip" data-placement="bottom"
-						title="Thời gian đăng" th:text="${#dates.format(post.postDate, 'dd-MM-yyyy hh:mm:ss')}">
+						title="Thời gian đăng"
+						th:text="${#dates.format(post.postDate, 'dd-MM-yyyy hh:mm:ss')}">
 					</span>
 				</div>
-		</div>
-	</div>
-	<div class="content-stt">Xin chào</div>
-	<hr />
-	<div class="radio">
-		<label> <input id="r1" name="optionsRadios" type="radio"
-			value="option1"> Đáp án 1
-		</label>
-	</div>
-	<div class="radio">
-		<label> <input id="r2" name="optionsRadios" type="radio"
-			value="option1"> Đáp án 2
-		</label>
-	</div>
-	<div class="radio">
-		<label> <input id="r3" name="optionsRadios" type="radio"
-			value="option1"> Đáp án 3
-		</label>
-	</div>
-	<div class="radio">
-		<label> <input id="r4" name="optionsRadios" type="radio"
-			value="option1"> Đáp án 4
-		</label>
-	</div>
-	<hr />
-	<div style="color: #B2B2B2; text-align: left">
-		<a class="link-act" href="#" id="like"><i
-			class="fa fa-thumbs-o-up"></i><span id="lbl-like"> Thích</span></a>
-		&nbsp;&nbsp; <a class="link-act" href="#"><i class="fa fa-comment"></i><span>
-				Bình luận</span></a>
-	</div>
-	<hr>
-	<div class="comment">
-		<div class="cmt-input row">
-			<div class="col-md-1">
-				<img alt="Ảnh đại diện" class="img-responsive"
-					src="/images/15284079_583315985195410_4289784661158093094_n.jpg"
-					width="100%">
-			</div>
-			<div class="col-md-11">
-				<input class="form-control" placeholder="Nhập bình luận" type="text">
 			</div>
 		</div>
-		<!--   								bình luận thứ 1-->
-		<br>
-		<div id="list_comment"></div>
+		<div class="content-stt" th:utext="${post.postContent}"></div>
+		<hr />
+		<div>
+			<div class="input-group" style="margin-bottom: 5px">
+				<span class="input-group-addon"><input name="radio_da" 
+					id="radio_da" type="radio"  checked value="1"></span> <input
+					class="form-control" id="da1" readonly="readonly"
+					th:value="${post.answer1}" type="text" required>
+			</div>
+			<div class="input-group" style="margin-bottom: 5px">
+				<span class="input-group-addon"><input name="radio_da"
+					name="radio_da" type="radio" value="2"></span> <input
+					class="form-control" id="da2" readonly="readonly"
+					th:value="${post.answer2}" type="text" required>
+			</div>
+			<div class="input-group" style="margin-bottom: 5px">
+				<span class="input-group-addon"><input name="radio_da"
+					name="radio_da" type="radio" value="3"></span> <input
+					class="form-control" id="da3" readonly="readonly"
+					th:value="${post.answer3}" type="text" required>
+			</div>
+			<div class="input-group" style="margin-bottom: 5px">
+				<span class="input-group-addon"><input name="radio_da"
+					name="radio_da" type="radio" value="4"></span> <input
+					class="form-control" id="da4" readonly="readonly"
+					th:value="${post.answer4}" type="text" required>
+			</div>
+
+
+		</div>
+		<hr />
+		<div style="color: #B2B2B2; text-align: left">
+			<a class="link-act" href="#" id="like"><i
+				class="fa fa-thumbs-o-up"></i><span id="lbl-like"> Thích</span></a>
+			&nbsp;&nbsp; <a class="link-act" href="#"><i
+				class="fa fa-comment"></i><span> Bình luận</span></a>
+		</div>
+		<hr>
+		<div class="comment">
+			<div class="cmt-input row">
+				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
+					<img class="media-photo img-responsive avt"
+						th:src="${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}"
+						alt="Ảnh đại diện" data-toggle="tooltip" data-placement="bottom"
+						title="Người đăng" />
+				</div>
+				<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
+					<input type="text" class="form-control"
+						th:id="comment_post+${post.idPost}"
+						placeholder="Nhập bình luận ..."
+						onkeydown="if(event.keyCode==13) addComment(this.id)" />
+				</div>
+			</div>
+			<!--   								bình luận thứ 1-->
+			<br />
+			<div th:id="list_comment+${post.idPost}"></div>
+		</div>
 	</div>
-</div>
+</body>
+</html>

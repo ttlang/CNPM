@@ -20,6 +20,7 @@ import com.spring.domain.Account;
 import com.spring.domain.Comment;
 import com.spring.domain.Post;
 import com.spring.domain.Room;
+import com.spring.model.PostByGroup;
 import com.spring.model.PostRoom;
 import com.spring.service.AccountS;
 import com.spring.service.PostS;
@@ -172,7 +173,7 @@ public class RoomC {
 	}
 
 	@RequestMapping(value = "/postQuizInRoom", method = RequestMethod.POST)
-	public String postQuizInRoom(WebRequest wr, HttpSession httpSession) {
+	public String postQuizInRoom(WebRequest wr, HttpSession httpSession, Model model) {
 		String noiDung = wr.getParameter("nd");
 		String dap1 = wr.getParameter("da1");
 		String dap2 = wr.getParameter("da2");
@@ -182,6 +183,10 @@ public class RoomC {
 		int idRoom = Integer.parseInt(wr.getParameter("id_room"));
 		Account account = (Account) httpSession.getAttribute("account");
 		int idPost = rooms.addPostQuizIntoRoom(idRoom, account.getIdAcc(), noiDung, dap1, dap2, dap3, dap4, daDung);
+
+		PostByGroup post = rooms.getQuizPost(idPost);
+		System.out.println(post);
+		model.addAttribute("post", post);
 		System.out.println(idPost + " Thanfh cong mej no cong");
 		return "/post/addQuizPost";
 	}
@@ -349,13 +354,13 @@ public class RoomC {
 
 	@RequestMapping(value = "/leaves/room")
 	@ResponseBody
-	public String leaveRoom(@RequestParam("IDroom") int idRoom,HttpSession session) {
+	public String leaveRoom(@RequestParam("IDroom") int idRoom, HttpSession session) {
 		System.err.println(idRoom);
-		Account account =(Account)session.getAttribute("account");
+		Account account = (Account) session.getAttribute("account");
 		System.err.println(account.getIdAcc());
-		boolean result =rooms.leaveRoom(account.getIdAcc(), idRoom);
+		boolean result = rooms.leaveRoom(account.getIdAcc(), idRoom);
 		System.err.println(result);
-		if(result) {
+		if (result) {
 			return "true";
 		} else {
 			return "Thất bại";
