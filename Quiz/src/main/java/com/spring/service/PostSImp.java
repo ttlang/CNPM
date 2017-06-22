@@ -21,6 +21,7 @@ import com.spring.domain.Account;
 import com.spring.domain.Comment;
 import com.spring.domain.Post;
 import com.spring.domain.Room;
+import com.spring.model.PostRoom;
 import com.spring.repository.PostR;
 
 @Service
@@ -84,32 +85,35 @@ public class PostSImp implements PostS {
 	}
 
 	@Override
-	public List<Post> getPostOfUser(int idAcc) {
+	public List<PostRoom> getPostOfUser(int idAcc) {
 		List<Room> listRoomManage = roomS.getListRoomManager(idAcc);
 		List<Room> listRoomPar = roomS.getListRoomParticipation(idAcc);
 
-		Set<Post> listPostRoom = new HashSet<>();
+		Set<Integer> listRoom = new HashSet<>();
+		List<PostRoom> result = new ArrayList<>();
+
 		for (Room room : listRoomManage) {
-			if (room.getPostList() != null && !room.getPostList().isEmpty()) {
-				listPostRoom.add(room.getPostList().get(room.getPostList().size() - 1));
-			}
+			listRoom.add(room.getIdRoom());
 		}
-
 		for (Room room : listRoomPar) {
-			if (room.getPostList() != null && !room.getPostList().isEmpty()) {
-				listPostRoom.add(room.getPostList().get(room.getPostList().size() - 1));
+			listRoom.add(room.getIdRoom());
+		}
+
+		for (Integer integer : listRoom) {
+			List<PostRoom> listPostInRoom = roomS.getListPostRoom(integer);
+			if (listPostInRoom != null && !listPostInRoom.isEmpty()) {
+				result.add(listPostInRoom.get(0));
 			}
 
 		}
-		List<Post>result = new ArrayList<>(listPostRoom);
-		Collections.sort(result,new  Comparator<Post>() {
+
+		Collections.sort(result, new Comparator<PostRoom>() {
 
 			@Override
-			public int compare(Post o1, Post o2) {
-					return o2.getPostDate().compareTo(o1.getPostDate());
+			public int compare(PostRoom o1, PostRoom o2) {
+				return o2.getContent().getPostDate().compareTo(o1.getContent().getPostDate());
 			}
 		});
-
 
 		return result;
 	}

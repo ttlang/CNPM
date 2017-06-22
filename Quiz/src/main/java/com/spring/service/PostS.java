@@ -5,6 +5,7 @@ import java.util.List;
 import com.spring.domain.Account;
 import com.spring.domain.Comment;
 import com.spring.domain.Post;
+import com.spring.model.PostRoom;
 
 public interface PostS {
 	/**
@@ -42,6 +43,6 @@ public interface PostS {
 	 * @param idAcc
 	 * @return
 	 */
-	public List<Post>getPostOfUser(int idAcc);
+	public List<PostRoom>getPostOfUser(int idAcc);
 
 }

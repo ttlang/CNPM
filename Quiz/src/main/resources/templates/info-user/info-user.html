@@ -16,7 +16,7 @@
 				</div>
 				<div class="userInfo">
 					<h3 class="username">
-						<a href="javascript:void(0)" th:text="${profileMem.name}">Trần
+						<a th:href="@{/account/viewinfo/acc{id_acc}(id_acc=${profileMem.idAcc})}" th:text="${profileMem.name}">Trần
 							Văn Thắng</a>
 					</h3>
 					<h4 class="title" th:text="${profileMem.job}">Sếp Thắng</h4>

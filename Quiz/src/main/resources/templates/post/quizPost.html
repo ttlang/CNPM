@@ -16,7 +16,7 @@
 			<div class="row">
 				<div class="col-md-2">
 					<img alt="Ảnh đại diện" class="img-responsive"
-						th:src="@{../images/15284079_583315985195410_4289784661158093094_n.jpg}"
+						th:src="@{${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}}"
 						width="150%">
 				</div>
 				<div class="col-md-10">

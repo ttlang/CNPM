@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8">
-<title th:text="${title}"></title>
+<title th:text="${accountView.name}"></title>
 <link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
 <link th:href="@{/css/profile-old.css}" rel="stylesheet">
 <link th:href="@{/css/profile.css}" rel="stylesheet">
@@ -26,6 +26,12 @@
 
 <script th:src="@{/jqueryUI/jquery-ui.min.js}"></script>
 <link th:href="@{/jqueryUI/jquery-ui.min.css}" rel="stylesheet">
+
+
+<script th:src="@{/js/account_info.js}"></script>
+
+
+
 
 </head>
 <body>
@@ -64,20 +70,20 @@
 						<div class="divcontent row avatar">
 							<div class="col-md-5 col-sm-6 col-xs-12">
 								<img class="img-circle img-responsive"
-									th:src="@{${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}}"
+									th:src="@{${accountView.avatar}!=null?@{${accountView.avatar}}:@{/upload/avatar/default_avatar.jpg}}"
 									alt="Ảnh đại diện" id="account_avatar" />
 							</div>
 
 							<div class="col-md-7 col-sm-6 col-xs-12">
-								<h4 th:text="${session.account.name}"></h4>
-								<h5 th:text="${session.account.job}"></h5>
+								<h4 th:text="${accountView.name}"></h4>
+								<h5 th:text="${accountView.job}"></h5>
 							</div>
 							<!-- UPLOAD AVATAR -->
-							<div class="upload-file">
-								<label class="btn btn-default btn-file" data-toggle="tooltip" title="Cập nhật ảnh đại diện"><i
-									class="fa fa-camera"></i>
-									<input type="file" style="display: none;" id="avatar" /> </label>
-							</div>
+<!-- 							<div class="upload-file"> -->
+<!-- 								<label class="btn btn-default btn-file" data-toggle="tooltip" title="Cập nhật ảnh đại diện"><i -->
+<!-- 									class="fa fa-camera"></i> -->
+<!-- 									<input type="file" style="display: none;" id="avatar" /> </label> -->
+<!-- 							</div> -->
 						</div>
 						
 						
@@ -89,7 +95,9 @@
 						<div class="divcontent">
 						
 						
-						<h4>Danh sách bạn bè</h4>
+						<button class="btn btn-info" type="button" id="friend_list_btn" th:value="${accountView.idAcc}">
+											<i class="fa fa-users"></i> Danh sách bạn bè
+										</button>
 						
 						
 						
@@ -103,7 +111,9 @@
 							
 							
 							
-							<h5>Thông tin khác </h5>
+							<button class="btn btn-warning" type="button" id="add_friend" th:value="${accountView.idAcc}">
+											<i class="fa fa-address-card"></i> Thêm bạn
+										</button>
 							
 							
 							
@@ -132,51 +142,51 @@
 <!-- Thông tin người dùng -->
 					<div class="col-xs-12 col-sm-12 col-md-8 col-lg-8" id="m-center">
 						<div class="divcontent">
-							<h4>Cập nhật thông tin</h4>
+							<h4>Thông tin người dùng</h4>
 							<hr />
 							<form role="form" id="account_info">
 								<div class="form-group">
 									<label for="name">Họ và tên</label> <input type="text"
-										 class="form-control" id="name" th:value="${acc_setting.name}" />
+										 class="form-control" id="name" th:value="${accountView.name}" readonly="readonly" />
 								</div>
 
 								<div class="form-group">
 									<label for="birth">Ngày sinh</label> <input type="date" data-date-format='dd/mm/yy'
-										class="form-control" id="birth" th:value="${acc_setting.birth}"  />
+										class="form-control" id="birth" th:value="${accountView.birth}" readonly="readonly"  />
 								</div>
 
 								<div class="form-group">
 									<label for="job">Công việc</label> <input type="text"
-									class="form-control" id="job" th:value="${acc_setting.job}" />
+									class="form-control" id="job" th:value="${accountView.job}" readonly="readonly" />
 								</div>
 
 								<div class="form-group">
 									<label for="gender1">Giới tính</label> <br /> <label
-										class="radio-inline"> <input type="radio" name="radio"
-										id="gender1" value="1" th:attr="checked=${acc_setting.gender==true}?'checked':null" /> Nam
-									</label> <label class="radio-inline"> <input type="radio"
-										name="radio" id="gender2" value="0" th:attr="checked=${acc_setting.gender==false}?'checked':null" /> Nữ
+										class="radio-inline"> <input type="radio" name="radio" 
+										id="gender1" value="1" th:attr="checked=${accountView.gender==true}?'checked':null" /> Nam
+									</label> <label class="radio-inline"> <input type="radio" 
+										name="radio" id="gender2" value="0" th:attr="checked=${accountView.gender==false}?'checked':null" /> Nữ
 									</label>
 								</div>
 
 								<div class="form-group">
 									<label for="email">Email</label> <input type="email"
-										class="form-control" id="email" th:value="${acc_setting.email}" readonly="readonly" />
+										class="form-control" id="email" th:value="${accountView.email}" readonly="readonly" />
 								</div>
 
 								<div class="form-group">
 									<label for="address">Địa chỉ</label>
-									<textarea rows="3"  title="abc" class="form-control" id="address" th:text="${acc_setting.address}"></textarea>
+									<textarea readonly="readonly" rows="3"  title="abc" class="form-control" id="address" th:text="${accountView.address}"></textarea>
 								</div>
 								<hr />
-								<p class="text-right">
-									<button type="submit" class="btn btn-default">
-										<i class="fa fa-close"></i>&nbsp;Hủy
-									</button>
-									<button type="submit" class="btn btn-primary">
-										<i class="fa fa-refresh"></i>&nbsp;Cập nhật
-									</button>
-								</p>
+<!-- 								<p class="text-right"> -->
+<!-- 									<button type="submit" class="btn btn-default"> -->
+<!-- 										<i class="fa fa-close"></i>&nbsp;Hủy -->
+<!-- 									</button> -->
+<!-- 									<button type="submit" class="btn btn-primary"> -->
+<!-- 										<i class="fa fa-refresh"></i>&nbsp;Cập nhật -->
+<!-- 									</button> -->
+<!-- 								</p> -->
 							</form>
 						</div>
 					</div>
@@ -184,6 +194,46 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	
+	
+	<div id="friend_list" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title" id="friend_list_title"></h4>
+      </div>
+      <div class="modal-body" id="friend_list_content">
+       
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	<script type="text/javascript">
 	// kiểm tra độ dài cho phần nhập liệu
 		$(document).ready(function(){
@@ -198,75 +248,7 @@
 	
 	
 	</script>
-	<script type="text/javascript">
-	
-	$(document).ready(function(){
-		
-		$("#avatar").change(function(){
-			var file_data = $('#avatar').prop('files')[0];   
-		    var form_data = new FormData();                  
-		    form_data.append('file', file_data);
-		    swal({
-		    	  title: "Cập nhật ảnh đại diện",
-		    	  text: "bạn có muốn thay đổi ảnh đại diện",
-		    	  type: "info",
-		    	  showCancelButton: true,
-		    	  closeOnConfirm: false,
-		    	  showLoaderOnConfirm: true,
-		    	},
-		    	function(){
-		    		 $.ajax({
-			                url: '/upload/avatar',
-			                dataType: 'text',
-			                cache: false,
-			                contentType: false,
-			                processData: false,
-			                data: form_data,                         
-			                type: 'post',
-			                success: function(result){
-			                	if(result.startsWith('https')){
-			        				swal("Cập nhật thành công")
-			                    $("#account_avatar").attr('src',result); 
-			        			}else{
-			        				swal('Cập nhật thất bại \n'+result)
-			        			}
-			                }
-			     });
-		    		
-		    		
-		    	});
-		    
-		   
-		})
-	});
-	
-	
-	
-	
-	</script>
-<script type="text/javascript">
-$("#account_info").bind('submit', function (e) {
-    name=$("#name").val();
-    birth=$("#birth").val();
-   	gender= $("input:radio[name ='radio']:checked").val();
-    job=$("#job").val();
-    address=$("#address").val();
-    form_data ={name:name,birth:birth,gender:gender,job:job,address:address}
-	$.ajax({
-		url : '/account/update/info',
-		dataType : 'text',
-		data : form_data,
-		success : function(result) {
-			  swal(result)
-		}
 
-	});
-    return false;
-});
-
-
-</script>
-	<!--java script-->
 	
 	
 	
