@@ -251,11 +251,11 @@
 													<input type="hidden" id="idpost-close"
 														th:value="${post.content.idPost}" />
 													<button class="close" type="submit">
-														<span aria-hidden="true">×</span>
+														<span aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Xóa bài viết">&times;</span>
 													</button>
 												</form>
 												<!-- end x post  -->
-												<a href="javascript:void(0)"
+												<a th:href="@{/account/viewinfo/acc{id_acc}(id_acc=${post.content.idAcc.idAcc})}"
 													th:id="'idAcc_'+${post.content.idAcc.idAcc}"
 													class="memberprofile"><strong
 													th:text="${post.content.idAcc.name}"> </strong></a> <br /> <span
@@ -353,7 +353,7 @@
 															</button>
 														</form>
 														<!-- end x close comment -->
-														<a href="javascript:void(0)"
+														<a th:href="@{/account/viewinfo/acc{id_acc}(id_acc=${post.content.idAcc.idAcc})}"
 															th:id="'idAcc_'+${comment.idAcc.idAcc}"
 															class="memberprofile"><strong
 															th:text="${comment.idAcc.name}"></strong></a> <span

@@ -128,13 +128,13 @@
 												</td>
 												<td>
 													<div class="media">
-														<a style="text-decoration: none;" th:href="@{/account/view/info/account{idAcc}(idAcc=${member.account.idAcc})}" class="pull-left">
+														<a style="text-decoration: none;" th:href="@{/account/viewinfo/acc{id_acc}(id_acc=${member.account.idAcc})}" class="pull-left">
 															<img th:src="${member.account.avatar}!=null?@{${member.account.avatar}}:@{/upload/avatar/default_avatar.jpg}" class="media-photo">
 														</a>
 														<div class="media-body">
 															<span class="media-meta pull-right"><a th:id="${member.account.idAcc}" href="javascript:void(0)" onclick="deleteMem(this.id);" th:class="${session.account.idAcc==member.account.idAcc}?'not-active':'a'" th:text="${session.account.idAcc==member.account.idAcc}?'':'Xóa thành viên'"></a></span>
 															<h4 class="title">
-																<a style="text-decoration: none;" th:text="${member.account.name}" th:href="@{/account/view/info/account{idAcc}(idAcc=${member.account.idAcc})}"></a>
+																<a style="text-decoration: none;" th:text="${member.account.name}" th:href="@{/account/viewinfo/acc{id_acc}(id_acc=${member.account.idAcc})}"></a>
 																<span class="pull-right pendiente" th:text="${session.account.idAcc==member.account.idAcc}?'(Trưởng phòng)':'(Thành viên)'"></span>
 															</h4>
 															<p class="summary" th:text="${member.account.email}"></p>
@@ -155,13 +155,13 @@
 												</td>
 												<td>
 													<div class="media">
-														<a style="text-decoration: none;"  th:href="@{/account/view/info/account{idAcc}(idAcc=${wait.account.idAcc})}" class="pull-left">
+														<a style="text-decoration: none;"  th:href="@{/account/viewinfo/acc{id_acc}(id_acc=${wait.account.idAcc})}" class="pull-left">
 															<img th:src="${wait.account.avatar}!=null?@{${wait.account.avatar}}:@{/upload/avatar/default_avatar.jpg}" class="media-photo">
 														</a>
 														<div class="media-body">
 															<span class="media-meta pull-right"><a th:name="${wait.account.idAcc}" href="javascript:void(0)" onclick="addMem(this.name);" >Duyệt yêu cầu</a> | <a th:id="${wait.account.idAcc}" href="javascript:void(0)" onclick="deleteMem(this.id);">Xóa yêu cầu</a></span>
 															<h4 class="title">
-															<a style="text-decoration: none;"  th:text="${wait.account.name}" th:href="@{/account/view/info/account{idAcc}(idAcc=${wait.account.idAcc})}"></a>
+															<a style="text-decoration: none;"  th:text="${wait.account.name}" th:href="@{/account/viewinfo/acc{id_acc}(id_acc=${wait.account.idAcc})}"></a>
 																<span class="pull-right pagado">(Chờ)</span>
 															</h4>
 															<p class="summary" th:text="${wait.account.email}"></p>
