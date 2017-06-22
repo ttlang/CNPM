@@ -104,10 +104,11 @@ function addQuizPost(form_post) {
 	var dapAnB = $(form_post).find("#da2").val();
 	var dapAnC = $(form_post).find("#da3").val();
 	var dapAnD = $(form_post).find("#da4").val();
-	alert("Câu hỏi: " + noiDungCauHoi + "\nĐáp án A: " + dapAnA
-			+ "\nĐáp  án B: " + dapAnB + "\nĐáp án C: " + dapAnC
-			+ "\nĐáp án D: " + dapAnD + "\nĐáp án đúng: " + dapAnDung);
-	console.log(id_room);
+	/*
+	 * alert("Câu hỏi: " + noiDungCauHoi + "\nĐáp án A: " + dapAnA + "\nĐáp án
+	 * B: " + dapAnB + "\nĐáp án C: " + dapAnC + "\nĐáp án D: " + dapAnD +
+	 * "\nĐáp án đúng: " + dapAnDung); console.log(id_room);
+	 */
 	$.ajax({
 		url : "/postQuizInRoom",
 		type : "POST",
@@ -121,6 +122,7 @@ function addQuizPost(form_post) {
 			id_room : id_room
 		},
 		success : function(response) {
+			alert(response);
 			if (response && response.trim().length != 0) {
 				$("#list-post").prepend(response);
 				$(this).find("#content_post").empty();
@@ -269,7 +271,7 @@ function addComment(id_comment) {
 				comment_value : comment_value
 			},
 			success : function(response) {
-//				alert(response);
+// alert(response);
 				comment.value = "";
 				if ((response)) {
 					$("#list_comment" + id).html(response);
@@ -622,5 +624,21 @@ function addFilePost(form_post){
 	
 	
 }
-
+// thang
+ function  chooseAnswer(id_room, id_post, id_dapan){
+	 alert (id_room +" " + id_post + " " +  id_dapan);
+	 $.ajax({
+		 url: "/answer-post-test",
+		 type: "POST",
+		 data: {
+			 id_room:  id_room,
+			 id_post: id_post,
+			 id_dapan : id_dapan
+		 },
+		 success:  function(response){
+			 alert("ket qua : " + response);
+		 }
+		 
+	 });
+ }
 
