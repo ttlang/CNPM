@@ -122,4 +122,9 @@ public class RoomTest {
 	public void getPostOfUser(){
 		postS.getPostOfUser(1);
 	}
+	
+	@Test
+	public void testDeleteRoom(){
+		System.out.println(rS.deleteRoom(1022));
+	}
 }
