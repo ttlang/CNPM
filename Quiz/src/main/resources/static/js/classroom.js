@@ -543,6 +543,7 @@ function addFilePost(form_post) {
 
 		$.ajax({
 			url : "/upload/file",
+			type : "POST",
 			data : form_data,
 			enctype : 'multipart/form-data',
 			processData : false,
