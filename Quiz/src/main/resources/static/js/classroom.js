@@ -83,7 +83,7 @@ function addStatusPost(form_post) {
 				$("#list-post").prepend(response);
 				$(form_post).find("#content_post").empty();
 				$(form_post).find("#content_post").val("");
-				autoNotify("#"+$(response)[5].id);
+				autoNotify("#" + $(response)[5].id);
 			}
 		}
 	});
@@ -154,108 +154,103 @@ function addFilePost(form_post) {
 
 function deletePost(form_post) {
 	var id_post = $(form_post).find("#idpost-close").val();
-	
-	
-	
-	swal({
-		  title: "Xóa bài đăng?",
-		  text: "Nếu chấp nhận bạn không thể khôi phục lại bài đăng này!",
-		  type: "warning",
-		  showCancelButton: true,
-		  confirmButtonColor: "#DD6B55",
-		  confirmButtonText: "Đồng ý!",
-		  cancelButtonText: "Bỏ qua",
-		  closeOnConfirm: false,
-		  closeOnCancel: false
-		},
-		function(isConfirm){
-		  if (isConfirm) {
-			  
-			  $
-				.ajax({
-					url : "/deletepost",
-					type : "POST",
-					data : {
-						id_post : id_post
-					},
-					success : function(response) {
-						if (response) {
-							$("#divcontent" + id_post).remove();
-							swal("Thành công!", "Bạn đã xóa bài đăng thành công!", "success");
-							
-						} else {
-							swal("Xóa thất bại!", "Bạn không phải người đăng, hoặc quản trị viên!", "error");
-						}
-						
-						return false;
-					}
-				});
 
-		return false;
-			  
-			  
-		  } else {
-		    swal("Bỏ qua", "không đồng ý xóa :)", "error");
-		  }
-		});
+	swal(
+			{
+				title : "Xóa bài đăng?",
+				text : "Nếu chấp nhận bạn không thể khôi phục lại bài đăng này!",
+				type : "warning",
+				showCancelButton : true,
+				confirmButtonColor : "#DD6B55",
+				confirmButtonText : "Đồng ý!",
+				cancelButtonText : "Bỏ qua",
+				closeOnConfirm : false,
+				closeOnCancel : false
+			},
+			function(isConfirm) {
+				if (isConfirm) {
+
+					$
+							.ajax({
+								url : "/deletepost",
+								type : "POST",
+								data : {
+									id_post : id_post
+								},
+								success : function(response) {
+									if (response) {
+										$("#divcontent" + id_post).remove();
+										swal(
+												"Thành công!",
+												"Bạn đã xóa bài đăng thành công!",
+												"success");
+
+									} else {
+										swal(
+												"Xóa thất bại!",
+												"Bạn không phải người đăng, hoặc quản trị viên!",
+												"error");
+									}
+
+									return false;
+								}
+							});
+
+					return false;
+
+				} else {
+					swal("Bỏ qua", "không đồng ý xóa :)", "error");
+				}
+			});
 	return false;
-	
-	
+
 }
 function deleteComment(form_comment) {
 	var id_comment = $(form_comment).find("#idcomment-close").val();
 	// alert("xóa comment id: " + id_comment);
-	
-	
-	
-	swal({
-		  title: "Xóa bình luận?",
-		  text: "Nếu chấp nhận bạn không thể khôi phục lại bình luận này!",
-		  type: "warning",
-		  showCancelButton: true,
-		  confirmButtonColor: "#DD6B55",
-		  confirmButtonText: "Đồng ý!",
-		  cancelButtonText: "Bỏ qua",
-		  closeOnConfirm: true,
-		  closeOnCancel: false
-		},
-		function(isConfirm){
-		  if (isConfirm) {
-			  
-			  $
-				.ajax({
-					url : "/deletecomment",
-					type : "POST",
-					data : {
-						id_comment : id_comment
-					},
-					success : function(response) {
-						if (response) {
-							$("#comment" + id_comment).remove();
-						} else {
-							 swal("Xóa thất bại", "Bạn không phải người bình luận , hoặc quản trị viên :)", "error");
-						}
-					}
-				});
 
-		return false;
-			  
-			  
-		  } else {
-		    swal("Bỏ qua", "không đồng ý xóa :)", "error");
-		  }
-		});
+	swal(
+			{
+				title : "Xóa bình luận?",
+				text : "Nếu chấp nhận bạn không thể khôi phục lại bình luận này!",
+				type : "warning",
+				showCancelButton : true,
+				confirmButtonColor : "#DD6B55",
+				confirmButtonText : "Đồng ý!",
+				cancelButtonText : "Bỏ qua",
+				closeOnConfirm : true,
+				closeOnCancel : false
+			},
+			function(isConfirm) {
+				if (isConfirm) {
+
+					$
+							.ajax({
+								url : "/deletecomment",
+								type : "POST",
+								data : {
+									id_comment : id_comment
+								},
+								success : function(response) {
+									if (response) {
+										$("#comment" + id_comment).remove();
+									} else {
+										swal(
+												"Xóa thất bại",
+												"Bạn không phải người bình luận , hoặc quản trị viên :)",
+												"error");
+									}
+								}
+							});
+
+					return false;
+
+				} else {
+					swal("Bỏ qua", "không đồng ý xóa :)", "error");
+				}
+			});
 	return false;
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
 
 function addComment(id_comment) {
@@ -271,7 +266,7 @@ function addComment(id_comment) {
 				comment_value : comment_value
 			},
 			success : function(response) {
-// alert(response);
+				// alert(response);
 				comment.value = "";
 				if ((response)) {
 					$("#list_comment" + id).html(response);
@@ -333,7 +328,7 @@ function newPostItem(form_post) {
 // thành viên rời khỏi phòng
 function leaveRoom(merberID) {
 	var IDroom = $("#leaveRoomID").val();
-	
+
 	var form_data = {
 		merberID : merberID,
 		IDroom : IDroom
@@ -358,7 +353,7 @@ function leaveRoom(merberID) {
 						console.log(result)
 						if (result == 'true') {
 							window.location.href = '/home'
-						}else{
+						} else {
 							swal(result);
 						}
 					}
@@ -443,201 +438,176 @@ function addPicPost(form_post) {
 	var file_data = $('#pic_post').prop('files');
 	var content_post = $(form_post).find("#content_post").val();
 	var id_room = $("#id-room").val();
-	
+
 	console.log(file_data);
-	
+
 	var form_data = new FormData();
-	
+
 	// đưa các file vào formData
 	for (var i = 0; i < file_data.length; i++) {
-		form_data.append('f'+i, file_data[i]);
+		form_data.append('f' + i, file_data[i]);
 	}
 	// đưa nội dung bài post vào form_data
 	form_data.append('content_post', content_post);
-	
+
 	// đưa số lượng file vào form_data
 	form_data.append('num', file_data.length);
-	
+
 	// đưa mã phòng vào form data
 	form_data.append('id_room', id_room);
-	
+
 	console.log(content_post);
 	console.log(id_room);
 	swal({
-		  title: "Đăng Bài",
-		  text: "xác nhận đăng bài",
-		  type: "info",
-		  showCancelButton: true,
-		  closeOnConfirm: false,
-		  showLoaderOnConfirm: true,
-		},
-		function(){
-		 
-			$.ajax({
-			      url: "/upload/picture",
-			      data: form_data,
-			      type: "POST",
-			      enctype: 'multipart/form-data',
-			      processData: false,
-			      contentType: false,
-			      success: function (result) {
-			    	  if(result=='1'){
-			    		  swal({
-							  title: "Đăng bài thành công",
-							  type: "success",
-							  showCancelButton: false,
-							  confirmButtonColor: "#b3f0ff",
-							  confirmButtonText: "OK",
-							  closeOnConfirm: false
-							},
-							function(){
-								location.reload();
-							});
-			    		  
-			    		  
-			    		  
-			    	  }else{
-			    		  swal({
-							  title: "Đăng bài thất bại",
-							  type: "error",
-							  showCancelButton: false,
-							  confirmButtonColor: "#DD6B55",
-							  confirmButtonText: "OK",
-							  closeOnConfirm: false
-							},
-							function(){
-								location.reload();
-							});
-			    		  
-			    		  
-			    		  
-			    		  
-			    	  }
-					return false;
-			    }
-				
-				
-				
-				
-			});
-			
-			
+		title : "Đăng Bài",
+		text : "xác nhận đăng bài",
+		type : "info",
+		showCancelButton : true,
+		closeOnConfirm : false,
+		showLoaderOnConfirm : true,
+	}, function() {
+
+		$.ajax({
+			url : "/upload/picture",
+			data : form_data,
+			type : "POST",
+			enctype : 'multipart/form-data',
+			processData : false,
+			contentType : false,
+			success : function(result) {
+				if (result == '1') {
+					swal({
+						title : "Đăng bài thành công",
+						type : "success",
+						showCancelButton : false,
+						confirmButtonColor : "#b3f0ff",
+						confirmButtonText : "OK",
+						closeOnConfirm : false
+					}, function() {
+						location.reload();
+					});
+
+				} else {
+					swal({
+						title : "Đăng bài thất bại",
+						type : "error",
+						showCancelButton : false,
+						confirmButtonColor : "#DD6B55",
+						confirmButtonText : "OK",
+						closeOnConfirm : false
+					}, function() {
+						location.reload();
+					});
+
+				}
+				return false;
+			}
+
 		});
-	
-	
-		
+
+	});
+
 	return false;
 
 }
 
-
 // bài đăng là file
 
-function addFilePost(form_post){
-	
+function addFilePost(form_post) {
+
 	var file_data = $('#file_post').prop('files');
 	var content_post = $(form_post).find("#content_post").val();
 	var id_room = $("#id-room").val();
-	
+
 	console.log(file_data);
-	
+
 	var form_data = new FormData();
-	
+
 	// đưa các file vào formData
-		form_data.append('file', file_data[0]);
+	form_data.append('file', file_data[0]);
 	// đưa nội dung bài post vào form_data
 	form_data.append('content_post', content_post);
 	// đưa mã phòng vào form data
 	form_data.append('id_room', id_room);
-	
+
 	console.log(content_post);
 	console.log(id_room);
 	swal({
-		  title: "Đăng Bài",
-		  text: "xác nhận đăng bài",
-		  type: "info",
-		  showCancelButton: true,
-		  closeOnConfirm: false,
-		  showLoaderOnConfirm: true,
-		},
-		function(){
-		 
-			$.ajax({
-			      url: "/upload/file",
-			      data: form_data,
-			      enctype: 'multipart/form-data',
-			      processData: false,
-			      contentType: false,
-			      success: function (result) {
-			    	  
-			    	  if(result=='1'){
-			    		  swal({
-							  title: "Đăng bài thành công",
-							  type: "success",
-							  showCancelButton: false,
-							  confirmButtonColor: "#b3f0ff",
-							  confirmButtonText: "OK",
-							  closeOnConfirm: false
-							},
-							function(){
-								location.reload();
-							});
-			    		  
-			    		  
-			    		  
-			    	  }else{
-			    		  swal({
-							  title: "Đăng bài thất bại",
-							  type: "error",
-							  showCancelButton: false,
-							  confirmButtonColor: "#DD6B55",
-							  confirmButtonText: "OK",
-							  closeOnConfirm: false
-							},
-							function(){
-								location.reload();
-							});
-			    		  
-			    		  
-			    		  
-			    		  
-			    	  }
-			    	  
-			    	 
-			    	  
-					return false;
-			    }
-				
-				
-				
-				
-			});
-			
-			
+		title : "Đăng Bài",
+		text : "xác nhận đăng bài",
+		type : "info",
+		showCancelButton : true,
+		closeOnConfirm : false,
+		showLoaderOnConfirm : true,
+	}, function() {
+
+		$.ajax({
+			url : "/upload/file",
+			data : form_data,
+			enctype : 'multipart/form-data',
+			processData : false,
+			contentType : false,
+			success : function(result) {
+
+				if (result == '1') {
+					swal({
+						title : "Đăng bài thành công",
+						type : "success",
+						showCancelButton : false,
+						confirmButtonColor : "#b3f0ff",
+						confirmButtonText : "OK",
+						closeOnConfirm : false
+					}, function() {
+						location.reload();
+					});
+
+				} else {
+					swal({
+						title : "Đăng bài thất bại",
+						type : "error",
+						showCancelButton : false,
+						confirmButtonColor : "#DD6B55",
+						confirmButtonText : "OK",
+						closeOnConfirm : false
+					}, function() {
+						location.reload();
+					});
+
+				}
+
+				return false;
+			}
+
 		});
-	
-	
-		
+
+	});
+
 	return false;
 
-	
-	
 }
 // thang
- function  chooseAnswer(id_room, id_post, id_dapan){
-	 alert (id_room +" " + id_post + " " +  id_dapan);
-	 $.ajax({
-		 url: "/answer-post-test",
-		 type: "POST",
-		 data: {
-			 id_room:  id_room,
-			 id_post: id_post,
-			 id_dapan : id_dapan
-		 },
-		 success:  function(response){
-			 alert("ket qua : " + response);
-		 }
-		 
-	 });
- }
+function chooseAnswer(id_room, id_post, id_dapan) {
 
+	$
+			.ajax({
+				url : "/answer-post-test",
+				type : "POST",
+				data : {
+					id_room : id_room,
+					id_post : id_post,
+					id_dapan : id_dapan
+				},
+				success : function(response) {
+					if (response) {
+						swal("Thành công!",
+								"Lựa chọn của bạn đã được lưu lại!", "success");
+					} else {
+						swal("Thất bại!",
+								"Có lỗi, lựa chọn của bạn không được lưu lại!",
+								"error");
+					}
+
+				}
+
+			});
+}

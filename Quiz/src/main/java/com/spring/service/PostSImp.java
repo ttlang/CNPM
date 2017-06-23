@@ -2,12 +2,15 @@ package com.spring.service;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.transaction.Transactional;
@@ -116,6 +119,51 @@ public class PostSImp implements PostS {
 		});
 
 		return result;
+	}
+
+	@Override
+	public Map<Integer, Integer> thongKeTracNghiem(int idPost) {
+		SessionImpl session = (SessionImpl) sf.getCurrentSession();
+		Connection connection = session.connection();
+		Map<Integer, Integer> result = new HashMap<>();
+		try {
+			CallableStatement callableStatement = connection.prepareCall("execute p_thongke_tracnghiem  ?");
+			callableStatement.setInt(1, idPost);
+
+			ResultSet resultSet = callableStatement.executeQuery();
+			while (resultSet.next()) {
+				result.put(resultSet.getInt("id_answer"), resultSet.getInt("slchon"));
+			}
+
+		} catch (SQLException sqlex) {
+			sqlex.printStackTrace();
+		}
+
+		return result;
+	}
+	@Override
+	public Map<Integer, Integer> nguoiChonTracNghiem(int idPost) {
+		
+		SessionImpl session = (SessionImpl) sf.getCurrentSession();
+		Connection connection = session.connection();
+		Map<Integer, Integer> result = new HashMap<>();
+		try {
+			CallableStatement callableStatement = connection.prepareCall("execute P_nguoiChonTracNghiem  ?");
+			callableStatement.setInt(1, idPost);
+
+			ResultSet resultSet = callableStatement.executeQuery();
+			while (resultSet.next()) {
+				
+				result.put(resultSet.getInt("id_acc"), resultSet.getInt("id_answer"));
+			}
+
+		} catch (SQLException sqlex) {
+			sqlex.printStackTrace();
+		}
+
+		return result;
+		
+		
 	}
 
 }

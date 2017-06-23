@@ -37,25 +37,29 @@
 		<hr />
 		<div>
 			<div class="input-group" style="margin-bottom: 5px">
-				<span class="input-group-addon"><input name="radio_da" 
-					id="radio_da" type="radio"  checked value="1"></span> <input
+				<span class="input-group-addon"><input name="radio_da"
+					th:onchange="'chooseAnswer('+${room.idRoom}+','+ ${post.idPost}+',this.value)'"
+					id="radio_da" type="radio"  value="1"></span> <input
 					class="form-control" id="da1" readonly="readonly"
 					th:value="${post.answer1}" type="text" required>
 			</div>
 			<div class="input-group" style="margin-bottom: 5px">
 				<span class="input-group-addon"><input name="radio_da"
+					th:onchange="'chooseAnswer('+${room.idRoom}+','+ ${post.idPost}+',this.value)'"
 					name="radio_da" type="radio" value="2"></span> <input
 					class="form-control" id="da2" readonly="readonly"
 					th:value="${post.answer2}" type="text" required>
 			</div>
 			<div class="input-group" style="margin-bottom: 5px">
 				<span class="input-group-addon"><input name="radio_da"
+					th:onchange="'chooseAnswer('+${room.idRoom}+','+ ${post.idPost}+',this.value)'"
 					name="radio_da" type="radio" value="3"></span> <input
 					class="form-control" id="da3" readonly="readonly"
 					th:value="${post.answer3}" type="text" required>
 			</div>
 			<div class="input-group" style="margin-bottom: 5px">
 				<span class="input-group-addon"><input name="radio_da"
+					th:onchange="'chooseAnswer('+${room.idRoom}+','+ ${post.idPost}+',this.value)'"
 					name="radio_da" type="radio" value="4"></span> <input
 					class="form-control" id="da4" readonly="readonly"
 					th:value="${post.answer4}" type="text" required>

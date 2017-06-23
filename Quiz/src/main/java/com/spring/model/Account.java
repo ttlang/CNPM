@@ -8,6 +8,7 @@ public class Account {
 	private String job;
 	private boolean gender;
 	private String address;
+	private int DapAn;
 
 	public Account(int idAcc, String email, String name, String avatar, String job, boolean gender, String address) {
 		super();
@@ -26,6 +27,29 @@ public class Account {
 		this.email = email;
 		this.name = name;
 		this.avatar = avatar;
+	}
+	
+	
+
+	public Account(int idAcc, String email, String name, String avatar, String job, boolean gender, String address,
+			int dapAn) {
+		super();
+		this.idAcc = idAcc;
+		this.email = email;
+		this.name = name;
+		this.avatar = avatar;
+		this.job = job;
+		this.gender = gender;
+		this.address = address;
+		DapAn = dapAn;
+	}
+
+	public int getDapAn() {
+		return DapAn;
+	}
+
+	public void setDapAn(int dapAn) {
+		DapAn = dapAn;
 	}
 
 	public String getJob() {

@@ -26,5 +26,12 @@ public class PostTest {
 	public void testGetListAccountLike() {
 		System.out.println(postS.getListAccountLike(35).size());
 	}
-
-}
+	@Test
+	public void testThongKeTracNghiem(){
+		System.err.println(postS.thongKeTracNghiem(3270));
+	}
+	@Test
+	public void testNguoiChonTracNghiem(){
+		System.err.println(postS.nguoiChonTracNghiem(3270));
+	}
+	}
