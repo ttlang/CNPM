@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -222,10 +223,15 @@ public class AccountC {
 		return "account_setting";
 	}
 
-	@RequestMapping(value = "/account/viewinfo/acc{idAcc}")
-	public String accountInfomation(@RequestParam("idAcc") int idAcc) {
-
-		return "account_setting";
+	@RequestMapping(value = "/viewinfo/acc{idAcc}")
+	public String accountInfomation(@PathVariable("idAcc") int idAcc, Model m, HttpSession session) {
+		Account account = (Account) session.getAttribute("account");
+		if (account == null) {
+			return "redirect:/";
+		}
+		Account accountView = accountService.getAccountByID(idAcc);
+		m.addAttribute("accountView", accountView);
+		return "account_info";
 	}
 
 	// cập nhật thông tin người dùng
@@ -368,4 +374,64 @@ public class AccountC {
 		model.addAttribute("listRelationship", accounts);
 		return "friendRequests";
 	}
+
+	// lấy danh sách bạn bè của một tài khoản nhận vào mã tài khoản người dùng
+
+	@RequestMapping(value = "/get_friend_list", method = RequestMethod.POST)
+	@ResponseBody
+	public List<com.spring.model.Account> getListFriend(@RequestParam("id_acc") int idAcc) {
+
+		List<Relationship> listFriend = (List<Relationship>) accountService.getAccountByID(idAcc).getRelationshipList();
+		List<com.spring.model.Account> result = new ArrayList<>();
+		for (Relationship relationship : listFriend) {
+			if (!relationship.getWaiting()) {
+				result.add(new com.spring.model.Account(relationship.getAccountFriend().getIdAcc(),
+						relationship.getAccountFriend().getEmail(), relationship.getAccountFriend().getName(),
+						relationship.getAccountFriend().getAvatar(), relationship.getAccountFriend().getJob(),
+						relationship.getAccountFriend().getGender(), relationship.getAccountFriend().getAddress()));
+			}
+		}
+
+		return result;
+	}
+
+	// gửi lời mời kết bạn với một tài khoản khác IDACC
+	@RequestMapping(value = "/friend-request-new", method = RequestMethod.POST)
+	@ResponseBody
+	public String friendRequestNew(HttpSession session, @RequestParam("id_acc") int idAcc) {
+		Account account = (Account) session.getAttribute("account");
+
+		if (account.getIdAcc() == idAcc) {
+			// không thể tự kết bạn với mình
+			return "0|Không thể kết bạn với chính mình";
+		} else {
+			int check = statusFriend(account.getIdAcc(), idAcc);
+			switch (check) {
+			case 0:
+				try {
+
+					accountService.sendRequestAddFriend(account.getIdAcc(), idAcc);
+				} catch (Exception e) {
+					e.printStackTrace();
+					return "0|Gửi lời mời kết bạn thất bại";
+
+				}
+				break;
+			case 1:
+				return "1|Bạn đã gửi lời mời kết bạn";
+			case 2:
+				return "1|Các bạn đã là bạn bè";
+			case 3:
+				return "1|Bạn đã gửi lời mời kết bạn";
+
+			default:
+				return "0|Gửi lời mời kết bạn thất bại";
+			}
+
+		}
+
+		return "1|Gửi lời mời kết bạn thành công";
+
+	}
+
 }
