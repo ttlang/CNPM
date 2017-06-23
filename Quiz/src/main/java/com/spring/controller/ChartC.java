@@ -1,13 +1,63 @@
 package com.spring.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.spring.domain.Account;
+import com.spring.service.AccountS;
+import com.spring.service.PostS;
 
 @Controller
 public class ChartC {
-	@GetMapping(value = "/chart")
-	public String chart() {
-		return "chart_answer";
+	@Autowired
+	private PostS postS;
+	@Autowired
+	private AccountS accountS;
+
+	@RequestMapping(value = "/thong-ke-trac-nghiem", method = RequestMethod.POST)
+	@ResponseBody
+	public Map<Integer, Integer> thongKe(@RequestParam("idPost") int idPost) {
+		Map<Integer, Integer> result = postS.thongKeTracNghiem(idPost);
+		return result;
+	}
+
+	@RequestMapping(value = "/check-trac-nghiem", method = RequestMethod.POST)
+	@ResponseBody
+	public String checkQuiz(HttpSession session, @RequestParam("idPost") int idPost) {
+		Map<Integer, Integer> nguoiChonTracNghiem = postS.nguoiChonTracNghiem(idPost);
+		Account account = (Account) session.getAttribute("account");
+		if (nguoiChonTracNghiem.containsKey(account.getIdAcc())) {
+			return "1";
+		}
+
+		return "0";
+	}
+
+	@RequestMapping(value = "/nguoi-chon-trac-nghiem", method = RequestMethod.POST)
+	@ResponseBody
+	public List<com.spring.model.Account> nguoiChonTracNghiem(@RequestParam("idPost") int idPost) {
+		List<com.spring.model.Account> listAccountResult = new ArrayList<>();
+		Map<Integer, Integer> dsDapAn = postS.nguoiChonTracNghiem(idPost);
+		for (Map.Entry<Integer, Integer> entry : dsDapAn.entrySet()) {
+			Account account = accountS.getAccountByID(entry.getKey());
+			com.spring.model.Account account2 = new com.spring.model.Account(entry.getKey(), account.getEmail(),
+					account.getName(), account.getAvatar(), account.getJob(), account.getGender(), account.getAddress(),
+					entry.getValue());
+			listAccountResult.add(account2);
+
+		}
+
+		return listAccountResult;
 	}
 
 }

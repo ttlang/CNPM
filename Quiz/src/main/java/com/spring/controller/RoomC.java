@@ -187,6 +187,7 @@ public class RoomC {
 		PostByGroup post = rooms.getQuizPost(idPost);
 		System.out.println(post);
 		model.addAttribute("post", post);
+		model.addAttribute("room", rooms.getRoom(idRoom));
 		System.out.println(idPost + " Thanfh cong mej no cong");
 		return "/post/addQuizPost";
 	}

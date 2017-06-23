@@ -1,6 +1,7 @@
 package com.spring.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.spring.domain.Account;
 import com.spring.domain.Comment;
@@ -44,5 +45,16 @@ public interface PostS {
 	 * @return
 	 */
 	public List<PostRoom>getPostOfUser(int idAcc);
+	
+	/**
+	 * thống kê trắc nghiệm
+	 * @param idPost mã bài đăng
+	 * @return
+	 */
+	public Map<Integer, Integer>thongKeTracNghiem(int idPost);
+	
+	public Map<Integer, Integer>nguoiChonTracNghiem(int idPost);
+	
+	
 
 }

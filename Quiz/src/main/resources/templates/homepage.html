@@ -21,25 +21,28 @@
 
 
 
-	<!--java script-->
-	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
-	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
-	<script th:src="@{/js/clipboard.min.js}"></script>
-	<script th:src="@{/js/profile.js}"></script>
+<!--java script-->
+<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/clipboard.min.js}"></script>
+<script th:src="@{/js/profile.js}"></script>
 
-	
-	<script th:src="@{/js/classroom.js}"></script>
-	
 
-	<script th:src="@{/js/classroom2.js}"></script>
-	<script th:src="@{/js/app.min.js}"></script>
+<script th:src="@{/js/classroom.js}"></script>
+
+
+<script th:src="@{/js/classroom2.js}"></script>
+<script th:src="@{/js/app.min.js}"></script>
+
+<script th:src="@{/js/Chart.min.js}"></script>
+<script th:src="@{/js/thong_ke.js}"></script>
 
 
 
 </head>
 
 <body>
-<th:block th:replace="header::menu_fix_top"></th:block>
+	<th:block th:replace="header::menu_fix_top"></th:block>
 	<div class="container">
 		<!--	slider menu-->
 		<div id="mySidenav" class="sidenav" th:fragment="sidenav">
@@ -66,19 +69,21 @@
 						<div class="divcontent row">
 							<div class="col-md-5 col-sm-6 col-xs-12">
 								<img class="img-circle img-responsive"
-									th:src="${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}" alt="Ảnh đại diện" />
+									th:src="${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}"
+									alt="Ảnh đại diện" />
 							</div>
 
 							<div class="col-md-7 col-sm-6 col-xs-12 text-right">
 								<h4 th:text="${session.account.name}"></h4>
-								<h5 style="text-transform: uppercase;" th:text="${session.account.job}"></h5>
+								<h5 style="text-transform: uppercase;"
+									th:text="${session.account.job}"></h5>
 							</div>
 						</div>
-						
-						
-						
-						
-						
+
+
+
+
+
 						<!--						danh sách phòng tham gia-->
 						<div class="divcontent" th:fragment="ds_phong_tham_gia">
 							<h4>Phòng tham gia</h4>
@@ -99,17 +104,17 @@
 								<i class="fa fa-plus"></i> Tham gia phòng
 							</button>
 						</div>
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
+
+
+
+
+
+
+
+
+
+
+
 						<!--						danh sách phòng quản lý-->
 						<div class="divcontent" th:fragment="ds_phong_quan_ly">
 							<h4>Phòng quản lý</h4>
@@ -127,15 +132,16 @@
 								<i class="fa fa-plus"></i> Tạo phòng mới<i></i>
 							</button>
 						</div>
-						
-						
-						
-						
-						
-						
-						
 
-						<div style="margin-top: -40px;" class="footer" th:frame="footer" th:fragment="footer">
+
+
+
+
+
+
+
+						<div style="margin-top: -40px;" class="footer" th:frame="footer"
+							th:fragment="footer">
 							<footer>
 								<p>Hệ thống quản lý học tập © 2017</p>
 							</footer>
@@ -143,79 +149,81 @@
 
 					</div>
 					<!--						hiển thị div nhập mã phòng-->
-						<div class="modal fade" id="tham-gia-phong" tabindex="-1"
-							role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true" th:fragment="div_hien_thi_ma_phong">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal">
-											<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-										</button>
-										<h4 class="modal-title" id="myModalLabel1">Tham gia phòng</h4>
-									</div>
-									<form class="form-horizontal" role="form">
-										<div class="modal-body">
-											<div class="form-group">
-												<label for="room" class="col-sm-3 control-label">Nhập
-													mã phòng</label>
-												<div class="col-sm-9">
-													<input type="text" class="form-control" id="id_room2"
-														placeholder="Mã phòng">
-												</div>
+					<div class="modal fade" id="tham-gia-phong" tabindex="-1"
+						role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true"
+						th:fragment="div_hien_thi_ma_phong">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">
+										<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+									</button>
+									<h4 class="modal-title" id="myModalLabel1">Tham gia phòng</h4>
+								</div>
+								<form class="form-horizontal" role="form">
+									<div class="modal-body">
+										<div class="form-group">
+											<label for="room" class="col-sm-3 control-label">Nhập
+												mã phòng</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control" id="id_room2"
+													placeholder="Mã phòng">
 											</div>
 										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default"
-												data-dismiss="modal">Hủy</button>
-											<button type="submit" id="search_room"
-												class="btn btn-primary" data-toggle="modal"
-												data-target="#tim-phong" data-dismiss="modal">Tìm
-												phòng</button>
-										</div>
-									</form>
-								</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Hủy</button>
+										<button type="submit" id="search_room" class="btn btn-primary"
+											data-toggle="modal" data-target="#tim-phong"
+											data-dismiss="modal">Tìm phòng</button>
+									</div>
+								</form>
 							</div>
 						</div>
-						
-						
-						
-						
-						<!--						hiển thị div tìm phong-->
-						<div class="modal fade" id="tim-phong" tabindex="-1" role="dialog"
-							aria-labelledby="myModalLabel1" aria-hidden="true" th:fragment="hien_thi_tim_phong">
-							<div class="modal-dialog">
-								<div class="modal-content">
-									<div class="modal-header">
-										<button type="button" class="close" data-dismiss="modal">
-											<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
-										</button>
-										<h4 class="modal-title" id="myModalLabel1">Tham gia phòng</h4>
-									</div>
-									<form class="form-horizontal" role="form">
-										<div class="modal-body">
-											<div class="form-group">
-												<label for="room" class="col-sm-3 control-label">Tên
-													phòng</label>
-												<div class="col-sm-9">
-													<input type="text" class="form-control"
-														id="room_name_participation" placeholder="Tên phòng"
-														readonly>
-												</div>
+					</div>
+
+
+
+
+					<!--						hiển thị div tìm phong-->
+					<div class="modal fade" id="tim-phong" tabindex="-1" role="dialog"
+						aria-labelledby="myModalLabel1" aria-hidden="true"
+						th:fragment="hien_thi_tim_phong">
+						<div class="modal-dialog">
+							<div class="modal-content">
+								<div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal">
+										<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+									</button>
+									<h4 class="modal-title" id="myModalLabel1">Tham gia phòng</h4>
+								</div>
+								<form class="form-horizontal" role="form">
+									<div class="modal-body">
+										<div class="form-group">
+											<label for="room" class="col-sm-3 control-label">Tên
+												phòng</label>
+											<div class="col-sm-9">
+												<input type="text" class="form-control"
+													id="room_name_participation" placeholder="Tên phòng"
+													readonly>
 											</div>
 										</div>
-										<div class="modal-footer">
-											<button type="button" class="btn btn-default"
-												data-dismiss="modal">Hủy</button>
-											<button type="button" class="btn btn-primary"
-												id="participation">Tham gia</button>
-										</div>
-									</form>
-								</div>
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">Hủy</button>
+										<button type="button" class="btn btn-primary"
+											id="participation">Tham gia</button>
+									</div>
+								</form>
 							</div>
 						</div>
+					</div>
 					<!--						hiển thị div nhập mã phòng-->
 					<div class="modal fade" id="tao-phong" tabindex="-1" role="dialog"
-						aria-labelledby="myModalLabel2" aria-hidden="true" th:fragment="div_hien_thi_nhap_ma_phong">
+						aria-labelledby="myModalLabel2" aria-hidden="true"
+						th:fragment="div_hien_thi_nhap_ma_phong">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -249,7 +257,8 @@
 
 					<!--					mã phòng-->
 					<div class="modal fade" id="ma-phong" tabindex="-1" role="dialog"
-						aria-labelledby="myModalLabel3" aria-hidden="true" th:fragment="ma_phong">
+						aria-labelledby="myModalLabel3" aria-hidden="true"
+						th:fragment="ma_phong">
 						<div class="modal-dialog">
 							<div class="modal-content">
 								<div class="modal-header">
@@ -268,9 +277,12 @@
 													placeholder="Mã phòng" readonly>
 											</div>
 											<div class="col-sm-3">
-												<button type="button" id="btn-copy" class="btn-copy btn btn-default"
+												<button type="button" id="btn-copy"
+													class="btn-copy btn btn-default"
 													data-clipboard-action="copy"
-													data-clipboard-target="#id_room"><i class="fa fa-copy"></i> Sao chép</button>
+													data-clipboard-target="#id_room">
+													<i class="fa fa-copy"></i> Sao chép
+												</button>
 											</div>
 										</div>
 									</form>
@@ -286,18 +298,18 @@
 
 					<div class="col-md-8" id="m-center">
 
-							
-					
-					
-					
+
+
+
+
 						<th:block th:if="${#lists.isEmpty(newPost)}">Chào Bạn</th:block>
-					
+
 
 						<th:block th:unless="${#lists.isEmpty(newPost)}">
-					
-					
 
-						
+
+
+
 
 							<!-- start post -->
 							<th:block th:each="post : ${newPost}">
@@ -315,14 +327,18 @@
 													<input type="hidden" id="idpost-close"
 														th:value="${post.content.idPost}" />
 													<button class="close" type="submit">
-														<span aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Xóa bài viết">&times;</span>
+														<span aria-hidden="true" data-toggle="tooltip"
+															data-placement="bottom" title="Xóa bài viết">&times;</span>
 													</button>
 												</form>
 												<!-- end x post  -->
 												<a href="javascript:void(0)"
 													th:id="'idAcc_'+${post.content.idAcc.idAcc}"
 													class="memberprofile"><strong
-													th:text="${post.content.idAcc.name}"> </strong></a><span> đã đăng trong phòng</span> <a th:href="@{/classRoom/{idRoom}(idRoom=${post.content.roomList[0].idRoom})}" th:text="${post.content.roomList[0].idRoom}"></a> <br /> <span
+													th:text="${post.content.idAcc.name}"> </strong></a><span>
+													đã đăng trong phòng</span> <a
+													th:href="@{/classRoom/{idRoom}(idRoom=${post.content.roomList[0].idRoom})}"
+													th:text="${post.content.roomList[0].idRoom}"></a> <br /> <span
 													class="time-post" style="color: #B2B2B2; cursor: pointer;"
 													data-toggle="tooltip" data-placement="bottom"
 													title="Thời gian đăng"
@@ -336,27 +352,34 @@
 									<th:block th:if="${post.content.idConnect > 0}">
 										<br>
 										<div>
+											
+											
+											
 											<div class="input-group" style="margin-bottom: 5px">
 												<span class="input-group-addon"><input
-													name="radio_da" id="radio_da" type="radio" checked
+													name="radio_da" id="radio_da" type="radio"
+													th:onchange="'chooseAnswer('+${post.content.roomList[0].idRoom}+','+ ${post.content.idPost}+',this.value)'"
 													value="1"></span> <input class="form-control" id="da1"
 													readonly="readonly" th:value="${post.da1}" type="text"
 													required>
 											</div>
 											<div class="input-group" style="margin-bottom: 5px">
 												<span class="input-group-addon"><input
+												th:onchange="'chooseAnswer('+${post.content.roomList[0].idRoom}+','+ ${post.content.idPost}+',this.value)'"
 													name="radio_da" name="radio_da" type="radio" value="2"></span>
 												<input class="form-control" id="da2" readonly="readonly"
 													th:value="${post.da2}" type="text" required>
 											</div>
 											<div class="input-group" style="margin-bottom: 5px">
 												<span class="input-group-addon"><input
+												th:onchange="'chooseAnswer('+${post.content.roomList[0].idRoom}+','+ ${post.content.idPost}+',this.value)'"
 													name="radio_da" name="radio_da" type="radio" value="3"></span>
 												<input class="form-control" id="da3" readonly="readonly"
 													th:value="${post.da3}" type="text" required>
 											</div>
 											<div class="input-group" style="margin-bottom: 5px">
 												<span class="input-group-addon"><input
+												th:onchange="'chooseAnswer('+${post.content.roomList[0].idRoom}+','+ ${post.content.idPost}+',this.value)'"
 													name="radio_da" name="radio_da" type="radio" value="4"></span>
 												<input class="form-control" id="da4" readonly="readonly"
 													th:value="${post.da4}" type="text" required>
@@ -364,6 +387,9 @@
 
 
 										</div>
+										<button class="btn btn-info" type="button" onclick="thong_ke_trac_nghiem(this)"  th:value="${post.content.idPost}">
+											<i class="fa fa-pie-chart"></i> Thống kê kết quả
+										</button>
 									</th:block>
 									<hr />
 									<div style="color: #B2B2B2; text-align: left">
@@ -436,20 +462,20 @@
 								</div>
 							</th:block>
 							<!-- end post -->
-						
-						
-						
-						
-						
-						
-						
-						
-						
+
+
+
+
+
+
+
+
+
 						</th:block>
 
-						
-						
-						
+
+
+
 
 					</div>
 					<div class="clearfix visible-xs-block"></div>
@@ -460,8 +486,66 @@
 
 
 
+<!-- Code HTML MODAL thống kê -->
+<div id="modal_thong_ke" class="modal fade" role="dialog">
+  <div class="modal-dialog">
 
-	
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Thống kê kết quả chọn</h4>
+      </div>
+      <div class="modal-body text-center" id="thong_ke_ket_qua2">
+      	<div style="width:80%">
+       <canvas id="myChart"></canvas>
+       </div>
+       <button class=" thong_ke btn btn-info" type="button" onclick="xem_nguoi_chon_trac_nghiem(this)">
+											<i class="fa fa-address-card"></i> Xem Danh sách người chọn
+										</button>
+       <script type="text/javascript">
+      
+       
+       </script>
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
+
+<!-- Code HTML MODAL hiển thị người chọn đáp án -->
+<div id="modal_danh_sach_nguoi_chon" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Danh sách người chọn đáp án</h4>
+      </div>
+      <div class="modal-body text-left" id="ds_nguoi_chon" style="overflow:scroll; height: 350px;">
+      		
+       
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+
 	<script>
 		document.getElementById("close-slide").style.display = "none";
 		function openNav() {
@@ -475,7 +559,7 @@
 			document.getElementById("open-slide").style.display = "block";
 			document.getElementById("close-slide").style.display = "none";
 		}
-		
+
 		new Clipboard('.btn-copy');
 	</script>
 </body>

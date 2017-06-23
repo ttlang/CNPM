@@ -77,8 +77,9 @@ $(document)
 																	response) {
 																if (response == "false") {
 // 																	alert("Phòng không tồn tại!");
-																	swal("Lỗi!", "Phòng không tồn tại!", "error")
+																	swal("Lỗi!", "Phòng không tồn tại!", "error");
 																	
+																	$('#tim-phong').modal('hide');
 																	$(
 																			"#id_room2")
 																			.val(
