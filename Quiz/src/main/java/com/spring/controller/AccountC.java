@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.context.request.WebRequest;
 
 import com.spring.domain.Account;
@@ -41,7 +40,6 @@ import com.spring.service.Mail;
 import it.ozimov.springboot.mail.service.exception.CannotSendEmailException;
 
 @RequestMapping("/account")
-@SessionAttributes("account")
 @Controller
 public class AccountC {
 	@Autowired
@@ -205,8 +203,7 @@ public class AccountC {
 
 	// Đăng xuất
 	@RequestMapping(value = "/logout")
-	public String logout(HttpServletRequest request) {
-		HttpSession session = request.getSession();
+	public String logout(HttpSession session) {
 		session.invalidate();
 		return "login_page";
 	}
