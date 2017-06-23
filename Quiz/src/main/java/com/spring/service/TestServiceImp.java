@@ -19,10 +19,10 @@ public class TestServiceImp implements TestService {
 
 	@Override
 	public boolean chooseAnswerInPostQuiz(int idRoom, int idPost, int idAcc, int idDapAn) {
-		String sql = "";
+		//String sql = "";
 		SessionImpl impl = (SessionImpl) sf.getCurrentSession();
 		Connection connection = impl.connection();
-		int idAccount = 0;
+		//int idAccount = 0;
 		try {
 			CallableStatement statement = connection.prepareCall(
 					"EXEC [dbo].[p_chooseAnswerInPost] @id_room = ?,	@id_post = ?, @id_acc = ?,	@id_answer = ?");
