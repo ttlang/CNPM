@@ -68,7 +68,8 @@
 								<li><a href="#">Chỉnh sửa</a></li>
 								<li class="divider"></li>
 								<li><a href="#">Trợ giúp</a></li>
-								<li><a th:href="@{/account/logout}">Đăng xuất</a></li>
+								<li><a th:href="@{/account/logout}" onclick="return  logoutFb(this);">Đăng
+										xuất</a></li>
 							</ul></li>
 					</ul>
 				</div>
@@ -80,6 +81,7 @@
 		<script src="/js/stomp.js"></script>
 		<script src="/bootstrap-notify/bootstrap-notify.min.js"></script>
 		<link href="/css/friend.css" rel="stylesheet" />
+		<script type="text/javascript" src="//connect.facebook.net/en_US/sdk.js"></script>
 		<script type="text/javascript" th:inline="javascript">
 			/*<![CDATA[*/
 
@@ -410,6 +412,14 @@
 		<div id="info-user"></div>
 		<script>
 			$(function() {
+				FB.init({
+					appId : '756485194513202',
+					xfbml : true,
+					cookie : true,
+					status : true,
+					version : 'v2.8'
+				});
+				
 				$('.memberprofile').click(function() {
 					var id_acc = $(this).attr("id").substring(6);
 					$.ajax({
@@ -440,6 +450,25 @@
 					});
 				 */
 			});
+			function logoutFb(e){
+				FB.getLoginStatus(function(response) {
+					console.log("login status");
+					//neu da dang nhap vao ung dung
+					if (response.status === 'connected') {
+						//console.log("da dang nhap");
+						//console.log(response.authResponse.accessToken);
+						FB.logout(function(response) {
+					        // FB.logout() called without an access token.
+					    });
+					} else if (response.status === 'not_authorized') {
+						console.log("chua dang nhap");
+					} else {
+
+					}
+					$(location).attr("href",$(e).attr("href"));
+				});
+				 return false;
+		 }
 		</script>
 		<!-- ./ket ban -->
 		<!-- /chat -->

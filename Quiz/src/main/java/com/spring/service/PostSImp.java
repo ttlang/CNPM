@@ -61,6 +61,7 @@ public class PostSImp implements PostS {
 			callableStatement.executeUpdate();
 			return true;
 		} catch (SQLException sqlex) {
+			sqlex.printStackTrace();
 			return false;
 		}
 	}
