@@ -517,8 +517,26 @@
   </div>
 </div>
 
-
-
+<!-- /modal like -->
+	<div class="modal fade" role="dialog" aria-labelledby="myModalLabel"
+		id="modal-like" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" onclick="closeModalLike()" class="close"
+						data-dismiss="modal">
+						<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Danh sách người
+						thích</h4>
+				</div>
+				<div class="modal-body"
+					style="max-height: 500px; overflow-y: scroll;"
+					id="list-account-like"></div>
+			</div>
+		</div>
+	</div>
+	<!-- ./modal like -->
 
 
 <!-- Code HTML MODAL hiển thị người chọn đáp án -->

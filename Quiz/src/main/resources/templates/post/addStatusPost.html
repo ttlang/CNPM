@@ -21,26 +21,34 @@
 					<form onsubmit="return deletePost(this)">
 						<input type="hidden" id="idpost-close" th:value="${post.idPost}" />
 						<button class="close" type="submit">
-							<span aria-hidden="true" data-toggle="tooltip" data-placement="bottom" title="Xóa bài viết">&times;</span>
+							<span aria-hidden="true" data-toggle="tooltip"
+								data-placement="bottom" title="Xóa bài viết">&times;</span>
 						</button>
 					</form>
 					<!-- end x post  -->
-					<a href="javascript:void(0)"  th:id="'idAcc_'+${post.idAcc.idAcc}" class="memberprofile"><strong th:text="${post.idAcc.name}"> </strong></a> <br />
-					<span class="time-post"  style="color: #B2B2B2; cursor: pointer;" 
-											data-toggle="tooltip" data-placement="bottom" 
-											title="Thời gian đăng" th:text="${#dates.format(post.postDate, 'dd-MM-yyyy hh:mm:ss')}">
-										</span>
-					
+					<a href="javascript:void(0)" th:id="'idAcc_'+${post.idAcc.idAcc}"
+						class="memberprofile"><strong th:text="${post.idAcc.name}">
+					</strong></a> <br /> <span class="time-post"
+						style="color: #B2B2B2; cursor: pointer;" data-toggle="tooltip"
+						data-placement="bottom" title="Thời gian đăng"
+						th:text="${#dates.format(post.postDate, 'dd-MM-yyyy hh:mm:ss')}">
+					</span>
+
 				</div>
 			</div>
 		</div>
 		<div class="content-stt" th:utext="${post.postContent}"></div>
 		<hr />
 		<div style="color: #B2B2B2; text-align: left">
-			<a class="link-act" href="#" id="like"><i
-				class="fa fa-thumbs-o-up"></i><span id="lbl-like"> Thích</span></a>
-			&nbsp;&nbsp; <a class="link-act" href="#"><i
-				class="fa fa-comment"></i><span> Bình luận</span></a>
+			<a class="link-act" href="javascript:void(0);"
+				th:id="like+${post.idPost}" onclick="likeThisPost(this)"><i
+				class="fa fa-thumbs-o-up"></i><span id="lbl-like" th:type="'0'"
+				th:text="'Thích'"> </span></a>&nbsp;<a href="javascript:void(0)"
+				th:onclick="'detailAccountLikePost('+${post.idPost}+')'"
+				th:text="'(0)'"></a> &nbsp;<a class="link-act"
+				href="javascript:void(0);"><i class="fa fa-comment"></i><span>
+					Bình luận (<span th:text="'0'"></span>)
+			</span></a>
 		</div>
 		<!--old comment -->
 		<!-- <div style="color: #B2B2B2; text-align: right">
@@ -55,11 +63,13 @@
 				<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
 					<img class="media-photo img-responsive avt"
 						th:src="${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}"
-						alt="Ảnh đại diện" data-toggle="tooltip" data-placement="bottom" title="Người đăng" />
+						alt="Ảnh đại diện" data-toggle="tooltip" data-placement="bottom"
+						title="Người đăng" />
 				</div>
 				<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
 					<input type="text" class="form-control"
-						th:id="comment_post+${post.idPost}" placeholder="Nhập bình luận ..."
+						th:id="comment_post+${post.idPost}"
+						placeholder="Nhập bình luận ..."
 						onkeydown="if(event.keyCode==13) addComment(this.id)" />
 				</div>
 			</div>

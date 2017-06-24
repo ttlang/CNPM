@@ -20,6 +20,7 @@ import com.spring.domain.Account;
 import com.spring.domain.Comment;
 import com.spring.domain.Post;
 import com.spring.domain.Room;
+import com.spring.domain.RoomManage;
 import com.spring.model.PostByGroup;
 import com.spring.model.PostRoom;
 import com.spring.service.AccountS;
@@ -78,12 +79,19 @@ public class RoomC {
 		try {
 			Account account = (Account) (session.getAttribute("account"));
 			int roomID = Integer.parseInt(idRoom);
+			Room r = rooms.getRoom(roomID);
 			// kiểm tra không có sesion
-			if (account == null) {
+			boolean checked = true;
+			for (RoomManage rm : r.getRoomManageList()) {
+				if (rm.getAccount().getIdAcc().intValue() == account.getIdAcc().intValue()) {
+					checked = false;
+					break;
+				}
+			}
+			if (account == null || checked) {
 				return "redirect:/";
 			}
 			// đối tượng phòng học
-			Room r = rooms.getRoom(roomID);
 			System.err.println(r);
 			m.addAttribute("Room", r);
 			// số lượng thành viên trong phòng

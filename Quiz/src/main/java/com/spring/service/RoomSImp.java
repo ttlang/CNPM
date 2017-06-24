@@ -101,6 +101,7 @@ public class RoomSImp implements RoomS {
 			int res = callableStatement.executeUpdate();
 			return res > 0 ? true : false;
 		} catch (SQLException sqlex) {
+			sqlex.printStackTrace();
 			return false;
 		}
 
@@ -172,6 +173,7 @@ public class RoomSImp implements RoomS {
 			}
 			return res;
 		} catch (SQLException sqlex) {
+			sqlex.printStackTrace();
 			return -1;
 		}
 	}
@@ -189,6 +191,7 @@ public class RoomSImp implements RoomS {
 			resultSet.next();
 			message = resultSet.getString("result");
 		} catch (SQLException sqlex) {
+			sqlex.printStackTrace();
 			message = sqlex.getMessage();
 		}
 
@@ -209,6 +212,7 @@ public class RoomSImp implements RoomS {
 			int resultSet = callableStatement.executeUpdate();
 			return resultSet;
 		} catch (SQLException sqlex) {
+			sqlex.printStackTrace();
 			return -1;
 		}
 
@@ -229,6 +233,7 @@ public class RoomSImp implements RoomS {
 			}
 			return res;
 		} catch (SQLException sqlex) {
+			System.err.println(sqlex);
 			return null;
 		}
 	}
