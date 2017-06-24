@@ -122,7 +122,7 @@ function addQuizPost(form_post) {
 			id_room : id_room
 		},
 		success : function(response) {
-			alert(response);
+//			alert(response);
 			if (response && response.trim().length != 0) {
 				$("#list-post").prepend(response);
 				$(this).find("#content_post").empty();
