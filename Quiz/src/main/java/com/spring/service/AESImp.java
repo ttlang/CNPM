@@ -3,11 +3,13 @@ package com.spring.service;
 import javax.crypto.Cipher;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
+import javax.transaction.Transactional;
 
 import org.apache.commons.codec.binary.Base64;
 import org.springframework.stereotype.Service;
 
 @Service
+@Transactional
 public class AESImp implements AES {
 	private String key = "Bar12345Bar12345"; // 128 bit key
 	private String initVector = "RandomInitVector"; // 16 bytes IV
@@ -46,6 +48,7 @@ public class AESImp implements AES {
 			byte[] original = cipher.doFinal(Base64.decodeBase64(encrypted));
 			return new String(original);
 		} catch (Exception ex) {
+			ex.printStackTrace();
 			return null;
 		}
 

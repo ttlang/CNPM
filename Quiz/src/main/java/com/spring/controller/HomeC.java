@@ -18,15 +18,17 @@ public class HomeC {
 	RoomS rooms;
 	@Autowired
 	AccountS accountS;
-	@Autowired PostS postS;
+	@Autowired
+	PostS postS;
+
 	@RequestMapping(value = "/home")
 	public String homePage(HttpSession session, Model model) {
 		Account account = (Account) session.getAttribute("account");
 		if (account == null) {
 			return "redirect:/";
-		}else{
+		} else {
 			Account accountInfo = accountS.getAccountByID(account.getIdAcc());
-			if(accountInfo.getName()==null||accountInfo.getName().equals("")){
+			if (accountInfo.getName() == null || accountInfo.getName().equals("")) {
 				return "redirect:/account/info";
 			}
 		}

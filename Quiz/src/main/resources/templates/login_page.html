@@ -1,65 +1,157 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-	<meta charset="utf-8">
-	<title>Đăng nhập</title>
-	<!--boostrap 4-->
-	<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
-	<link th:href="@{/css/dangnhap.css}" rel="stylesheet">
+<meta charset="utf-8">
+<title>Đăng nhập</title>
+<!--boostrap 4-->
+<link th:href="@{/bootstrap/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/css/dangnhap.css}" rel="stylesheet">
+<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
+<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+<script type="text/javascript" src="//connect.facebook.net/en_US/sdk.js"></script>
+<!-- facebook login -->
+<script>
+	$(document).ready(function() {
+		FB.init({
+			appId : '756485194513202',
+			xfbml : true,
+			cookie : true,
+			status : true,
+			version : 'v2.8'
+		});
+	});
+	function checkLoginState() {
+		console.log("call login fb");
+		FB.getLoginStatus(function(response) {
+			alert("getlogin");
+			console.log("login status");
+			//neu da dang nhap vao ung dung
+			if (response.status === 'connected') {
+				//console.log("da dang nhap");
+				//console.log(response.authResponse.accessToken);
+				console.log("connected");
+				FB.api('/me', {
+					fields : 'name, email, picture, birthday, gender'
+				}, function(response) {
+					alert(response);
+					var email = response.email;
+					var name = response.name;
+					var avatar = response.picture.data.url;
+					var gender = response.gender;
+					var birthday = response.birthday;
+					console.log(email);
+					console.log(name);
+					console.log(avatar);
+					console.log(gender);
+					console.log(birthday);
+					$.ajax({
+						url : "/account/loginFB",
+						type : "POST",
+						data : {
+							name : name,
+							emailFB : email,
+							avatar : avatar,
+							gender : gender,
+							birthday : birthday
+
+						},
+						success : function(response) {
+							console.log("success");
+							alert("login fb");
+							$(location).attr("href", "/");
+						},
+						error : function(err) {
+							alert("error");
+							console.log(err);
+						}
+					});
+					//neu nguoi dung khong cho phep xem email thi yeu cau dang nhap lai
+					if (typeof (email) == "undefined") {
+						//xu ly sau				   
+					}
+				});
+			} else if (response.status === 'not_authorized') {
+				console.log("chua dang nhap");
+			} else {
+
+			}
+		});
+	}
+
+	function login() {
+		FB.login(function(response) {
+			console.log(response);
+			alert("check login");
+			checkLoginState();
+		}, {
+			scope : 'email',
+			auth_type : 'rerequest'
+		});
+	}
+</script>
+<!-- facebook login end -->
 </head>
 
 <body>
+
 	<div class="container">
 		<div class="row">
-		  	<div class="col-md-7">
+			<div class="col-md-7">
 				<h6 style="color: #FFFFFF;"></h6>
-	  		</div>
-<!--		form đăng nhập và đăng ký-->
-		  	<div class="col-md-5">
-		  		<div class="login-wrap">
+			</div>
+			<!--		form đăng nhập và đăng ký-->
+			<div class="col-md-5">
+				<div class="login-wrap">
 					<div class="login-html">
 						<input id="tab-1" type="radio" name="tab" class="sign-in" checked>
-						<label for="tab-1" class="tab">ĐĂNG NHẬP</label>
-						<input id="tab-2" type="radio" name="tab" class="sign-up">
-						<label for="tab-2" class="tab"></label>
-						
+						<label for="tab-1" class="tab">ĐĂNG NHẬP</label> <input id="tab-2"
+							type="radio" name="tab" class="sign-up"> <label
+							for="tab-2" class="tab"></label>
+
 						<div class="login-form">
 							<div class="sign-in-htm">
 								<form th:action="@{/account/login}" method="post">
 									<div class="group">
-										<label for="email" class="label">Email</label>
-										<input id="email" type="email" class="input" required="required" name="email" th:value="${email}"/>
+										<label for="email" class="label">Email</label> <input
+											id="email" type="email" class="input" required="required"
+											name="email" th:value="${email}" />
 									</div>
 									<div class="group">
-										<label for="password" class="label">Mật khẩu</label>
-										<input id="password" type="password" class="input" required="required" name="password"/>
+										<label for="password" class="label">Mật khẩu</label> <input
+											id="password" type="password" class="input"
+											required="required" name="password" />
 									</div>
 									<div class="group">
-										<input type="submit" class="button" value="Đăng nhập"/>
+										<input type="submit" class="button" value="Đăng nhập" />
 									</div>
 									<div class="hr"></div>
 									<p class="text-center" style="color: red" th:text="${err}"></p>
 									<div class="foot-lnk">
-										<p class="text-left">&emsp;
-											<a th:href="@{/account/forgot_pass}">Quên mật khẩu?</a>&emsp;
-											<a th:href="@{/account/sign_up}">Đăng ký ngay !</a>
+										<p class="text-left">
+											&emsp; <a th:href="@{/account/forgot_pass}">Quên mật
+												khẩu?</a>&emsp; <a th:href="@{/account/sign_up}">Đăng ký
+												ngay !</a>
 										</p>
+									</div>
+									<div class="hr2"></div>
+									<div class="loginFb">
+										<div onlogin="login()" onclick="checkLoginState()"
+											class="fb-login-button" scope="public_profile, email"
+											data-max-rows="1" data-size="large"
+											data-button-type="login_with" data-show-faces="fasle"
+											data-auto-logout-link="false" data-use-continue-as="true"></div>
 									</div>
 								</form>
 							</div>
-							<div class="sign-up-htm">
-								
-							</div>
+							<div class="sign-up-htm"></div>
 						</div>
 					</div>
 				</div>
-		  	</div>
+			</div>
 		</div>
 	</div>
 
 
 	<!--java script-->
-	<script th:src="@{/js/jquery-3.1.1.min.js}"></script>
-	<script th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
 </body>
 </html>

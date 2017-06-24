@@ -198,4 +198,18 @@ public class AccountSImp implements AccountS {
 		System.out.printf("Đã xóa yê cầu kết bạn %d dòng của bạn và tôi!\n ", a);
 
 	}
+
+	@Override
+	public Account addAccountInfo(String name, String avatar, Date birth, String email, boolean gender,
+			boolean available) {
+		Account account = new Account();
+		account.setName(name);
+		account.setAvatar(avatar);
+		account.setBirth(birth);
+		account.setGender(gender);
+		account.setEmail(email);
+		account.setState(available);
+		account.setPassword(email);
+		return r.save(account);
+	}
 }

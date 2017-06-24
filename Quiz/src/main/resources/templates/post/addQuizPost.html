@@ -6,12 +6,12 @@
 <body>
 	<div class="divcontent" th:id="divcontent+${post.idPost}">
 		<div class="status row">
-			<div class="col-md-1">
+			<div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 media">
 				<img class="media-photo img-responsive avt"
 					th:src="@{${session.account.avatar}!=null?@{${session.account.avatar}}:@{/upload/avatar/default_avatar.jpg}}"
 					alt="Ảnh đại diện">
 			</div>
-			<div class="col-md-10">
+			<div class="col-lg-11 col-md-11 col-sm-11 col-xs-10 cnt">
 				<div class="people-stt">
 					<!--start  x post -->
 					<form onsubmit="return deletePost(this)">
@@ -39,7 +39,7 @@
 			<div class="input-group" style="margin-bottom: 5px">
 				<span class="input-group-addon"><input name="radio_da"
 					th:onchange="'chooseAnswer('+${room.idRoom}+','+ ${post.idPost}+',this.value)'"
-					id="radio_da" type="radio"  value="1"></span> <input
+					id="radio_da" type="radio" value="1"></span> <input
 					class="form-control" id="da1" readonly="readonly"
 					th:value="${post.answer1}" type="text" required>
 			</div>
@@ -67,12 +67,22 @@
 
 
 		</div>
+		<button class="btn btn-info" type="button"
+			onclick="thong_ke_trac_nghiem(this)" th:value="${post.idPost}">
+			<i class="fa fa-pie-chart"></i> Thống kê kết quả
+		</button>
 		<hr />
 		<div style="color: #B2B2B2; text-align: left">
-			<a class="link-act" href="#" id="like"><i
-				class="fa fa-thumbs-o-up"></i><span id="lbl-like"> Thích</span></a>
-			&nbsp;&nbsp; <a class="link-act" href="#"><i
-				class="fa fa-comment"></i><span> Bình luận</span></a>
+			<a class="link-act" href="javascript:void(0);"
+				th:id="like+${post.idPost}" onclick="likeThisPost(this)"><i
+				class="fa fa-thumbs-o-up"></i><span id="lbl-like" th:type="'0'"
+				th:text="'Thích'"> </span></a>&nbsp;<a href="javascript:void(0)"
+				th:onclick="'detailAccountLikePost('+${post.idPost}+')'"
+				th:text="'(0)'"></a> &nbsp;<a
+				class="link-act" href="javascript:void(0);"><i
+				class="fa fa-comment"></i><span> Bình luận (<span
+					th:text="'0'"></span>)
+			</span></a>
 		</div>
 		<hr>
 		<div class="comment">

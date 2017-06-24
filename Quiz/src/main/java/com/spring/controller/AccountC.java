@@ -6,6 +6,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -205,7 +206,7 @@ public class AccountC {
 	@RequestMapping(value = "/logout")
 	public String logout(HttpSession session) {
 		session.invalidate();
-		return "login_page";
+		return "redirect:/home";
 	}
 
 	// trang thông tin người dùng
@@ -431,4 +432,34 @@ public class AccountC {
 
 	}
 
+	// login facebook
+	@RequestMapping(value = "/loginFB", method = RequestMethod.POST)
+	public String loginFB(WebRequest w, HttpSession session) {
+		String email = w.getParameter("emailFB");
+		System.out.println("email: " + email);
+		// neu email da ton tai thi cho dang nhap
+		Account account = null;
+		if (accountService.checkEmail(email)) {
+			account = accountService.getAccountByEmail(email);
+		}
+		// neu email chua ton tai thi tao tai khoan
+		else {
+			String name = (w.getParameter("name") == null) ? "" : w.getParameter("name"),
+					avatar = (w.getParameter("avatar")) == null ? "/upload/avatar/default_avatar.jpg"
+							: w.getParameter("avatar");
+			Date birth;
+			if (w.getParameter("birthday") == null) {
+				birth = new Date();
+			} else {
+				birth = new Date(w.getParameter("birthday"));
+			}
+			boolean gender = ("male".equals(w.getParameter("gender")) ? true : false);
+			account = accountService.addAccountInfo(name, avatar, birth, email, gender, true);
+			System.out.println("Khong ton tai");
+		}
+		if (account != null) {
+			session.setAttribute("account", account);
+		}
+		return "homepage";
+	}
 }
