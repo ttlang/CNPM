@@ -1,10 +1,12 @@
 package com.spring.controller;
 
+import java.sql.SQLException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.nlu.model.OutputMessage;
 import com.spring.domain.Account;
 import com.spring.domain.Comment;
 import com.spring.domain.Post;
@@ -24,6 +27,7 @@ import com.spring.domain.RoomManage;
 import com.spring.model.PostByGroup;
 import com.spring.model.PostRoom;
 import com.spring.service.AccountS;
+import com.spring.service.ChatService;
 import com.spring.service.PostS;
 import com.spring.service.RoomS;
 
@@ -36,6 +40,10 @@ public class RoomC {
 	PostS postS;
 	@Autowired
 	AccountS accountS;
+	@Autowired
+	SimpMessagingTemplate messagingTemplate;
+	@Autowired
+	ChatService chatService;
 
 	@RequestMapping(value = "/createroom", method = RequestMethod.POST)
 	@ResponseBody
@@ -181,7 +189,7 @@ public class RoomC {
 	}
 
 	@RequestMapping(value = "/postQuizInRoom", method = RequestMethod.POST)
-	public String postQuizInRoom(WebRequest wr, HttpSession httpSession, Model model) {
+	public String postQuizInRoom(WebRequest wr, HttpSession httpSession, Model model) throws SQLException {
 		String noiDung = wr.getParameter("nd");
 		String dap1 = wr.getParameter("da1");
 		String dap2 = wr.getParameter("da2");
@@ -196,7 +204,33 @@ public class RoomC {
 		System.out.println(post);
 		model.addAttribute("post", post);
 		model.addAttribute("room", rooms.getRoom(idRoom));
-		System.out.println(idPost + " Thanfh cong mej no cong");
+
+		// this.messagingTemplate.convertAndSend("/topic/messages", new
+		// OutputMessage();
+		OutputMessage res = new OutputMessage(String.valueOf(account.getIdAcc().intValue()), String.valueOf(idRoom),
+				"notification");
+		int[] listIdAcc = rooms.getListIDAccountInRoom(idRoom);
+		String messageContent = account.getName() + " vừa đăng một câu hỏi trắc nghiệm trong nhóm "
+				+ rooms.getNameRoom(idRoom);
+		String url = "/classRoom/" + idRoom + "#divcontent" + idPost;
+		//
+		for (int i = 0; i < listIdAcc.length; i++) {
+			if (account.getIdAcc().intValue() == listIdAcc[i]) {
+				listIdAcc[i] = -1;
+				break;
+			}
+		}
+		for (int i : listIdAcc) {
+			if (i != -1) {
+				chatService.themNoiDung("POST_" + account.getIdAcc().intValue(), i + "", messageContent, url);
+			}
+		}
+		//
+		res.setListIdAcc(listIdAcc);
+		res.setMessageContent(messageContent);
+		res.setUrl(url);
+		this.messagingTemplate.convertAndSend("/topic/messages", res);
+		/* System.out.println(idPost + " Thanfh cong mej no cong"); */
 		return "/post/addQuizPost";
 	}
 

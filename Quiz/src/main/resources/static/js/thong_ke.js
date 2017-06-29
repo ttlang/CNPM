@@ -22,6 +22,36 @@ function thong_ke_trac_nghiem(e) {
 										idPost : idPost
 									},
 									success : function(result) {
+										
+										
+										$.ajax({
+											
+												url : '/dap-an-dung',
+												type : 'POST',
+												dataType : 'text',
+												data : {
+													idPost : idPost
+												},
+												success : function(result) {
+													//alert(result);
+													s =result.split("|");
+													if(s[0]=='0'){
+														$("#dap_an_dung").hide();
+														
+													}else{
+														$("#dap_an_dung").text("Đáp án đúng "+s[1]);
+														$("#dap_an_dung").show();
+														
+													}
+														
+														
+													
+													
+												}
+											
+										});
+										
+										
 
 										var d1, d2, d3, d4 = 0;
 

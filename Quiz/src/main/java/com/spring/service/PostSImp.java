@@ -61,7 +61,6 @@ public class PostSImp implements PostS {
 			callableStatement.executeUpdate();
 			return true;
 		} catch (SQLException sqlex) {
-			sqlex.printStackTrace();
 			return false;
 		}
 	}
@@ -142,9 +141,10 @@ public class PostSImp implements PostS {
 
 		return result;
 	}
+
 	@Override
 	public Map<Integer, Integer> nguoiChonTracNghiem(int idPost) {
-		
+
 		SessionImpl session = (SessionImpl) sf.getCurrentSession();
 		Connection connection = session.connection();
 		Map<Integer, Integer> result = new HashMap<>();
@@ -154,7 +154,7 @@ public class PostSImp implements PostS {
 
 			ResultSet resultSet = callableStatement.executeQuery();
 			while (resultSet.next()) {
-				
+
 				result.put(resultSet.getInt("id_acc"), resultSet.getInt("id_answer"));
 			}
 
@@ -163,8 +163,28 @@ public class PostSImp implements PostS {
 		}
 
 		return result;
-		
-		
+
+	}
+
+	@Override
+	public int getCorrectAnswerFromPost(int idPost) {
+		int result = 0;
+		SessionImpl session = (SessionImpl) sf.getCurrentSession();
+		Connection connection = session.connection();
+		try {
+			CallableStatement callableStatement = connection
+					.prepareCall("SELECT  [dbo].f_getCorrect_Answer(?)as result");
+			callableStatement.setInt(1, idPost);
+			ResultSet resultSet = callableStatement.executeQuery();
+			while (resultSet.next()) {
+				result = resultSet.getInt("result");
+			}
+
+		} catch (SQLException sqlex) {
+			sqlex.printStackTrace();
+		}
+
+		return result;
 	}
 
 }
