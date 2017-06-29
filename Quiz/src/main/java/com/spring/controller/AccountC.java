@@ -6,7 +6,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
@@ -433,6 +432,7 @@ public class AccountC {
 	}
 
 	// login facebook
+	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "/loginFB", method = RequestMethod.POST)
 	public String loginFB(WebRequest w, HttpSession session) {
 		String email = w.getParameter("emailFB");

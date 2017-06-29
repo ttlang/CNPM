@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.domain.Account;
+import com.spring.domain.Post;
 import com.spring.service.AccountS;
 import com.spring.service.PostS;
 
@@ -59,5 +60,31 @@ public class ChartC {
 
 		return listAccountResult;
 	}
-
+	@RequestMapping(value="/dap-an-dung",method=RequestMethod.POST)
+	@ResponseBody
+	public String dapAnDung(HttpSession session,@RequestParam("idPost")int idPost){
+		Account account =(Account)session.getAttribute("account");
+		Post p =postS.getPostById(idPost);
+		if(p!=null){
+			
+			int idAccRoomPost =p.getRoomList().get(0).getIdAcc().getIdAcc(); // mã tài khoản là chủ phòng chứa bài post
+			int idAccPost =p.getIdAcc().getIdAcc();// tài khoản là người dùng là chủ bài đăng
+			if(idAccRoomPost==account.getIdAcc()||idAccPost==account.getIdAcc()){
+				// lấy ra đáp án đúng và trả về client
+				int correctAnswer =postS.getCorrectAnswerFromPost(idPost);
+				if(correctAnswer==0){
+					return "0|không có dữ liệu";
+				}else{
+					return "1|"+correctAnswer;
+				}
+				
+			}
+			
+		}else{
+			return "0|không có dữ liệu";
+		}
+		return "0|không có dữ liệu";
+				
+	}
+	
 }

@@ -55,6 +55,8 @@ public interface PostS {
 	
 	public Map<Integer, Integer>nguoiChonTracNghiem(int idPost);
 	
+	public int getCorrectAnswerFromPost(int idPost);
+	
 	
 
 }
