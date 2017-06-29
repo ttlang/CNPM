@@ -5,5 +5,7 @@ Công nghệ sử dụng :
 + Thymeleaf
 + JDK 8
 + SQL server
-ngày bắt đầu  code 18/4/2016
-Nhóm trưởng : Trần văn Thắng (T_DOG)
++ Google Drive API
++ web socket
+ngày bắt đầu  code 18/4/2017
+Nhóm trưởng : Trần văn Thắng
